@@ -577,6 +577,8 @@ function viewNosotras(){
       </div>
     </div>`;
 }
+
+
 function wireUI(rerender){
   $("#langBtn")?.addEventListener("click", ev => { ev.stopPropagation(); state.langOpen = !state.langOpen; rerender(); });
   
@@ -591,9 +593,6 @@ function wireUI(rerender){
   if (state.langOpen) document.addEventListener("click", () => { state.langOpen = false; rerender(); }, { once: true });
 }
   
-  root.querySelectorAll(".lang-menu button").forEach(b => b.addEventListener("click", () => { state.lang = b.dataset.lang; document.documentElement.lang = state.lang; ls.set("ci_lang", state.lang); state.langOpen = false; rerender(); }));
-  if (state.langOpen) document.addEventListener("click", () => { state.langOpen = false; rerender(); }, { once: true });
-}
 
 function render(){
   const inner = state.tab === "hoy" ? viewHoy() : state.tab === "diario" ? viewDiario() : viewNosotras();
