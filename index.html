@@ -202,7 +202,18 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .journal-content .entry.mica, .journal-content .entry.tati { border-left: none; }
 .journal-content .entry-head { display: none; }
 
-  
+
+
+/* HISTORIAL DE ÁNIMO EN TEXTO */
+.mood-history-list { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-top: 12px; }
+.mood-day { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 76px; padding: 10px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+.mood-date { font-size: 0.72rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+.mood-texts { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.mood-txt { font-size: 0.85rem; font-weight: 600; font-family: Newsreader, serif; }
+.mood-txt.mica { color: var(--mica); }
+.mood-txt.tati { color: var(--tati); }
+
+
 </style>
 </head>
 <body>
@@ -526,9 +537,23 @@ function viewNosotras(){
   const dates = [...new Set(state.entries.map(e => e.date))].sort();
   let streak = 0; const d = new Date(); if (!(entryOf(todayKey(), "mica") && entryOf(todayKey(), "tati"))) d.setUTCDate(d.getUTCDate() - 1);
   for (;;){ const k = `${d.getUTCFullYear()}-${pad(d.getUTCMonth()+1)}-${pad(d.getUTCDate())}`; if (entryOf(k, "mica") && entryOf(k, "tati")){ streak++; d.setUTCDate(d.getUTCDate() - 1); } else break; }
-  const last = dates.slice(-14); const h = e => e && typeof e.mood === "number" ? 12 + e.mood * 14 : 0;
-  const bars = last.map(k => { const a = entryOf(k, "mica"), b = entryOf(k, "tati"); return `<div class="barcol">${a ? `<div class="bar mica" style="height:${h(a)}%"></div>` : ""}${b ? `<div class="bar tati" style="height:${h(b)}%"></div>` : ""}</div>`; }).join("");
+  
+  const last = dates.slice(-14); 
+  
+  // Armamos las tarjetas con los textos de cada día
+  const historyList = last.map(k => { 
+    const a = entryOf(k, "mica"), b = entryOf(k, "tati"); 
+    const dateObj = new Date(k + "T00:00:00Z");
+    const shortDate = dateObj.toLocaleDateString(LOCALE[state.lang], { day:"numeric", month:"short", timeZone:"UTC" });
+    
+    const aMood = a && typeof a.mood === "number" ? `<span class="mood-txt mica">${esc(moods()[a.mood])}</span>` : "";
+    const bMood = b && typeof b.mood === "number" ? `<span class="mood-txt tati">${esc(moods()[b.mood])}</span>` : "";
+    
+    return `<div class="mood-day"><span class="mood-date">${esc(shortDate)}</span><div class="mood-texts">${aMood}${bMood}</div></div>`;
+  }).join("");
+
   const notes = [...state.notes].sort((a,b) => b.created_at.localeCompare(a.created_at)).slice(0, 30);
+  
   return `
     <div class="stats">
       <div class="stat"><span class="n">${together}</span><span class="l">${esc(t("daysTogether"))}</span></div>
@@ -536,7 +561,7 @@ function viewNosotras(){
       <div class="stat"><span class="n">${state.entries.length}</span><span class="l">${esc(t("savedAnswers"))}</span></div>
     </div>
     <div class="card" style="margin-bottom:16px"><h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("howWeAre"))}</h3><p class="hint" style="margin:0 0 8px">${esc(t("moodSub", { n: last.length }))}</p>
-      ${last.length ? `<div class="bars">${bars}</div><div class="legend"><span><i style="background:var(--mica)"></i>${esc(nameOf("mica"))}</span><span><i style="background:var(--tati)"></i>${esc(nameOf("tati"))}</span></div>` : `<p class="empty">${esc(t("moodEmpty"))}</p>`}
+      ${last.length ? `<div class="mood-history-list">${historyList}</div><div class="legend" style="margin-top:10px;"><span><i style="background:var(--mica)"></i>${esc(nameOf("mica"))}</span><span><i style="background:var(--tati)"></i>${esc(nameOf("tati"))}</span></div>` : `<p class="empty">${esc(t("moodEmpty"))}</p>`}
     </div>
     <div class="card">
       <h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("thinking"))}</h3>
@@ -552,7 +577,6 @@ function viewNosotras(){
       </div>
     </div>`;
 }
-
 function wireUI(rerender){
   $("#langBtn")?.addEventListener("click", ev => { ev.stopPropagation(); state.langOpen = !state.langOpen; rerender(); });
   
