@@ -164,11 +164,23 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 <div class="wrap" id="root"></div>
 
 <script>
-
+/* =======================================================================
+   1. CONFIG — the only part you need to edit
+   ======================================================================= */
 const CONFIG = {
+  // ================================================================
+  // COMPLETÁ ACÁ ABAJO — reemplazá el texto entre comillas.
+  // Los 4 campos marcados con 👉 son los únicos que tenés que tocar.
+  // ================================================================
 
+  // 👉 Settings → API Keys en Supabase → "Project URL"
   supabaseUrl: "https://bdammhpnswvhniykxdcl.supabase.co/rest/v1/",
+
+  // 👉 Settings → API Keys en Supabase → "Publishable key" (empieza con sb_publishable_...)
   supabaseKey: "sb_publishable_JBsfUBcFia_jscZ4hg4rUA_QLhxHkRp",
+
+  // true = login real con email + contraseña (necesita lo de arriba completo)
+  useAuth: true,
 
   since: "2026-04-16",        // the day you two started (YYYY-MM-DD)
   defaultLang: "en",          // "en" | "es" | "ru"
@@ -176,8 +188,9 @@ const CONFIG = {
   translateEmail: "",         // optional: your email raises the daily limit from 5.000 to 50.000 characters
 
   people: {
-    mica: { name: "Mica", pin: "1111" },
-    tati: { name: "Tati", pin: "2222" }
+    // 👉 el email exacto que le pusiste a cada usuaria en Supabase → Authentication → Users
+    mica: { name: "Mica", email: "azorzoni@gmail.com", pin: "1111" },
+    tati: { name: "Tati", email: "tati@gmail.com", pin: "2222" }
   },
   reactions: ["❤️", "🥹", "🫂", "😭", "😂", "🌙"]
 };
@@ -323,6 +336,8 @@ const UI = {
     tagline: "One check-in a day, both of us. Neither of you sees the other's answers until you write your own.",
     yourKey: "Your key", enter: "Enter", wrongKey: "That's not the key. Try again.",
     enteringAs: "Entering as {name}.", signOut: "Sign out",
+    yourPassword: "Your password", signIn: "Sign in", wrongPassword: "Wrong email or password.",
+    authError: "Couldn't reach the login server. Try again in a moment.", signingIn: "Signing in…",
     tabToday: "Today", tabJournal: "Journal", tabUs: "Us",
     localBanner: "Test mode: answers are saved on this device only. Connect the database so you can both see them.",
     degradedBanner: "Couldn't reach the database, so you're in local mode.",
@@ -353,6 +368,8 @@ const UI = {
     tagline: "Un check-in por día, las dos. Ninguna ve lo que escribió la otra hasta responder.",
     yourKey: "Tu clave", enter: "Entrar", wrongKey: "Esa clave no es. Probá de nuevo.",
     enteringAs: "Entrando como {name}.", signOut: "Salir",
+    yourPassword: "Tu contraseña", signIn: "Entrar", wrongPassword: "Email o contraseña incorrectos.",
+    authError: "No se pudo conectar con el servidor de acceso. Probá de nuevo en un momento.", signingIn: "Entrando…",
     tabToday: "Hoy", tabJournal: "Diario", tabUs: "Nosotras",
     localBanner: "Modo de prueba: las respuestas se guardan solo en este dispositivo. Conectá la base de datos para que las dos las vean.",
     degradedBanner: "No se pudo conectar con la base de datos, así que estás en modo local.",
@@ -383,6 +400,8 @@ const UI = {
     tagline: "Один чек-ин в день, обе. Никто не видит ответы другой, пока не напишет свои.",
     yourKey: "Твой код", enter: "Войти", wrongKey: "Код не тот. Попробуй ещё раз.",
     enteringAs: "Вход как {name}.", signOut: "Выйти",
+    yourPassword: "Твой пароль", signIn: "Войти", wrongPassword: "Неверный email или пароль.",
+    authError: "Не удалось подключиться к серверу входа. Попробуй ещё раз через момент.", signingIn: "Входим…",
     tabToday: "Сегодня", tabJournal: "Дневник", tabUs: "Мы",
     localBanner: "Тестовый режим: ответы сохраняются только на этом устройстве. Подключите базу данных, чтобы видеть их вдвоём.",
     degradedBanner: "Не удалось подключиться к базе данных, поэтому включён локальный режим.",
@@ -425,7 +444,7 @@ const ls = { get(k){ try { return localStorage.getItem(k); } catch { return null
              set(k,v){ try { localStorage.setItem(k,v); } catch {} },
              del(k){ try { localStorage.removeItem(k); } catch {} } };
 
-const state = { store: null, me: null, lang: CONFIG.defaultLang, tab: "hoy",
+const state = { store: null, me: null, userId: null, lang: CONFIG.defaultLang, tab: "hoy",
                 entries: [], comments: [], notes: [], editing: false, degraded: false,
                 tx: {}, txOn: {}, langOpen: false };
 
@@ -556,9 +575,21 @@ const remote = {
     await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js");
     this.db = window.supabase.createClient(CONFIG.supabaseUrl, CONFIG.supabaseKey);
     const { error } = await this.db.from("entries").select("id").limit(1);
-    if (error) throw error;
+    // with auth-based policies, this fails on purpose before anyone signs in — that's fine, not a real connection problem
+    if (error && !/JWT|auth|permission|policy/i.test(error.message || "") && error.code !== "42501") throw error;
     return true;
   },
+  async getSession(){
+    const { data, error } = await this.db.auth.getSession();
+    if (error) throw error;
+    return data.session;
+  },
+  async signIn(email, password){
+    const { data, error } = await this.db.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    return data.session;
+  },
+  async signOut(){ await this.db.auth.signOut(); },
   async entries(){ const { data } = await this.db.from("entries").select("*"); return data || []; },
   async saveEntry(e){ const { error } = await this.db.from("entries").upsert(e); if (error) throw error; },
   async comments(){ const { data } = await this.db.from("comments").select("*"); return data || []; },
@@ -572,6 +603,7 @@ async function refresh(){
   state.entries = e; state.comments = c; state.notes = n;
 }
 const entryOf = (date, who) => state.entries.find(x => x.date === date && x.author === who);
+const withAuthor = obj => state.userId ? { ...obj, author_id: state.userId } : obj;
 
 /* =======================================================================
    6. views
@@ -591,6 +623,7 @@ function langHTML(){
 
 function renderLogin(){
   const key = todayKey();
+  const authMode = CONFIG.useAuth && state.store.mode === "remote";
   root.innerHTML = `
     <section class="login">
       <div class="login-top">${langHTML()}</div>
@@ -607,8 +640,10 @@ function renderLogin(){
           </button>`).join("")}
       </div>
       <form class="pin-row hidden" id="pinForm">
-        <input type="password" id="pin" inputmode="numeric" autocomplete="off" placeholder="${esc(t("yourKey"))}">
-        <button class="btn" type="submit">${esc(t("enter"))}</button>
+        <input type="password" id="pin" autocomplete="${authMode ? "current-password" : "off"}"
+          ${authMode ? "" : 'inputmode="numeric"'}
+          placeholder="${esc(authMode ? t("yourPassword") : t("yourKey"))}">
+        <button class="btn" type="submit">${esc(authMode ? t("signIn") : t("enter"))}</button>
       </form>
       <p class="hint" id="pinHint"></p>
     </section>`;
@@ -621,11 +656,25 @@ function renderLogin(){
     $("#pinHint").textContent = t("enteringAs", { name: nameOf(picked) });
     $("#pin").focus();
   }));
-  $("#pinForm").addEventListener("submit", ev => {
+  $("#pinForm").addEventListener("submit", async ev => {
     ev.preventDefault();
     if (!picked) return;
-    if ($("#pin").value.trim() !== CONFIG.people[picked].pin){ $("#pinHint").textContent = t("wrongKey"); return; }
-    state.me = picked; ls.set("ci_me", picked); start();
+    const val = $("#pin").value;
+
+    if (!authMode){
+      if (val.trim() !== CONFIG.people[picked].pin){ $("#pinHint").textContent = t("wrongKey"); return; }
+      state.me = picked; ls.set("ci_me", picked); start();
+      return;
+    }
+
+    $("#pinHint").textContent = t("signingIn");
+    try {
+      const session = await remote.signIn(CONFIG.people[picked].email, val);
+      state.me = picked; state.userId = session.user.id;
+      await start();
+    } catch (err) {
+      $("#pinHint").textContent = /invalid/i.test(err.message || "") ? t("wrongPassword") : t("authError");
+    }
   });
 }
 
@@ -832,8 +881,11 @@ function render(){
   root.innerHTML = shell(inner);
   wireLang(render);
 
-  $("#logout").addEventListener("click", () => {
-    state.me = null; state.editing = false; ls.del("ci_me"); renderLogin();
+  $("#logout").addEventListener("click", async () => {
+    state.me = null; state.userId = null; state.editing = false;
+    ls.del("ci_me");
+    if (CONFIG.useAuth && state.store.mode === "remote"){ try { await state.store.signOut(); } catch {} }
+    renderLogin();
   });
   root.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => {
     state.tab = b.dataset.tab; state.editing = false; render();
@@ -859,7 +911,7 @@ function render(){
         lang: state.lang, reactions: prev?.reactions || {},
         created_at: prev?.created_at || new Date().toISOString(), edited: !!prev
       };
-      try { await state.store.saveEntry(entry); } catch { toast(t("saveFailed")); return; }
+      try { await state.store.saveEntry(withAuthor(entry)); } catch { toast(t("saveFailed")); return; }
       state.editing = false; delete state.tx[entry.id];
       await refresh(); render();
       toast(prev ? t("changed") : t("saved"));
@@ -880,8 +932,8 @@ function render(){
     const input = f.querySelector("input"), text = input.value.trim();
     if (!text) return;
     try {
-      await state.store.addComment({ id: uid(), entry_id: f.dataset.entry, author: state.me,
-                                     text, lang: state.lang, created_at: new Date().toISOString() });
+      await state.store.addComment(withAuthor({ id: uid(), entry_id: f.dataset.entry, author: state.me,
+                                     text, lang: state.lang, created_at: new Date().toISOString() }));
     } catch { toast(t("saveFailed")); return; }
     delete state.tx[f.dataset.entry];
     await refresh(); render();
@@ -914,7 +966,7 @@ function render(){
     ev.preventDefault();
     const text = $("#noteText").value.trim();
     if (!text) return;
-    try { await state.store.addNote({ id: uid(), author: state.me, text, lang: state.lang, created_at: new Date().toISOString() }); }
+    try { await state.store.addNote(withAuthor({ id: uid(), author: state.me, text, lang: state.lang, created_at: new Date().toISOString() })); }
     catch { toast(t("saveFailed")); return; }
     await refresh(); render();
     toast(t("noteSent"));
@@ -933,8 +985,23 @@ async function start(){ await refresh(); render(); }
     try { await remote.init(); state.store = remote; }
     catch { state.store = local; state.degraded = true; }
   }
-  const saved = ls.get("ci_me");
-  if (saved && CONFIG.people[saved]){ state.me = saved; await start(); } else { renderLogin(); }
+
+  if (CONFIG.useAuth && state.store.mode === "remote"){
+    // real login: restore the Supabase session if there is one, no PIN involved
+    try {
+      const session = await remote.getSession();
+      if (session){
+        const email = session.user.email;
+        const who = Object.keys(CONFIG.people).find(k => CONFIG.people[k].email === email);
+        if (who){ state.me = who; state.userId = session.user.id; await start(); return; }
+      }
+    } catch {}
+    renderLogin();
+  } else {
+    // local test mode: the old PIN system
+    const saved = ls.get("ci_me");
+    if (saved && CONFIG.people[saved]){ state.me = saved; await start(); } else { renderLogin(); }
+  }
 
   setInterval(async () => {
     if (state.store.mode !== "remote" || !state.me || state.editing) return;
