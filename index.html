@@ -8,22 +8,40 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
 <style>
+
 :root{
-  --ink:#241f36; --ink-soft:#5b5273; --paper:#f4f0f7; --paper-2:#ffffff; --line:#ddd4e6;
-  --mica:#d4587a; --tati:#c98a2e;
-  --mica-wash:rgba(212,88,122,.10); --tati-wash:rgba(201,138,46,.12);
-  --accent:#6d5ba8;
-  --shadow:0 1px 0 rgba(36,31,54,.06), 0 10px 30px -18px rgba(36,31,54,.45);
+  /* -----  ----- */
+  --ink:#241f36; 
+  --ink-soft:#a79ac4; 
+  --paper:#F9F5F6;       /* Fondo principal rosado clarito */
+  --paper-2:#F8E8EE;     /* Fondo de las cajas más oscuro */
+  --line:#FDCEDF;        /* Color de las líneas y bordes */
+  --mica:#d4587a; 
+  --tati:#c98a2e;
+  --mica-wash:rgba(212,88,122,.10); 
+  --tati-wash:rgba(201,138,46,.12);
+  --accent:#b7a6ef;
+  --shadow:0 1px 0 rgba(0,0,0,.2), 0 18px 40px -22px rgba(0,0,0, 0.05); /* Sombra suave */
   --radius:14px;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
-/* MODO OSCURO AHORA ES OPCIONAL (CONTROLADO POR BOTÓN) */
+
+/* ----- ESTE ES EL MODO OSCURO (Se activa con el botón) ----- */
 :root[data-theme="dark"]{
-  --ink:#ece7f5; --ink-soft:#a79ac4; --paper:#F9F5F6; --paper-2:#F8E8EE; --line:#FDCEDF;
-  --mica:#f09ab2; --tati:#f0bd6a; --mica-wash:rgba(240,154,178,.10); --tati-wash:rgba(240,189,106,.10);
-  --accent:#b7a6ef; --shadow:0 1px 0 rgba(0,0,0,.2), 0 18px 40px -22px rgba(0,0,0, 0.05);
+  --ink:#ece7f5; 
+  --ink-soft:#a79ac4; 
+  --paper:#191530;       /* Fondo oscuro original */
+  --paper-2:#221d3d;     /* Cajas oscuras */
+  --line:#332c53;
+  --mica:#f09ab2; 
+  --tati:#f0bd6a; 
+  --mica-wash:rgba(240,154,178,.10); 
+  --tati-wash:rgba(240,189,106,.10);
+  --accent:#b7a6ef; 
+  --shadow:0 1px 0 rgba(0,0,0,.2), 0 18px 40px -22px rgba(0,0,0,.9);
 }
+  
 *,*::before,*::after{box-sizing:inherit}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);
