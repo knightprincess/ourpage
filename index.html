@@ -20,9 +20,9 @@
 }
 /* MODO OSCURO AHORA ES OPCIONAL (CONTROLADO POR BOTÓN) */
 :root[data-theme="dark"]{
-  --ink:#ece7f5; --ink-soft:#a79ac4; --paper:#191530; --paper-2:#221d3d; --line:#332c53;
+  --ink:#ece7f5; --ink-soft:#a79ac4; --paper:#F9F5F6; --paper-2:#F8E8EE; --line:#FDCEDF;
   --mica:#f09ab2; --tati:#f0bd6a; --mica-wash:rgba(240,154,178,.10); --tati-wash:rgba(240,189,106,.10);
-  --accent:#b7a6ef; --shadow:0 1px 0 rgba(0,0,0,.2), 0 18px 40px -22px rgba(0,0,0,.9);
+  --accent:#b7a6ef; --shadow:0 1px 0 rgba(0,0,0,.2), 0 18px 40px -22px rgba(0,0,0, 0.05);
 }
 *,*::before,*::after{box-sizing:inherit}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -160,6 +160,31 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));
   background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-size:.88rem;z-index:50;box-shadow:var(--shadow)}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+
+
+  
+/* DISEÑO DEL DIARIO DESPLEGABLE */
+.journal-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
+.journal-details { background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); transition: all 0.2s ease; }
+.journal-summary { padding: 18px 20px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-family: Newsreader, serif; font-size: 1.15rem; color: var(--ink); }
+.journal-summary::-webkit-details-marker { display: none; } /* Oculta la flecha por defecto del navegador */
+.journal-summary.mica { border-left: 3px solid var(--mica); border-radius: var(--radius); }
+.journal-summary.tati { border-left: 3px solid var(--tati); border-radius: var(--radius); }
+
+/* Cuando la pestaña está abierta */
+.journal-details[open] .journal-summary { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: 1px dashed var(--line); }
+.journal-details[open] .icon { transform: rotate(45deg); color: var(--accent); }
+
+/* El ícono de + y x */
+.icon { font-size: 1.6rem; font-family: sans-serif; transition: transform 0.2s; color: var(--ink-soft); line-height: 0.8; font-weight: 300; }
+.journal-content { padding: 16px 20px; }
+
+/* Ajustes para no duplicar fondos y bordes dentro del desplegable */
+.journal-content .entry { border: none; box-shadow: none; padding: 0; background: transparent; }
+.journal-content .entry.mica, .journal-content .entry.tati { border-left: none; }
+.journal-content .entry-head { display: none; }
+
+  
 </style>
 </head>
 <body>
@@ -450,16 +475,34 @@ function viewHoy(){
 }
 
 function viewDiario(){
-  const key = todayKey(); const dates = [...new Set(state.entries.map(e => e.date))].sort().reverse();
+  const key = todayKey(); 
+  const dates = [...new Set(state.entries.map(e => e.date))].sort().reverse();
   if (!dates.length) return `<div class="card"><p class="empty">${esc(t("emptyJournal"))}</p></div>`;
-  return dates.map(d => {
-    const mine = entryOf(d, state.me), hers = entryOf(d, other(state.me)); const locked = d === key && !mine; const cards = [];
-    if (mine) cards.push(entryHTML(mine));
-    if (hers) cards.push(entryHTML(hers, { reactable: !locked, thread: !locked, veiled: locked, veilMsg: t("veil", { name: nameOf(other(state.me)) }) }));
-    return `<div class="day"><div class="day-label">${esc(dayTitle(d))}</div><div class="pair ${cards.length === 2 ? "two" : ""}">${cards.join("")}</div></div>`;
-  }).join("");
-}
+  
+  return `<div class="journal-list">` + dates.map(d => {
+    const mine = entryOf(d, state.me), hers = entryOf(d, other(state.me));
+    const locked = d === key && !mine; 
+    const items = [];
+    
+    const makeItem = (e, who, isLocked) => {
+      const body = entryHTML(e, { reactable: !isLocked, thread: !isLocked, veiled: isLocked, veilMsg: t("veil", { name: nameOf(other(state.me)) }) });
+      return `
+        <details class="journal-details">
+          <summary class="journal-summary ${who}">
+            <span><strong>${esc(nameOf(who))}</strong>, ${esc(prettyDate(d))}</span>
+            <span class="icon">+</span>
+          </summary>
+          <div class="journal-content">${body}</div>
+        </details>`;
+    };
 
+    if (mine) items.push(makeItem(mine, state.me, false));
+    if (hers) items.push(makeItem(hers, other(state.me), locked));
+    
+    return items.join("");
+  }).join("") + `</div>`;
+}
+  
 function viewNosotras(){
   const since = new Date(CONFIG.since + "T00:00:00Z"); const together = Math.max(0, Math.round((new Date() - since) / 86400000));
   const dates = [...new Set(state.entries.map(e => e.date))].sort();
