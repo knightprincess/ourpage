@@ -15,16 +15,10 @@
   --accent:#6d5ba8;
   --shadow:0 1px 0 rgba(36,31,54,.06), 0 10px 30px -18px rgba(36,31,54,.45);
   --radius:14px;
-  color-scheme:light dark; box-sizing:border-box;
+  box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --ink:#ece7f5; --ink-soft:#a79ac4; --paper:#191530; --paper-2:#221d3d; --line:#332c53;
-    --mica:#f09ab2; --tati:#f0bd6a; --mica-wash:rgba(240,154,178,.10); --tati-wash:rgba(240,189,106,.10);
-    --accent:#b7a6ef; --shadow:0 1px 0 rgba(0,0,0,.2), 0 18px 40px -22px rgba(0,0,0,.9);
-  }
-}
+/* MODO OSCURO AHORA ES OPCIONAL (CONTROLADO POR BOTÓN) */
 :root[data-theme="dark"]{
   --ink:#ece7f5; --ink-soft:#a79ac4; --paper:#191530; --paper-2:#221d3d; --line:#332c53;
   --mica:#f09ab2; --tati:#f0bd6a; --mica-wash:rgba(240,154,178,.10); --tati-wash:rgba(240,189,106,.10);
@@ -33,7 +27,7 @@
 *,*::before,*::after{box-sizing:inherit}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);
-  font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased; transition: background 0.3s, color 0.3s;}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
   background:radial-gradient(70% 45% at 12% 0%, var(--mica-wash), transparent 70%),
              radial-gradient(60% 40% at 92% 8%, var(--tati-wash), transparent 70%)}
@@ -44,11 +38,11 @@ button{font:inherit;cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
 .hidden{display:none !important}
 
-/* language picker */
-.lang{position:relative}
-.lang-btn{background:transparent;border:1px solid var(--line);border-radius:999px;color:var(--ink-soft);
-  padding:5px 11px;display:inline-flex;align-items:center;gap:6px;font-size:.82rem}
-.lang-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.6}
+/* language & theme picker */
+.lang{position:relative; display:inline-flex; align-items:center; gap:8px;}
+.lang-btn, .theme-btn{background:transparent;border:1px solid var(--line);border-radius:999px;color:var(--ink-soft);
+  padding:5px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:.82rem; height: 32px;}
+.lang-btn svg, .theme-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.6}
 .lang-menu{position:absolute;right:0;top:calc(100% + 6px);background:var(--paper-2);border:1px solid var(--line);
   border-radius:12px;box-shadow:var(--shadow);overflow:hidden;z-index:20;min-width:140px}
 .lang-menu button{display:block;width:100%;text-align:left;background:none;border:none;color:var(--ink);padding:9px 14px;font-size:.9rem}
@@ -60,16 +54,19 @@ button{font:inherit;cursor:pointer}
 .eyebrow{font-size:.82rem;color:var(--ink-soft);margin:0}
 .login h1{font-size:clamp(1.9rem,6.6vw,2.9rem);font-style:italic;line-height:1.14;font-weight:300}
 .login .sub{color:var(--ink-soft);font-size:.95rem;max-width:46ch}
-.who{display:flex;flex-direction:column;gap:12px}
-.who-btn{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left;
-  padding:16px 18px;border-radius:var(--radius);background:var(--paper-2);border:1px solid var(--line);
+
+/* BOTONES DE USUARIO LADO A LADO */
+.who{display:flex;flex-direction:row;gap:14px;justify-content:center;}
+.who-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;flex:1;text-align:center;
+  padding:24px 10px;border-radius:var(--radius);background:var(--paper-2);border:1px solid var(--line);
   color:var(--ink);box-shadow:var(--shadow);transition:border-color .18s ease, transform .18s ease}
 .who-btn:hover{border-color:var(--accent)}
 .who-btn:active{transform:scale(.99)}
 .who-btn strong{font-family:Newsreader,serif;font-size:1.35rem;font-weight:400;display:block}
-.who-btn span{font-size:.85rem;color:var(--ink-soft)}
-.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.who-btn span{font-size:.85rem;color:var(--ink-soft);display:none;}
+.dot{width:12px;height:12px;border-radius:50%;flex:none;margin-top:4px}
 .dot.mica{background:var(--mica)} .dot.tati{background:var(--tati)}
+
 .pin-row{display:flex;gap:8px;margin-top:10px}
 .pin-row input{flex:1;min-width:0}
 
@@ -101,7 +98,7 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .mood[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--paper-2);font-weight:500}
 .hint{font-size:.83rem;color:var(--ink-soft);margin:6px 0 0}
 
-.entry{border-radius:var(--radius);border:1px solid var(--line);padding:18px 20px;background:var(--paper-2)}
+.entry{border-radius:var(--radius);border:1px solid var(--line);padding:18px 20px;background:var(--paper-2); position:relative;}
 .entry.mica{border-left:3px solid var(--mica)}
 .entry.tati{border-left:3px solid var(--tati)}
 .entry-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:12px}
@@ -112,6 +109,11 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .qa:last-child{margin-bottom:0}
 .qa .lbl{font-family:Newsreader,serif;font-style:italic;color:var(--ink-soft);font-size:.98rem;margin-bottom:2px}
 .qa .ans{font-family:Newsreader,serif;font-size:1.06rem;line-height:1.6;white-space:pre-wrap}
+
+/* DECORACIÓN PEQUEÑA AL FINAL DE LA ENTRADA */
+.decor{text-align:center; margin-top:20px; opacity:0.3;}
+.decor svg {width:20px; height:20px;}
+
 .moodchip{display:inline-block;font-size:.78rem;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--ink-soft)}
 .trbar{margin-top:12px}
 .tr{background:none;border:none;padding:0;color:var(--accent);font-size:.82rem;text-decoration:underline;text-underline-offset:3px}
@@ -164,17 +166,7 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 <div class="wrap" id="root"></div>
 
 <script>
-/* =======================================================================
-   1. CONFIG — the only part you need to edit
-   ======================================================================= */
 const CONFIG = {
-  // ================================================================
-  // COMPLETÁ ACÁ ABAJO
-  // Andá a console.firebase.google.com → creá un proyecto → Project settings
-  // → "Your apps" → ícono </> (Web app) → ahí te da un bloque de código
-  // que empieza con "const firebaseConfig = {...}". Copiá ESE objeto entero
-  // y pegalo reemplazando el de abajo.
-  // ================================================================
   firebase: {
     apiKey: "AIzaSyBAHsGhnU3nnjLijw-jG6pobPkl2wYgkaE",
     authDomain: "our-page-c2d7d.firebaseapp.com",
@@ -183,17 +175,12 @@ const CONFIG = {
     messagingSenderId: "427311237218",
     appId: "1:427311237218:web:5b7aa71bcd6100bea8293b"
   },
-
-  // true = login real con email + contraseña (necesita lo de arriba completo)
   useAuth: true,
-
-  since: "2026-04-01",        // the day you two started (YYYY-MM-DD)
-  defaultLang: "en",          // "en" | "es" | "ru"
-  translateApi: true,         // set false to hide the translate buttons
-  translateEmail: "",         // optional: your email raises the daily limit from 5.000 to 50.000 characters
-
+  since: "2026-04-01",
+  defaultLang: "en",
+  translateApi: true,
+  translateEmail: "",
   people: {
-    // 👉 el email exacto que le pusiste a cada usuaria en Firebase → Authentication → Users
     mica: { name: "Mica", email: "azorzoni@gmail.com", pin: "1111" },
     tati: { name: "Tati", email: "boldohonova01@mail.ru", pin: "2222" }
   },
@@ -203,130 +190,16 @@ const CONFIG = {
 const LANGS = { en: "English", es: "Español", ru: "Русский" };
 const LOCALE = { en: "en-GB", es: "es-AR", ru: "ru-RU" };
 
-/* =======================================================================
-   2. TEXTS — interface, questions, moods
-   ======================================================================= */
 const QUESTIONS = {
-  en: [
-    "How was your day, really?",
-    "What was the best thing that happened today?",
-    "What was hard today?",
-    "What do you need from me tomorrow? Something small.",
-    "Anything you wanted to tell me today and couldn't?"
-  ],
-  es: [
-    "¿Cómo estuvo tu día, de verdad?",
-    "¿Qué fue lo mejor que te pasó hoy?",
-    "¿Qué te costó hoy?",
-    "¿Qué necesitás de mí mañana? Algo chiquito.",
-    "¿Algo que quieras decirme y hoy no te salió por chat?"
-  ],
-  ru: [
-    "Как прошёл твой день, честно?",
-    "Что было самым хорошим за сегодня?",
-    "Что далось тяжело сегодня?",
-    "Что тебе нужно от меня завтра? Что-нибудь маленькое.",
-    "Есть что-то, что ты хотела сказать мне сегодня и не сказала?"
-  ]
+  en: ["How was your day, really?", "What was the best thing that happened today?", "What was hard today?", "What do you need from me tomorrow?", "Anything you wanted to tell me today and couldn't?"],
+  es: ["¿Cómo estuvo tu día, de verdad?", "¿Qué fue lo mejor que te pasó hoy?", "¿Qué te costó hoy?", "¿Qué necesitás de mí mañana?", "¿Algo que quieras decirme y hoy no te salió por chat?"],
+  ru: ["Как прошёл твой день, честно?", "Что было самым хорошим за сегодня?", "Что далось тяжело сегодня?", "Что тебе нужно от меня завтра?", "Есть что-то, что ты хотела сказать мне сегодня и не сказала?"]
 };
 
 const BONUS = {
-  en: [
-    "What song reminded you of me this week?",
-    "If we were together right now, what would we be doing?",
-    "Tell me something about your day you didn't tell anyone else.",
-    "What's the first thing you want to do when we see each other?",
-    "What do you miss about me today?",
-    "What did you learn about yourself this month?",
-    "Describe your day in three words.",
-    "What scared you this week?",
-    "What do you want our next Saturday to look like?",
-    "What do you want to thank me for?",
-    "What are you putting off?",
-    "If your day were a photo, what would it show?",
-    "What made you laugh today?",
-    "What do you need to let go of before sleeping?",
-    "What do you wish I knew without you having to say it?",
-    "When did you feel closest to me this week?",
-    "What part of the distance is hardest today?",
-    "One real plan of ours, a year from now.",
-    "What did you eat today? Tell me in detail.",
-    "What's exciting you lately?",
-    "What would you do tomorrow if nobody was watching?",
-    "Write me one line to read on a bad day.",
-    "What song would you put on if we danced in your room?",
-    "What do you want to ask me and never have?",
-    "What would change if we lived in the same city?",
-    "What calms you down when you're anxious?",
-    "What are you proud of this week?",
-    "What could we do together from far away this week?",
-    "Which version of you showed up today?",
-    "What do you want us to remember about this month?"
-  ],
-  es: [
-    "¿Qué canción te hizo acordar a mí esta semana?",
-    "Si estuviéramos juntas ahora mismo, ¿qué estaríamos haciendo?",
-    "Contame algo de tu día que no le contaste a nadie más.",
-    "¿Qué es lo primero que querés hacer cuando nos veamos?",
-    "¿Qué cosa mía extrañás hoy?",
-    "¿Qué aprendiste de vos misma este mes?",
-    "Describí tu día con tres palabras.",
-    "¿Qué te dio miedo esta semana?",
-    "¿Cómo querés que sea nuestro próximo sábado?",
-    "¿Qué me querés agradecer?",
-    "¿Qué estás postergando?",
-    "Si tu día fuera una foto, ¿qué se vería?",
-    "¿Qué te hizo reír hoy?",
-    "¿Qué necesitás soltar antes de dormir?",
-    "¿Qué te gustaría que yo supiera sin tener que decírmelo?",
-    "¿Cuándo te sentiste más cerca mío esta semana?",
-    "¿Qué te está costando de la distancia hoy?",
-    "Un plan nuestro, real, para dentro de un año.",
-    "¿Qué comiste hoy? Contámelo con detalle.",
-    "¿Qué te está emocionando últimamente?",
-    "¿Qué harías mañana si nadie te viera?",
-    "Escribime una sola frase para que la lea un día malo.",
-    "¿Qué canción pondrías si bailáramos en tu pieza?",
-    "¿Qué me querés preguntar y nunca preguntaste?",
-    "¿Qué cambiaría si viviéramos en la misma ciudad?",
-    "¿Qué te tranquiliza cuando estás ansiosa?",
-    "¿De qué estás orgullosa esta semana?",
-    "¿Qué podríamos hacer juntas a distancia esta semana?",
-    "¿Qué versión tuya salió hoy?",
-    "¿Qué querés que recordemos de este mes?"
-  ],
-  ru: [
-    "Какая песня напомнила тебе обо мне на этой неделе?",
-    "Если бы мы были вместе прямо сейчас, что бы мы делали?",
-    "Расскажи то из своего дня, о чём не рассказала никому другому.",
-    "Что ты хочешь сделать первым делом, когда мы увидимся?",
-    "По чему во мне ты скучаешь сегодня?",
-    "Что ты узнала о себе в этом месяце?",
-    "Опиши свой день тремя словами.",
-    "Что тебя напугало на этой неделе?",
-    "Каким ты хочешь видеть нашу следующую субботу?",
-    "За что ты хочешь сказать мне спасибо?",
-    "Что ты откладываешь?",
-    "Если бы твой день был фотографией, что было бы на ней?",
-    "Что тебя рассмешило сегодня?",
-    "Что нужно отпустить перед сном?",
-    "Что бы ты хотела, чтобы я знала без слов?",
-    "Когда на этой неделе ты чувствовала себя ближе всего ко мне?",
-    "Что сегодня тяжелее всего в расстоянии?",
-    "Один наш настоящий план на год вперёд.",
-    "Что ты сегодня ела? Расскажи подробно.",
-    "Что тебя вдохновляет в последнее время?",
-    "Что бы ты сделала завтра, если бы никто не видел?",
-    "Напиши мне одну фразу, чтобы прочитать в плохой день.",
-    "Какую песню ты бы включила, если бы мы танцевали у тебя в комнате?",
-    "О чём ты хочешь меня спросить и до сих пор не спросила?",
-    "Что бы изменилось, если бы мы жили в одном городе?",
-    "Что тебя успокаивает, когда тревожно?",
-    "Чем ты гордишься на этой неделе?",
-    "Что мы могли бы сделать вместе на расстоянии на этой неделе?",
-    "Какая версия тебя проявилась сегодня?",
-    "Что ты хочешь, чтобы мы запомнили об этом месяце?"
-  ]
+  en: ["What song reminded you of me this week?", "If we were together right now, what would we be doing?", "Tell me something about your day you didn't tell anyone else.", "What's the first thing you want to do when we see each other?", "What do you miss about me today?"],
+  es: ["¿Qué canción te hizo acordar a mí esta semana?", "Si estuviéramos juntas ahora mismo, ¿qué estaríamos haciendo?", "Contame algo de tu día que no le contaste a nadie más.", "¿Qué es lo primero que querés hacer cuando nos veamos?", "¿Qué cosa mía extrañás hoy?"],
+  ru: ["Какая песня напомнила тебе обо мне на этой неделе?", "Если бы мы были вместе прямо сейчас, что бы мы делали?", "Расскажи то из своего дня, о чём не рассказала никому другому.", "Что ты хочешь сделать первым делом, когда мы увидимся?", "По чему во мне ты скучаешь сегодня?"]
 };
 
 const MOODS = {
@@ -336,111 +209,18 @@ const MOODS = {
 };
 
 const UI = {
-  en: {
-    brand: "Our check-in",
-    tagline: "One check-in a day, both of us. Neither of you sees the other's answers until you write your own.",
-    yourKey: "Your key", enter: "Enter", wrongKey: "That's not the key. Try again.",
-    enteringAs: "Entering as {name}.", signOut: "Sign out",
-    yourPassword: "Your password", signIn: "Sign in", wrongPassword: "Wrong email or password.",
-    authError: "Couldn't reach the login server. Try again in a moment.", signingIn: "Signing in…",
-    tabToday: "Today", tabJournal: "Journal", tabUs: "Us",
-    localBanner: "Test mode: answers are saved on this device only. Connect the database so you can both see them.",
-    degradedBanner: "Couldn't reach the database, so you're in local mode.",
-    todayTitle: "Your check-in today", howFeel: "How are you feeling?",
-    writeHere: "Write whatever comes…", bonusHere: "Today's extra question, different every day.",
-    save: "Save my check-in", saveChanges: "Save changes",
-    editHint: "You can edit until midnight. After that the day is closed.",
-    yours: "Yours", hersLabel: "{name}'s", editToday: "Edit today",
-    nextIn: "Tomorrow's questions open in {t}.",
-    notYet: "{name} hasn't checked in today yet. It'll show up here when she does.",
-    veil: "Write your check-in to read {name}'s.",
-    emptyJournal: "Nothing written yet. Day one starts today.",
-    commentHere: "Say something…", send: "Send",
-    daysTogether: "days together", streak: "days in a row", savedAnswers: "answers saved",
-    howWeAre: "How we're doing", moodSub: "Mood across the last {n} days with entries.",
-    moodEmpty: "Once there are check-ins, this fills up.",
-    thinking: "Thinking of you", notesSub: "Short notes, without waiting for the night.",
-    noteHere: "Something short, right now…", leave: "Leave", noNotes: "No notes yet.",
-    today: "Today", yesterday: "Yesterday", edited: "edited",
-    saved: "Check-in saved", changed: "Changes saved", noteSent: "She'll see it",
-    writeSomething: "Write at least one line.", saveFailed: "Couldn't save.",
-    translate: "Translate", original: "Show original", translating: "Translating…",
-    trFailed: "Translation isn't available right now.",
-    trNote: "Machine translation", language: "Language"
-  },
-  es: {
-    brand: "Nuestro check-in",
-    tagline: "Un check-in por día, las dos. Ninguna ve lo que escribió la otra hasta responder.",
-    yourKey: "Tu clave", enter: "Entrar", wrongKey: "Esa clave no es. Probá de nuevo.",
-    enteringAs: "Entrando como {name}.", signOut: "Salir",
-    yourPassword: "Tu contraseña", signIn: "Entrar", wrongPassword: "Email o contraseña incorrectos.",
-    authError: "No se pudo conectar con el servidor de acceso. Probá de nuevo en un momento.", signingIn: "Entrando…",
-    tabToday: "Hoy", tabJournal: "Diario", tabUs: "Nosotras",
-    localBanner: "Modo de prueba: las respuestas se guardan solo en este dispositivo. Conectá la base de datos para que las dos las vean.",
-    degradedBanner: "No se pudo conectar con la base de datos, así que estás en modo local.",
-    todayTitle: "Tu check-in de hoy", howFeel: "¿Cómo te sentís?",
-    writeHere: "Escribí lo que salga…", bonusHere: "La pregunta extra de hoy, distinta cada día.",
-    save: "Guardar mi check-in", saveChanges: "Guardar cambios",
-    editHint: "Se puede editar hasta las 00:00. Después el día queda cerrado.",
-    yours: "Lo tuyo", hersLabel: "Lo de {name}", editToday: "Editar lo de hoy",
-    nextIn: "Las preguntas de mañana se abren en {t}.",
-    notYet: "{name} todavía no hizo el check-in de hoy. Cuando lo haga, aparece acá.",
-    veil: "Respondé tu check-in para leer lo de {name}.",
-    emptyJournal: "Todavía no hay nada escrito. El primer día empieza hoy.",
-    commentHere: "Comentar algo…", send: "Enviar",
-    daysTogether: "días juntas", streak: "días seguidos", savedAnswers: "respuestas guardadas",
-    howWeAre: "Cómo venimos", moodSub: "Ánimo de los últimos {n} días con registro.",
-    moodEmpty: "Cuando haya check-ins, esto se llena.",
-    thinking: "Pensé en vos", notesSub: "Notitas sueltas, sin esperar a la noche.",
-    noteHere: "Algo corto, ahora mismo…", leave: "Dejar", noNotes: "Todavía no hay notitas.",
-    today: "Hoy", yesterday: "Ayer", edited: "editado",
-    saved: "Check-in guardado", changed: "Cambios guardados", noteSent: "Le va a aparecer",
-    writeSomething: "Escribí aunque sea una línea.", saveFailed: "No se pudo guardar.",
-    translate: "Traducir", original: "Ver original", translating: "Traduciendo…",
-    trFailed: "La traducción no está disponible ahora.",
-    trNote: "Traducción automática", language: "Idioma"
-  },
-  ru: {
-    brand: "Наш чек-ин",
-    tagline: "Один чек-ин в день, обе. Никто не видит ответы другой, пока не напишет свои.",
-    yourKey: "Твой код", enter: "Войти", wrongKey: "Код не тот. Попробуй ещё раз.",
-    enteringAs: "Вход как {name}.", signOut: "Выйти",
-    yourPassword: "Твой пароль", signIn: "Войти", wrongPassword: "Неверный email или пароль.",
-    authError: "Не удалось подключиться к серверу входа. Попробуй ещё раз через момент.", signingIn: "Входим…",
-    tabToday: "Сегодня", tabJournal: "Дневник", tabUs: "Мы",
-    localBanner: "Тестовый режим: ответы сохраняются только на этом устройстве. Подключите базу данных, чтобы видеть их вдвоём.",
-    degradedBanner: "Не удалось подключиться к базе данных, поэтому включён локальный режим.",
-    todayTitle: "Твой чек-ин на сегодня", howFeel: "Как ты себя чувствуешь?",
-    writeHere: "Пиши что придёт…", bonusHere: "Дополнительный вопрос дня, каждый день новый.",
-    save: "Сохранить чек-ин", saveChanges: "Сохранить изменения",
-    editHint: "Можно редактировать до полуночи. Потом день закрывается.",
-    yours: "Твоё", hersLabel: "Её: {name}", editToday: "Изменить сегодняшнее",
-    nextIn: "Завтрашние вопросы откроются через {t}.",
-    notYet: "{name} ещё не сделала чек-ин сегодня. Как только сделает, появится здесь.",
-    veil: "Напиши свой чек-ин, чтобы прочитать ответы ({name}).",
-    emptyJournal: "Пока ничего не написано. Первый день начинается сегодня.",
-    commentHere: "Написать комментарий…", send: "Отправить",
-    daysTogether: "дней вместе", streak: "дней подряд", savedAnswers: "сохранённых ответов",
-    howWeAre: "Как у нас дела", moodSub: "Настроение за последние {n} дней с записями.",
-    moodEmpty: "Когда появятся чек-ины, здесь будет график.",
-    thinking: "Думаю о тебе", notesSub: "Короткие записки, не дожидаясь вечера.",
-    noteHere: "Что-нибудь короткое, прямо сейчас…", leave: "Оставить", noNotes: "Записок пока нет.",
-    today: "Сегодня", yesterday: "Вчера", edited: "изменено",
-    saved: "Чек-ин сохранён", changed: "Изменения сохранены", noteSent: "Она это увидит",
-    writeSomething: "Напиши хотя бы строчку.", saveFailed: "Не удалось сохранить.",
-    translate: "Перевести", original: "Показать оригинал", translating: "Перевожу…",
-    trFailed: "Перевод сейчас недоступен.",
-    trNote: "Машинный перевод", language: "Язык"
-  }
+  en: { brand: "Our check-in", tagline: "One check-in a day, both of us.", yourKey: "Your key", enter: "Enter", wrongKey: "Wrong key.", enteringAs: "Entering as {name}.", signOut: "Sign out", yourPassword: "Your password", signIn: "Sign in", wrongPassword: "Wrong email or password.", authError: "Couldn't reach server.", signingIn: "Signing in…", tabToday: "Today", tabJournal: "Journal", tabUs: "Us", localBanner: "Test mode.", degradedBanner: "Offline.", todayTitle: "Your check-in today", howFeel: "How are you feeling?", writeHere: "Write whatever comes…", bonusHere: "Today's extra question.", save: "Save", saveChanges: "Save changes", editHint: "Edit until UTC midnight.", yours: "Yours", hersLabel: "{name}'s", editToday: "Edit today", nextIn: "Next opens in {t}.", notYet: "{name} hasn't checked in.", veil: "Write your check-in to read {name}'s.", emptyJournal: "Nothing written yet.", commentHere: "Say something…", send: "Send", daysTogether: "days together", streak: "days in a row", savedAnswers: "answers saved", howWeAre: "How we're doing", moodSub: "Mood history.", moodEmpty: "No data.", thinking: "This made me think of you", notesSub: "Small things, songs, or moments.", noteHere: "A song, a verse, a thought...", leave: "Leave", noNotes: "No notes yet.", today: "Today", yesterday: "Yesterday", edited: "edited", saved: "Saved", changed: "Changes saved", noteSent: "Sent", writeSomething: "Write something.", saveFailed: "Failed.", translate: "Translate", original: "Show original", translating: "Translating…", trFailed: "Error", trNote: "Machine translation", language: "Language" },
+  es: { brand: "Nuestro check-in", tagline: "Un check-in por día, las dos.", yourKey: "Tu clave", enter: "Entrar", wrongKey: "Clave incorrecta.", enteringAs: "Entrando como {name}.", signOut: "Salir", yourPassword: "Tu contraseña", signIn: "Entrar", wrongPassword: "Email o contraseña incorrectos.", authError: "Error de conexión.", signingIn: "Entrando…", tabToday: "Hoy", tabJournal: "Diario", tabUs: "Nosotras", localBanner: "Modo prueba.", degradedBanner: "Sin conexión.", todayTitle: "Tu check-in de hoy", howFeel: "¿Cómo te sentís?", writeHere: "Escribí lo que salga…", bonusHere: "Pregunta extra de hoy.", save: "Guardar", saveChanges: "Guardar cambios", editHint: "Se puede editar hasta la medianoche UTC.", yours: "Lo tuyo", hersLabel: "Lo de {name}", editToday: "Editar", nextIn: "Mañana se abre en {t}.", notYet: "{name} todavía no hizo el check-in.", veil: "Respondé para leer a {name}.", emptyJournal: "Sin registros.", commentHere: "Comentar algo…", send: "Enviar", daysTogether: "días juntas", streak: "días seguidos", savedAnswers: "respuestas", howWeAre: "Cómo venimos", moodSub: "Ánimo histórico.", moodEmpty: "Sin datos.", thinking: "Esto me hizo acordar a vos", notesSub: "Detalles, canciones o momentos sueltos.", noteHere: "Una canción, un verso, un pensamiento...", leave: "Dejar", noNotes: "Todavía no hay nada.", today: "Hoy", yesterday: "Ayer", edited: "editado", saved: "Guardado", changed: "Cambios guardados", noteSent: "Enviado", writeSomething: "Escribí algo.", saveFailed: "Error al guardar.", translate: "Traducir", original: "Original", translating: "Traduciendo…", trFailed: "Error", trNote: "Traducción automática", language: "Idioma" },
+  ru: { brand: "Наш чек-ин", tagline: "Один чек-ин в день, обе.", yourKey: "Твой код", enter: "Войти", wrongKey: "Неверный код.", enteringAs: "Вход как {name}.", signOut: "Выйти", yourPassword: "Твой пароль", signIn: "Войти", wrongPassword: "Неверный email/пароль.", authError: "Ошибка подключения.", signingIn: "Входим…", tabToday: "Сегодня", tabJournal: "Дневник", tabUs: "Мы", localBanner: "Тестовый режим.", degradedBanner: "Офлайн.", todayTitle: "Твой чек-ин", howFeel: "Как ты себя чувствуешь?", writeHere: "Пиши что придёт…", bonusHere: "Дополнительный вопрос.", save: "Сохранить", saveChanges: "Изменить", editHint: "Можно редактировать до полуночи UTC.", yours: "Твоё", hersLabel: "Её: {name}", editToday: "Изменить", nextIn: "Завтра откроется через {t}.", notYet: "{name} ещё не сделала чек-ин.", veil: "Напиши чтобы прочитать.", emptyJournal: "Пусто.", commentHere: "Написать…", send: "Отправить", daysTogether: "дней вместе", streak: "дней подряд", savedAnswers: "ответов", howWeAre: "Как у нас дела", moodSub: "История настроения.", moodEmpty: "Нет данных.", thinking: "Это напомнило мне о тебе", notesSub: "Песни, стихи или моменты.", noteHere: "Песня, стих, мысль...", leave: "Оставить", noNotes: "Пока нет.", today: "Сегодня", yesterday: "Вчера", edited: "изменено", saved: "Сохранено", changed: "Изменено", noteSent: "Отправлено", writeSomething: "Напиши что-то.", saveFailed: "Ошибка.", translate: "Перевести", original: "Оригинал", translating: "Перевожу…", trFailed: "Ошибка", trNote: "Машинный перевод", language: "Язык" }
 };
 
-/* =======================================================================
-   3. helpers
-   ======================================================================= */
 const $ = (s, el = document) => el.querySelector(s);
 const root = $("#root");
 const pad = n => String(n).padStart(2, "0");
-const todayKey = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; };
+
+// SINCRONIZACIÓN UTC: Ambas comparten exactamente el mismo momento del día
+const todayKey = () => { const d = new Date(); return `${d.getUTCFullYear()}-${pad(d.getUTCMonth()+1)}-${pad(d.getUTCDate())}`; };
+
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const other = who => who === "mica" ? "tati" : "mica";
 const nameOf = who => CONFIG.people[who]?.name ?? who;
@@ -449,72 +229,42 @@ const ls = { get(k){ try { return localStorage.getItem(k); } catch { return null
              set(k,v){ try { localStorage.setItem(k,v); } catch {} },
              del(k){ try { localStorage.removeItem(k); } catch {} } };
 
-const state = { store: null, me: null, userId: null, lang: CONFIG.defaultLang, tab: "hoy",
-                entries: [], comments: [], notes: [], editing: false, degraded: false,
-                tx: {}, txOn: {}, langOpen: false };
+const state = { store: null, me: null, userId: null, lang: CONFIG.defaultLang, tab: "hoy", entries: [], comments: [], notes: [], editing: false, degraded: false, tx: {}, txOn: {}, langOpen: false };
 
-const t = (k, vars) => {
-  let s = (UI[state.lang] || UI.en)[k] || k;
-  if (vars) for (const v in vars) s = s.replace(`{${v}}`, vars[v]);
-  return s;
-};
+// INICIALIZAR TEMA
+const savedTheme = ls.get("ci_theme") || "light";
+document.documentElement.setAttribute("data-theme", savedTheme);
+
+const t = (k, vars) => { let s = (UI[state.lang] || UI.en)[k] || k; if (vars) for (const v in vars) s = s.replace(`{${v}}`, vars[v]); return s; };
 const questions = () => QUESTIONS[state.lang] || QUESTIONS.en;
 const moods = () => MOODS[state.lang] || MOODS.en;
 
-function bonusFor(key){
-  const [y,m,d] = key.split("-").map(Number);
-  const list = BONUS[state.lang] || BONUS.en;
-  return list[Math.floor(Date.UTC(y, m-1, d) / 86400000) % list.length];
-}
-function prettyDate(key){
-  const [y,m,d] = key.split("-").map(Number);
-  const s = new Date(y, m-1, d).toLocaleDateString(LOCALE[state.lang], { weekday:"long", day:"numeric", month:"long" });
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
-function dayTitle(key){
-  if (key === todayKey()) return t("today");
-  const d = new Date(); d.setDate(d.getDate()-1);
-  if (key === `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`) return t("yesterday");
-  return prettyDate(key);
-}
+function bonusFor(key){ const [y,m,d] = key.split("-").map(Number); const list = BONUS[state.lang] || BONUS.en; return list[Math.floor(Date.UTC(y, m-1, d) / 86400000) % list.length]; }
+function prettyDate(key){ const [y,m,d] = key.split("-").map(Number); const s = new Date(Date.UTC(y, m-1, d)).toLocaleDateString(LOCALE[state.lang], { weekday:"long", day:"numeric", month:"long", timeZone:"UTC" }); return s.charAt(0).toUpperCase() + s.slice(1); }
+function dayTitle(key){ if (key === todayKey()) return t("today"); return prettyDate(key); }
 const timeOf = iso => { try { return new Date(iso).toLocaleTimeString(LOCALE[state.lang], {hour:"2-digit", minute:"2-digit"}); } catch { return ""; } };
+
+// CUENTA REGRESIVA UTC
 function countdown(){
-  const now = new Date(), next = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
+  const now = new Date();
+  const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()+1));
   const ms = next - now;
   return `${Math.floor(ms/3600000)}h ${Math.floor(ms%3600000/60000)}m`;
 }
-function toast(msg){
-  const el = document.createElement("div");
-  el.className = "toast"; el.textContent = msg; document.body.appendChild(el);
-  setTimeout(() => el.remove(), 2600);
-}
+function toast(msg){ const el = document.createElement("div"); el.className = "toast"; el.textContent = msg; document.body.appendChild(el); setTimeout(() => el.remove(), 2600); }
 
-/* =======================================================================
-   4. machine translation (MyMemory, free, no key)
-   ======================================================================= */
 let tcache = {};
 try { tcache = JSON.parse(ls.get("ci_tcache") || "{}"); } catch {}
-
-const enc = new TextEncoder();
-const bytes = s => enc.encode(s).length;
-
-// the API takes 500 bytes per request, and Cyrillic costs 2 bytes per letter
+const enc = new TextEncoder(); const bytes = s => enc.encode(s).length;
 function chunkText(s, maxBytes = 460){
-  const parts = [];
-  let cur = "";
-  for (const w of s.split(/(\s+)/)){
-    if (bytes(cur + w) > maxBytes && cur){ parts.push(cur); cur = w.trimStart(); }
-    else cur += w;
-  }
+  const parts = []; let cur = "";
+  for (const w of s.split(/(\s+)/)){ if (bytes(cur + w) > maxBytes && cur){ parts.push(cur); cur = w.trimStart(); } else cur += w; }
   if (cur.trim()) parts.push(cur);
-  // a single word longer than the limit: cut it hard
   const safe = [];
   for (const p of parts){
     if (bytes(p) <= maxBytes){ safe.push(p); continue; }
     let buf = "";
-    for (const ch of p){
-      if (bytes(buf + ch) > maxBytes){ safe.push(buf); buf = ch; } else buf += ch;
-    }
+    for (const ch of p){ if (bytes(buf + ch) > maxBytes){ safe.push(buf); buf = ch; } else buf += ch; }
     if (buf) safe.push(buf);
   }
   return safe.length ? safe : [s];
@@ -522,22 +272,17 @@ function chunkText(s, maxBytes = 460){
 
 async function translate(text, from, to){
   if (!text || !text.trim() || from === to) return text;
-  const key = `${from}|${to}|${text}`;
-  if (tcache[key]) return tcache[key];
+  const key = `${from}|${to}|${text}`; if (tcache[key]) return tcache[key];
   const de = CONFIG.translateEmail ? `&de=${encodeURIComponent(CONFIG.translateEmail)}` : "";
   const out = [];
   for (const piece of chunkText(text)){
-    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(piece)}&langpair=${from}|${to}${de}`;
-    const res = await fetch(url);
+    const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(piece)}&langpair=${from}|${to}${de}`);
     const json = await res.json();
     const got = json && json.responseData && json.responseData.translatedText;
-    if (!got || /MYMEMORY WARNING|QUERY LENGTH|INVALID/i.test(got)) throw new Error("translation failed");
+    if (!got || /MYMEMORY WARNING/i.test(got)) throw new Error("translation failed");
     out.push(got);
   }
-  const joined = out.join(" ");
-  tcache[key] = joined;
-  ls.set("ci_tcache", JSON.stringify(tcache));
-  return joined;
+  const joined = out.join(" "); tcache[key] = joined; ls.set("ci_tcache", JSON.stringify(tcache)); return joined;
 }
 
 async function translateEntry(e){
@@ -545,100 +290,57 @@ async function translateEntry(e){
   const answers = await Promise.all((e.answers || []).map(a => translate(a, from, to)));
   const bonus = await translate(e.bonus || "", from, to);
   const cmts = {};
-  for (const c of state.comments.filter(c => c.entry_id === e.id))
-    cmts[c.id] = await translate(c.text, c.lang || from, to);
+  for (const c of state.comments.filter(c => c.entry_id === e.id)) cmts[c.id] = await translate(c.text, c.lang || from, to);
   state.tx[e.id] = { lang: to, answers, bonus, comments: cmts };
 }
 
-/* =======================================================================
-   5. storage
-   ======================================================================= */
 const local = {
-  mode: "local",
-  read(k){ try { return JSON.parse(ls.get(k) || "[]"); } catch { return []; } },
-  write(k, v){ ls.set(k, JSON.stringify(v)); },
-  async init(){ return true; },
-  async entries(){ return this.read("ci_entries"); },
-  async saveEntry(e){ const all = this.read("ci_entries").filter(x => x.id !== e.id); all.push(e); this.write("ci_entries", all); },
-  async comments(){ return this.read("ci_comments"); },
-  async addComment(c){ const all = this.read("ci_comments"); all.push(c); this.write("ci_comments", all); },
-  async notes(){ return this.read("ci_notes"); },
-  async addNote(n){ const all = this.read("ci_notes"); all.push(n); this.write("ci_notes", all); }
+  mode: "local", read(k){ try { return JSON.parse(ls.get(k) || "[]"); } catch { return []; } }, write(k, v){ ls.set(k, JSON.stringify(v)); },
+  async init(){ return true; }, async entries(){ return this.read("ci_entries"); }, async saveEntry(e){ const all = this.read("ci_entries").filter(x => x.id !== e.id); all.push(e); this.write("ci_entries", all); },
+  async comments(){ return this.read("ci_comments"); }, async addComment(c){ const all = this.read("ci_comments"); all.push(c); this.write("ci_comments", all); },
+  async notes(){ return this.read("ci_notes"); }, async addNote(n){ const all = this.read("ci_notes"); all.push(n); this.write("ci_notes", all); }
 };
 
-function loadScript(src){
-  return new Promise((res, rej) => {
-    const s = document.createElement("script");
-    s.src = src; s.onload = res; s.onerror = () => rej(new Error("script"));
-    document.head.appendChild(s);
-  });
-}
+function loadScript(src){ return new Promise((res, rej) => { const s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = () => rej(new Error("script")); document.head.appendChild(s); }); }
 
 const remote = {
   mode: "remote", db: null, authRef: null,
   async init(){
-    await Promise.all([
-      loadScript("https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"),
-      loadScript("https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"),
-      loadScript("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js")
-    ]);
-    firebase.initializeApp(CONFIG.firebase);
-    this.db = firebase.firestore();
-    this.authRef = firebase.auth();
-    return true;
+    await Promise.all([ loadScript("https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"), loadScript("https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"), loadScript("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js") ]);
+    firebase.initializeApp(CONFIG.firebase); this.db = firebase.firestore(); this.authRef = firebase.auth(); return true;
   },
-  async getSession(){
-    return new Promise(res => {
-      const unsub = this.authRef.onAuthStateChanged(user => { unsub(); res(user); });
-    });
-  },
-  async signIn(email, password){
-    const cred = await this.authRef.signInWithEmailAndPassword(email, password);
-    return cred.user;
-  },
+  async getSession(){ return new Promise(res => { const unsub = this.authRef.onAuthStateChanged(user => { unsub(); res(user); }); }); },
+  async signIn(email, password){ const cred = await this.authRef.signInWithEmailAndPassword(email, password); return cred.user; },
   async signOut(){ await this.authRef.signOut(); },
-  async entries(){ const s = await this.db.collection("entries").get(); return s.docs.map(d => d.data()); },
-  async saveEntry(e){ await this.db.collection("entries").doc(e.id).set(e, { merge: true }); },
-  async comments(){ const s = await this.db.collection("comments").get(); return s.docs.map(d => d.data()); },
-  async addComment(c){ await this.db.collection("comments").doc(c.id).set(c); },
-  async notes(){ const s = await this.db.collection("notes").get(); return s.docs.map(d => d.data()); },
-  async addNote(n){ await this.db.collection("notes").doc(n.id).set(n); }
+  async entries(){ const s = await this.db.collection("entries").get(); return s.docs.map(d => d.data()); }, async saveEntry(e){ await this.db.collection("entries").doc(e.id).set(e, { merge: true }); },
+  async comments(){ const s = await this.db.collection("comments").get(); return s.docs.map(d => d.data()); }, async addComment(c){ await this.db.collection("comments").doc(c.id).set(c); },
+  async notes(){ const s = await this.db.collection("notes").get(); return s.docs.map(d => d.data()); }, async addNote(n){ await this.db.collection("notes").doc(n.id).set(n); }
 };
 
-async function refresh(){
-  const [e, c, n] = await Promise.all([state.store.entries(), state.store.comments(), state.store.notes()]);
-  state.entries = e; state.comments = c; state.notes = n;
-}
+async function refresh(){ const [e, c, n] = await Promise.all([state.store.entries(), state.store.comments(), state.store.notes()]); state.entries = e; state.comments = c; state.notes = n; }
 const entryOf = (date, who) => state.entries.find(x => x.date === date && x.author === who);
 const withAuthor = obj => state.userId ? { ...obj, author_id: state.userId } : obj;
 
-/* =======================================================================
-   6. views
-   ======================================================================= */
 function langHTML(){
   return `
     <div class="lang">
-      <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="${state.langOpen}" title="${esc(t("language"))}">
+      <button class="theme-btn" id="themeBtn" title="Tema">
+        <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="lang-btn" id="langBtn" aria-expanded="${state.langOpen}">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg>
         ${esc(LANGS[state.lang])}
       </button>
-      ${state.langOpen ? `<div class="lang-menu">
-        ${Object.keys(LANGS).map(l => `<button data-lang="${l}" aria-current="${l === state.lang}">${esc(LANGS[l])}</button>`).join("")}
-      </div>` : ""}
+      ${state.langOpen ? `<div class="lang-menu">${Object.keys(LANGS).map(l => `<button data-lang="${l}">${esc(LANGS[l])}</button>`).join("")}</div>` : ""}
     </div>`;
 }
 
 function renderLogin(){
-  const key = todayKey();
-  const authMode = CONFIG.useAuth && state.store.mode === "remote";
+  const key = todayKey(); const authMode = CONFIG.useAuth && state.store.mode === "remote";
   root.innerHTML = `
     <section class="login">
       <div class="login-top">${langHTML()}</div>
-      <div>
-        <p class="eyebrow">${esc(prettyDate(key))}</p>
-        <h1>${esc(questions()[0])}</h1>
-        <p class="sub">${esc(t("tagline"))}</p>
-      </div>
+      <div><p class="eyebrow">${esc(prettyDate(key))}</p><h1>${esc(questions()[0])}</h1><p class="sub">${esc(t("tagline"))}</p></div>
       <div class="who">
         ${Object.keys(CONFIG.people).map(k => `
           <button class="who-btn" data-who="${k}">
@@ -647,42 +349,19 @@ function renderLogin(){
           </button>`).join("")}
       </div>
       <form class="pin-row hidden" id="pinForm">
-        <input type="password" id="pin" autocomplete="${authMode ? "current-password" : "off"}"
-          ${authMode ? "" : 'inputmode="numeric"'}
-          placeholder="${esc(authMode ? t("yourPassword") : t("yourKey"))}">
+        <input type="password" id="pin" autocomplete="${authMode ? "current-password" : "off"}" placeholder="${esc(authMode ? t("yourPassword") : t("yourKey"))}">
         <button class="btn" type="submit">${esc(authMode ? t("signIn") : t("enter"))}</button>
       </form>
       <p class="hint" id="pinHint"></p>
     </section>`;
-
-  wireLang(renderLogin);
+  wireUI(renderLogin);
   let picked = null;
-  root.querySelectorAll(".who-btn").forEach(b => b.addEventListener("click", () => {
-    picked = b.dataset.who;
-    $("#pinForm").classList.remove("hidden");
-    $("#pinHint").textContent = t("enteringAs", { name: nameOf(picked) });
-    $("#pin").focus();
-  }));
+  root.querySelectorAll(".who-btn").forEach(b => b.addEventListener("click", () => { picked = b.dataset.who; $("#pinForm").classList.remove("hidden"); $("#pinHint").textContent = t("enteringAs", { name: nameOf(picked) }); $("#pin").focus(); }));
   $("#pinForm").addEventListener("submit", async ev => {
-    ev.preventDefault();
-    if (!picked) return;
-    const val = $("#pin").value;
-
-    if (!authMode){
-      if (val.trim() !== CONFIG.people[picked].pin){ $("#pinHint").textContent = t("wrongKey"); return; }
-      state.me = picked; ls.set("ci_me", picked); start();
-      return;
-    }
-
+    ev.preventDefault(); if (!picked) return; const val = $("#pin").value;
+    if (!authMode){ if (val.trim() !== CONFIG.people[picked].pin){ $("#pinHint").textContent = t("wrongKey"); return; } state.me = picked; ls.set("ci_me", picked); start(); return; }
     $("#pinHint").textContent = t("signingIn");
-    try {
-      const user = await remote.signIn(CONFIG.people[picked].email, val);
-      state.me = picked; state.userId = user.uid;
-      await start();
-    } catch (err) {
-      const wrong = /wrong-password|user-not-found|invalid-credential|invalid-email/i.test(err.code || err.message || "");
-      $("#pinHint").textContent = wrong ? t("wrongPassword") : t("authError");
-    }
+    try { const user = await remote.signIn(CONFIG.people[picked].email, val); state.me = picked; state.userId = user.uid; await start(); } catch { $("#pinHint").textContent = t("wrongPassword"); }
   });
 }
 
@@ -710,21 +389,12 @@ function formHTML(prefill){
       <p class="eyebrow">${esc(prettyDate(key))}</p>
       <h2 style="font-size:1.5rem;margin:4px 0 20px">${esc(t("todayTitle"))}</h2>
       <form id="checkin">
-        <div class="field">
-          <p class="q">${esc(t("howFeel"))}</p>
-          <div class="moods">
-            ${moods().map((m,i) => `<button type="button" class="mood" data-m="${i}" aria-pressed="${prefill && prefill.mood===i}">${esc(m)}</button>`).join("")}
-          </div>
+        <div class="field"><p class="q">${esc(t("howFeel"))}</p>
+          <div class="moods">${moods().map((m,i) => `<button type="button" class="mood" data-m="${i}" aria-pressed="${prefill && prefill.mood===i}">${esc(m)}</button>`).join("")}</div>
         </div>
         ${questions().map((q,i) => `
-          <div class="field">
-            <p class="q">${esc(q)}</p>
-            <textarea name="q${i}" placeholder="${esc(t("writeHere"))}">${esc(prefill?.answers?.[i] || "")}</textarea>
-          </div>`).join("")}
-        <div class="field bonus">
-          <p class="q">${esc(bonusFor(key))}</p>
-          <textarea name="bonus" placeholder="${esc(t("bonusHere"))}">${esc(prefill?.bonus || "")}</textarea>
-        </div>
+          <div class="field"><p class="q">${esc(q)}</p><textarea name="q${i}" placeholder="${esc(t("writeHere"))}">${esc(prefill?.answers?.[i] || "")}</textarea></div>`).join("")}
+        <div class="field bonus"><p class="q">${esc(bonusFor(key))}</p><textarea name="bonus" placeholder="${esc(t("bonusHere"))}">${esc(prefill?.bonus || "")}</textarea></div>
         <button class="btn" type="submit">${esc(prefill ? t("saveChanges") : t("save"))}</button>
         <p class="hint">${esc(t("editHint"))}</p>
       </form>
@@ -733,30 +403,18 @@ function formHTML(prefill){
 
 function entryHTML(e, opts = {}){
   const showTx = state.txOn[e.id] && state.tx[e.id] && state.tx[e.id].lang === state.lang;
-  const src = showTx ? state.tx[e.id] : e;
-  const qs = questions();
-  const canTranslate = CONFIG.translateApi && (e.lang || "es") !== state.lang;
-
+  const src = showTx ? state.tx[e.id] : e; const qs = questions(); const canTranslate = CONFIG.translateApi && (e.lang || "es") !== state.lang;
   const body = `
     <div class="entry ${e.author}">
-      <div class="entry-head">
-        <span class="author ${e.author}">${esc(nameOf(e.author))}</span>
-        <span class="stamp">${timeOf(e.created_at)}${e.edited ? " · " + esc(t("edited")) : ""}</span>
-      </div>
+      <div class="entry-head"><span class="author ${e.author}">${esc(nameOf(e.author))}</span><span class="stamp">${timeOf(e.created_at)}${e.edited ? " · " + esc(t("edited")) : ""}</span></div>
       ${typeof e.mood === "number" ? `<p class="moodchip">${esc(moods()[e.mood])}</p>` : ""}
-      ${qs.map((q,i) => (src.answers?.[i] || "").trim()
-        ? `<div class="qa"><div class="lbl">${esc(q)}</div><div class="ans">${esc(src.answers[i])}</div></div>` : "").join("")}
+      ${qs.map((q,i) => (src.answers?.[i] || "").trim() ? `<div class="qa"><div class="lbl">${esc(q)}</div><div class="ans">${esc(src.answers[i])}</div></div>` : "").join("")}
       ${(src.bonus || "").trim() ? `<div class="qa"><div class="lbl">${esc(bonusFor(e.date))}</div><div class="ans">${esc(src.bonus)}</div></div>` : ""}
-      ${canTranslate ? `<div class="trbar">
-        <button class="tr" data-tr="${e.id}">${esc(showTx ? t("original") : t("translate"))}</button>
-        ${showTx ? `<div class="trnote">${esc(t("trNote"))}</div>` : ""}
-      </div>` : ""}
-      ${opts.reactable
-        ? `<div class="reacts">${CONFIG.reactions.map(r => `<button class="react" data-entry="${e.id}" data-r="${r}" aria-pressed="${(e.reactions||{})[state.me]===r}">${r}</button>`).join("")}</div>`
-        : (e.reactions && Object.keys(e.reactions).length ? `<div class="reacts">${Object.values(e.reactions).map(r => `<span class="react">${r}</span>`).join("")}</div>` : "")}
+      ${canTranslate ? `<div class="trbar"><button class="tr" data-tr="${e.id}">${esc(showTx ? t("original") : t("translate"))}</button>${showTx ? `<div class="trnote">${esc(t("trNote"))}</div>` : ""}</div>` : ""}
+      ${opts.reactable ? `<div class="reacts">${CONFIG.reactions.map(r => `<button class="react" data-entry="${e.id}" data-r="${r}" aria-pressed="${(e.reactions||{})[state.me]===r}">${r}</button>`).join("")}</div>` : (e.reactions && Object.keys(e.reactions).length ? `<div class="reacts">${Object.values(e.reactions).map(r => `<span class="react">${r}</span>`).join("")}</div>` : "")}
       ${opts.thread === false ? "" : threadHTML(e.id, showTx ? state.tx[e.id].comments : null)}
+      <div class="decor"><svg viewBox="0 0 24 24" fill="var(--line)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
     </div>`;
-
   if (!opts.veiled) return body;
   return `<div class="veil">${body}<div class="veil-msg">${esc(opts.veilMsg)}</div></div>`;
 }
@@ -765,257 +423,111 @@ function threadHTML(entryId, txMap){
   const list = state.comments.filter(c => c.entry_id === entryId).sort((a,b) => a.created_at.localeCompare(b.created_at));
   return `
     <div class="thread">
-      ${list.map(c => `<div class="msg ${c.author}"><b>${esc(nameOf(c.author))}</b> ${esc(txMap && txMap[c.id] ? txMap[c.id] : c.text)}<span class="t">${timeOf(c.created_at)}</span></div>`).join("")}
-      <form class="thread-form" data-entry="${entryId}">
-        <input type="text" placeholder="${esc(t("commentHere"))}" maxlength="400">
-        <button class="btn btn-sm" type="submit">${esc(t("send"))}</button>
-      </form>
+      ${list.map(c => `<div class="msg ${c.author}"><b>${esc(nameOf(c.author))}</b>${esc(txMap && txMap[c.id] ? txMap[c.id] : c.text)}<span class="t">${timeOf(c.created_at)}</span></div>`).join("")}
+      <form class="thread-form" data-entry="${entryId}"><input type="text" placeholder="${esc(t("commentHere"))}" maxlength="400"><button class="btn btn-sm" type="submit">${esc(t("send"))}</button></form>
     </div>`;
 }
 
 function viewHoy(){
-  const key = todayKey();
-  const mine = entryOf(key, state.me), hers = entryOf(key, other(state.me));
+  const key = todayKey(); const mine = entryOf(key, state.me), hers = entryOf(key, other(state.me));
   if (!mine || state.editing) return formHTML(state.editing ? mine : null);
   return `
-    <div class="day">
-      <div class="day-label">${esc(t("yours"))}</div>
-      ${entryHTML(mine)}
-      <p class="hint" style="margin-top:10px">${esc(t("nextIn", { t: countdown() }))}
-        <button class="btn btn-ghost btn-sm" id="editBtn">${esc(t("editToday"))}</button></p>
+    <div class="day"><div class="day-label">${esc(t("yours"))}</div>${entryHTML(mine)}
+      <p class="hint" style="margin-top:10px">${esc(t("nextIn", { t: countdown() }))} <button class="btn btn-ghost btn-sm" id="editBtn">${esc(t("editToday"))}</button></p>
     </div>
-    <div class="day">
-      <div class="day-label">${esc(t("hersLabel", { name: nameOf(other(state.me)) }))}</div>
-      ${hers ? `<div class="revealed">${entryHTML(hers, { reactable: true })}</div>`
-             : `<div class="card"><p class="empty">${esc(t("notYet", { name: nameOf(other(state.me)) }))}</p></div>`}
+    <div class="day"><div class="day-label">${esc(t("hersLabel", { name: nameOf(other(state.me)) }))}</div>
+      ${hers ? `<div class="revealed">${entryHTML(hers, { reactable: true })}</div>` : `<div class="card"><p class="empty">${esc(t("notYet", { name: nameOf(other(state.me)) }))}</p></div>`}
     </div>`;
 }
 
 function viewDiario(){
-  const key = todayKey();
-  const dates = [...new Set(state.entries.map(e => e.date))].sort().reverse();
+  const key = todayKey(); const dates = [...new Set(state.entries.map(e => e.date))].sort().reverse();
   if (!dates.length) return `<div class="card"><p class="empty">${esc(t("emptyJournal"))}</p></div>`;
   return dates.map(d => {
-    const mine = entryOf(d, state.me), hers = entryOf(d, other(state.me));
-    const locked = d === key && !mine;
-    const cards = [];
+    const mine = entryOf(d, state.me), hers = entryOf(d, other(state.me)); const locked = d === key && !mine; const cards = [];
     if (mine) cards.push(entryHTML(mine));
-    if (hers) cards.push(entryHTML(hers, {
-      reactable: !locked, thread: !locked, veiled: locked,
-      veilMsg: t("veil", { name: nameOf(other(state.me)) })
-    }));
-    return `<div class="day">
-      <div class="day-label">${esc(dayTitle(d))}</div>
-      <div class="pair ${cards.length === 2 ? "two" : ""}">${cards.join("")}</div>
-    </div>`;
+    if (hers) cards.push(entryHTML(hers, { reactable: !locked, thread: !locked, veiled: locked, veilMsg: t("veil", { name: nameOf(other(state.me)) }) }));
+    return `<div class="day"><div class="day-label">${esc(dayTitle(d))}</div><div class="pair ${cards.length === 2 ? "two" : ""}">${cards.join("")}</div></div>`;
   }).join("");
 }
 
 function viewNosotras(){
-  const since = new Date(CONFIG.since + "T00:00:00");
-  const together = Math.max(0, Math.round((new Date() - since) / 86400000));
+  const since = new Date(CONFIG.since + "T00:00:00Z"); const together = Math.max(0, Math.round((new Date() - since) / 86400000));
   const dates = [...new Set(state.entries.map(e => e.date))].sort();
-
-  let streak = 0;
-  const d = new Date();
-  if (!(entryOf(todayKey(), "mica") && entryOf(todayKey(), "tati"))) d.setDate(d.getDate() - 1);
-  for (;;){
-    const k = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-    if (entryOf(k, "mica") && entryOf(k, "tati")){ streak++; d.setDate(d.getDate() - 1); } else break;
-  }
-
-  const last = dates.slice(-14);
-  const h = e => e && typeof e.mood === "number" ? 12 + e.mood * 14 : 0;
-  const bars = last.map(k => {
-    const a = entryOf(k, "mica"), b = entryOf(k, "tati");
-    return `<div class="barcol">${a ? `<div class="bar mica" style="height:${h(a)}%"></div>` : ""}${b ? `<div class="bar tati" style="height:${h(b)}%"></div>` : ""}</div>`;
-  }).join("");
-
+  let streak = 0; const d = new Date(); if (!(entryOf(todayKey(), "mica") && entryOf(todayKey(), "tati"))) d.setUTCDate(d.getUTCDate() - 1);
+  for (;;){ const k = `${d.getUTCFullYear()}-${pad(d.getUTCMonth()+1)}-${pad(d.getUTCDate())}`; if (entryOf(k, "mica") && entryOf(k, "tati")){ streak++; d.setUTCDate(d.getUTCDate() - 1); } else break; }
+  const last = dates.slice(-14); const h = e => e && typeof e.mood === "number" ? 12 + e.mood * 14 : 0;
+  const bars = last.map(k => { const a = entryOf(k, "mica"), b = entryOf(k, "tati"); return `<div class="barcol">${a ? `<div class="bar mica" style="height:${h(a)}%"></div>` : ""}${b ? `<div class="bar tati" style="height:${h(b)}%"></div>` : ""}</div>`; }).join("");
   const notes = [...state.notes].sort((a,b) => b.created_at.localeCompare(a.created_at)).slice(0, 30);
-
   return `
     <div class="stats">
       <div class="stat"><span class="n">${together}</span><span class="l">${esc(t("daysTogether"))}</span></div>
       <div class="stat"><span class="n">${streak}</span><span class="l">${esc(t("streak"))}</span></div>
       <div class="stat"><span class="n">${state.entries.length}</span><span class="l">${esc(t("savedAnswers"))}</span></div>
     </div>
-    <div class="card" style="margin-bottom:16px">
-      <h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("howWeAre"))}</h3>
-      <p class="hint" style="margin:0 0 8px">${esc(t("moodSub", { n: last.length }))}</p>
-      ${last.length ? `<div class="bars">${bars}</div>
-        <div class="legend"><span><i style="background:var(--mica)"></i>${esc(nameOf("mica"))}</span><span><i style="background:var(--tati)"></i>${esc(nameOf("tati"))}</span></div>`
-      : `<p class="empty">${esc(t("moodEmpty"))}</p>`}
+    <div class="card" style="margin-bottom:16px"><h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("howWeAre"))}</h3><p class="hint" style="margin:0 0 8px">${esc(t("moodSub", { n: last.length }))}</p>
+      ${last.length ? `<div class="bars">${bars}</div><div class="legend"><span><i style="background:var(--mica)"></i>${esc(nameOf("mica"))}</span><span><i style="background:var(--tati)"></i>${esc(nameOf("tati"))}</span></div>` : `<p class="empty">${esc(t("moodEmpty"))}</p>`}
     </div>
     <div class="card">
       <h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("thinking"))}</h3>
       <p class="hint" style="margin:0 0 12px">${esc(t("notesSub"))}</p>
-      <form id="noteForm" class="thread-form">
-        <input type="text" id="noteText" maxlength="240" placeholder="${esc(t("noteHere"))}">
-        <button class="btn btn-sm" type="submit">${esc(t("leave"))}</button>
-      </form>
+      <form id="noteForm" class="thread-form"><input type="text" id="noteText" maxlength="240" placeholder="${esc(t("noteHere"))}"><button class="btn btn-sm" type="submit">${esc(t("leave"))}</button></form>
       <div class="notes">
         ${notes.length ? notes.map(n => {
-          const shown = state.tx["note:" + n.id] && state.txOn["note:" + n.id] && state.tx["note:" + n.id].lang === state.lang
-            ? state.tx["note:" + n.id].text : n.text;
+          const shown = state.tx["note:" + n.id] && state.txOn["note:" + n.id] && state.tx["note:" + n.id].lang === state.lang ? state.tx["note:" + n.id].text : n.text;
           const can = CONFIG.translateApi && (n.lang || "es") !== state.lang;
-          return `<div class="note ${n.author}">${esc(shown)}
-            <span class="t">${esc(nameOf(n.author))} · ${new Date(n.created_at).toLocaleString(LOCALE[state.lang], {day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</span>
-            ${can ? `<button class="tr" data-trnote="${n.id}" style="margin-top:6px">${esc(state.txOn["note:" + n.id] ? t("original") : t("translate"))}</button>` : ""}
-          </div>`;
+          return `<div class="note ${n.author}">${esc(shown)}<span class="t">${esc(nameOf(n.author))} ·${new Date(n.created_at).toLocaleString(LOCALE[state.lang], {day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</span>
+            ${can ? `<button class="tr" data-trnote="${n.id}" style="margin-top:6px">${esc(state.txOn["note:" + n.id] ? t("original") : t("translate"))}</button>` : ""}</div>`;
         }).join("") : `<p class="empty">${esc(t("noNotes"))}</p>`}
       </div>
     </div>`;
 }
 
-/* =======================================================================
-   7. render + events
-   ======================================================================= */
-function wireLang(rerender){
-  const btn = $("#langBtn");
-  if (!btn) return;
-  btn.addEventListener("click", ev => { ev.stopPropagation(); state.langOpen = !state.langOpen; rerender(); });
-  root.querySelectorAll(".lang-menu button").forEach(b => b.addEventListener("click", () => {
-    state.lang = b.dataset.lang;
-    document.documentElement.lang = state.lang;
-    ls.set("ci_lang", state.lang);
-    state.langOpen = false;
-    rerender();
-  }));
+function wireUI(rerender){
+  $("#langBtn")?.addEventListener("click", ev => { ev.stopPropagation(); state.langOpen = !state.langOpen; rerender(); });
+  $("#themeBtn")?.addEventListener("click", () => {
+    let current = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", current);
+    ls.set("ci_theme", current);
+  });
+  root.querySelectorAll(".lang-menu button").forEach(b => b.addEventListener("click", () => { state.lang = b.dataset.lang; document.documentElement.lang = state.lang; ls.set("ci_lang", state.lang); state.langOpen = false; rerender(); }));
   if (state.langOpen) document.addEventListener("click", () => { state.langOpen = false; rerender(); }, { once: true });
 }
 
 function render(){
   const inner = state.tab === "hoy" ? viewHoy() : state.tab === "diario" ? viewDiario() : viewNosotras();
   root.innerHTML = shell(inner);
-  wireLang(render);
-
-  $("#logout").addEventListener("click", async () => {
-    state.me = null; state.userId = null; state.editing = false;
-    ls.del("ci_me");
-    if (CONFIG.useAuth && state.store.mode === "remote"){ try { await state.store.signOut(); } catch {} }
-    renderLogin();
-  });
-  root.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => {
-    state.tab = b.dataset.tab; state.editing = false; render();
-  }));
-  const editBtn = $("#editBtn");
-  if (editBtn) editBtn.addEventListener("click", () => { state.editing = true; render(); });
-
+  wireUI(render);
+  $("#logout")?.addEventListener("click", async () => { state.me = null; state.userId = null; state.editing = false; ls.del("ci_me"); if (CONFIG.useAuth && state.store.mode === "remote"){ try { await state.store.signOut(); } catch {} } renderLogin(); });
+  root.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { state.tab = b.dataset.tab; state.editing = false; render(); }));
+  $("#editBtn")?.addEventListener("click", () => { state.editing = true; render(); });
   const form = $("#checkin");
   if (form){
     let mood = entryOf(todayKey(), state.me)?.mood ?? null;
-    root.querySelectorAll(".mood").forEach(b => b.addEventListener("click", () => {
-      mood = Number(b.dataset.m);
-      root.querySelectorAll(".mood").forEach(x => x.setAttribute("aria-pressed", x === b));
-    }));
+    root.querySelectorAll(".mood").forEach(b => b.addEventListener("click", () => { mood = Number(b.dataset.m); root.querySelectorAll(".mood").forEach(x => x.setAttribute("aria-pressed", x === b)); }));
     form.addEventListener("submit", async ev => {
-      ev.preventDefault();
-      const answers = questions().map((_, i) => form[`q${i}`].value.trim());
-      const bonus = form.bonus.value.trim();
+      ev.preventDefault(); const answers = questions().map((_, i) => form[`q${i}`].value.trim()); const bonus = form.bonus.value.trim();
       if (mood === null && !answers.some(Boolean) && !bonus){ toast(t("writeSomething")); return; }
       const key = todayKey(), prev = entryOf(key, state.me);
-      const entry = {
-        id: `${key}__${state.me}`, date: key, author: state.me, mood, answers, bonus,
-        lang: state.lang, reactions: prev?.reactions || {},
-        created_at: prev?.created_at || new Date().toISOString(), edited: !!prev
-      };
+      const entry = { id: `${key}__${state.me}`, date: key, author: state.me, mood, answers, bonus, lang: state.lang, reactions: prev?.reactions || {}, created_at: prev?.created_at || new Date().toISOString(), edited: !!prev };
       try { await state.store.saveEntry(withAuthor(entry)); } catch { toast(t("saveFailed")); return; }
-      state.editing = false; delete state.tx[entry.id];
-      await refresh(); render();
-      toast(prev ? t("changed") : t("saved"));
+      state.editing = false; delete state.tx[entry.id]; await refresh(); render(); toast(prev ? t("changed") : t("saved"));
     });
   }
-
-  root.querySelectorAll(".react[data-entry]").forEach(b => b.addEventListener("click", async () => {
-    const e = state.entries.find(x => x.id === b.dataset.entry);
-    if (!e) return;
-    const r = { ...(e.reactions || {}) };
-    if (r[state.me] === b.dataset.r) delete r[state.me]; else r[state.me] = b.dataset.r;
-    try { await state.store.saveEntry({ ...e, reactions: r }); } catch { toast(t("saveFailed")); return; }
-    await refresh(); render();
-  }));
-
-  root.querySelectorAll(".thread-form[data-entry]").forEach(f => f.addEventListener("submit", async ev => {
-    ev.preventDefault();
-    const input = f.querySelector("input"), text = input.value.trim();
-    if (!text) return;
-    try {
-      await state.store.addComment(withAuthor({ id: uid(), entry_id: f.dataset.entry, author: state.me,
-                                     text, lang: state.lang, created_at: new Date().toISOString() }));
-    } catch { toast(t("saveFailed")); return; }
-    delete state.tx[f.dataset.entry];
-    await refresh(); render();
-  }));
-
-  root.querySelectorAll("[data-tr]").forEach(b => b.addEventListener("click", async () => {
-    const id = b.dataset.tr;
-    if (state.txOn[id]){ state.txOn[id] = false; render(); return; }
-    const e = state.entries.find(x => x.id === id);
-    if (!e) return;
-    b.textContent = t("translating");
-    try { await translateEntry(e); state.txOn[id] = true; render(); }
-    catch { b.textContent = t("trFailed"); }
-  }));
-
-  root.querySelectorAll("[data-trnote]").forEach(b => b.addEventListener("click", async () => {
-    const n = state.notes.find(x => x.id === b.dataset.trnote);
-    if (!n) return;
-    const k = "note:" + n.id;
-    if (state.txOn[k]){ state.txOn[k] = false; render(); return; }
-    b.textContent = t("translating");
-    try {
-      state.tx[k] = { lang: state.lang, text: await translate(n.text, n.lang || "es", state.lang) };
-      state.txOn[k] = true; render();
-    } catch { b.textContent = t("trFailed"); }
-  }));
-
-  const noteForm = $("#noteForm");
-  if (noteForm) noteForm.addEventListener("submit", async ev => {
-    ev.preventDefault();
-    const text = $("#noteText").value.trim();
-    if (!text) return;
-    try { await state.store.addNote(withAuthor({ id: uid(), author: state.me, text, lang: state.lang, created_at: new Date().toISOString() })); }
-    catch { toast(t("saveFailed")); return; }
-    await refresh(); render();
-    toast(t("noteSent"));
-  });
+  root.querySelectorAll(".react[data-entry]").forEach(b => b.addEventListener("click", async () => { const e = state.entries.find(x => x.id === b.dataset.entry); if (!e) return; const r = { ...(e.reactions || {}) }; if (r[state.me] === b.dataset.r) delete r[state.me]; else r[state.me] = b.dataset.r; try { await state.store.saveEntry({ ...e, reactions: r }); } catch { toast(t("saveFailed")); return; } await refresh(); render(); }));
+  root.querySelectorAll(".thread-form[data-entry]").forEach(f => f.addEventListener("submit", async ev => { ev.preventDefault(); const input = f.querySelector("input"), text = input.value.trim(); if (!text) return; try { await state.store.addComment(withAuthor({ id: uid(), entry_id: f.dataset.entry, author: state.me, text, lang: state.lang, created_at: new Date().toISOString() })); } catch { toast(t("saveFailed")); return; } delete state.tx[f.dataset.entry]; await refresh(); render(); }));
+  root.querySelectorAll("[data-tr]").forEach(b => b.addEventListener("click", async () => { const id = b.dataset.tr; if (state.txOn[id]){ state.txOn[id] = false; render(); return; } const e = state.entries.find(x => x.id === id); if (!e) return; b.textContent = t("translating"); try { await translateEntry(e); state.txOn[id] = true; render(); } catch { b.textContent = t("trFailed"); } }));
+  root.querySelectorAll("[data-trnote]").forEach(b => b.addEventListener("click", async () => { const n = state.notes.find(x => x.id === b.dataset.trnote); if (!n) return; const k = "note:" + n.id; if (state.txOn[k]){ state.txOn[k] = false; render(); return; } b.textContent = t("translating"); try { state.tx[k] = { lang: state.lang, text: await translate(n.text, n.lang || "es", state.lang) }; state.txOn[k] = true; render(); } catch { b.textContent = t("trFailed"); } }));
+  $("#noteForm")?.addEventListener("submit", async ev => { ev.preventDefault(); const text = $("#noteText").value.trim(); if (!text) return; try { await state.store.addNote(withAuthor({ id: uid(), author: state.me, text, lang: state.lang, created_at: new Date().toISOString() })); } catch { toast(t("saveFailed")); return; } await refresh(); render(); toast(t("noteSent")); });
 }
 
 async function start(){ await refresh(); render(); }
-
 (async function boot(){
-  const savedLang = ls.get("ci_lang");
-  if (savedLang && LANGS[savedLang]) state.lang = savedLang;
-  document.documentElement.lang = state.lang;
-
+  const savedLang = ls.get("ci_lang"); if (savedLang && LANGS[savedLang]) state.lang = savedLang; document.documentElement.lang = state.lang;
   state.store = local;
-  if (CONFIG.firebase && CONFIG.firebase.apiKey && !/PEGAR_ACA/.test(CONFIG.firebase.apiKey)){
-    try { await remote.init(); state.store = remote; }
-    catch { state.store = local; state.degraded = true; }
-  }
-
-  if (CONFIG.useAuth && state.store.mode === "remote"){
-    // real login: restore the Firebase session if there is one, no PIN involved
-    try {
-      const user = await remote.getSession();
-      if (user){
-        const who = Object.keys(CONFIG.people).find(k => CONFIG.people[k].email === user.email);
-        if (who){ state.me = who; state.userId = user.uid; await start(); return; }
-      }
-    } catch {}
-    renderLogin();
-  } else {
-    // local test mode: the old PIN system
-    const saved = ls.get("ci_me");
-    if (saved && CONFIG.people[saved]){ state.me = saved; await start(); } else { renderLogin(); }
-  }
-
-  setInterval(async () => {
-    if (state.store.mode !== "remote" || !state.me || state.editing) return;
-    const before = state.entries.length + state.comments.length + state.notes.length;
-    await refresh();
-    if (state.entries.length + state.comments.length + state.notes.length !== before) render();
-  }, 45000);
+  if (CONFIG.firebase && CONFIG.firebase.apiKey && !/PEGAR_ACA/.test(CONFIG.firebase.apiKey)){ try { await remote.init(); state.store = remote; } catch { state.store = local; state.degraded = true; } }
+  if (CONFIG.useAuth && state.store.mode === "remote"){ try { const user = await remote.getSession(); if (user){ const who = Object.keys(CONFIG.people).find(k => CONFIG.people[k].email === user.email); if (who){ state.me = who; state.userId = user.uid; await start(); return; } } } catch {} renderLogin(); } else { const saved = ls.get("ci_me"); if (saved && CONFIG.people[saved]){ state.me = saved; await start(); } else { renderLogin(); } }
+  setInterval(async () => { if (state.store.mode !== "remote" || !state.me || state.editing) return; const before = state.entries.length + state.comments.length + state.notes.length; await refresh(); if (state.entries.length + state.comments.length + state.notes.length !== before) render(); }, 45000);
 })();
 </script>
 </body>
