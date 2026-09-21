@@ -166,21 +166,29 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
   .stat-img { grid-column: 1 / -1; height: 180px; } 
 }
 
-/* HISTORIAL DE ÁNIMO (BARRAS ORIGINALES) */
-.bars{display:flex;align-items:flex-end;gap:5px;height:76px;margin-top:8px}
-.barcol{flex:1;display:flex;flex-direction:column-reverse;gap:2px;height:100%}
-.bar{border-radius:3px;min-height:3px}
-.bar.mica{background:var(--mica)} .bar.tati{background:var(--tati)}
 
-/* HISTORIAL DE ÁNIMO (PUNTITOS COMPACTOS) */
+
+/* HISTORIAL DE ÁNIMO (TEXTOS HASTA 14 DÍAS) */
+.mood-history-list { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-top: 12px; }
+.mood-day { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 76px; padding: 10px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+.mood-date { font-size: 0.72rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+.mood-texts { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.mood-txt { font-size: 0.85rem; font-weight: 600; font-family: Newsreader, serif; text-align: center; }
+.mood-txt.mica { color: var(--mica); }
+.mood-txt.tati { color: var(--tati); }
+
+/* HISTORIAL DE ÁNIMO (PUNTITOS COMPACTOS DESPUÉS DE 14 DÍAS) */
 .mood-dots-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
-.mood-dot-col { display: flex; flex-direction: column; gap: 4px; padding: 4px; border-radius: 6px; transition: background 0.2s; }
+.mood-dot-col { display: flex; flex-direction: column; gap: 5px; padding: 4px; border-radius: 6px; transition: background 0.2s; cursor: help; }
 .mood-dot-col:hover { background: var(--line); }
-.mood-dot { width: 12px; height: 12px; border-radius: 50%; opacity: 0.85; }
+.mood-dot { width: 14px; height: 14px; border-radius: 50%; opacity: 0.9; }
 .mood-dot.mica { background: var(--mica); }
 .mood-dot.tati { background: var(--tati); }
-.mood-dot.empty { background: transparent; border: 1px solid var(--ink-soft); opacity: 0.3; }
+.mood-dot.empty { background: transparent; border: 1px solid var(--ink-soft); opacity: 0.25; }  
 
+
+
+  
 .legend{font-size:.8rem;color:var(--ink-soft);display:flex;gap:14px;margin-top:10px}
 .legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
 
@@ -545,24 +553,43 @@ function viewNosotras(){
   let historyHTML = "";
   if (dates.length > 0) {
     if (dates.length <= 14) {
-      // SI HAY POCOS DÍAS: Usa las barras originales
-      const h = e => e && typeof e.mood === "number" ? 12 + e.mood * 14 : 0;
-      const bars = dates.map(k => { 
+      // VISTA 1: TARJETAS DE TEXTO (hasta 14 días)
+      const historyList = dates.map(k => { 
         const a = entryOf(k, "mica"), b = entryOf(k, "tati"); 
-        return `<div class="barcol">${a ? `<div class="bar mica" style="height:${h(a)}%"></div>` : ""}${b ? `<div class="bar tati" style="height:${h(b)}%"></div>` : ""}</div>`; 
+        const dateObj = new Date(k + "T00:00:00Z");
+        const shortDate = dateObj.toLocaleDateString(LOCALE[state.lang], { day:"numeric", month:"short", timeZone:"UTC" });
+        
+        const aMood = a && typeof a.mood === "number" ? `<span class="mood-txt mica">${esc(moods()[a.mood])}</span>` : "";
+        const bMood = b && typeof b.mood === "number" ? `<span class="mood-txt tati">${esc(moods()[b.mood])}</span>` : "";
+        
+        return `<div class="mood-day"><span class="mood-date">${esc(shortDate)}</span><div class="mood-texts">${aMood}${bMood}</div></div>`;
       }).join("");
-      historyHTML = `<div class="bars">${bars}</div>`;
+      historyHTML = `<div class="mood-history-list">${historyList}</div>`;
     } else {
-      // SI HAY MÁS DE 14 DÍAS: Usa los puntos compactos
+      // VISTA 2: PUNTITOS COMPACTOS CON TOOLTIPS (más de 14 días)
+      const getSnippet = (entry) => {
+        if (!entry || !entry.answers) return "";
+        const ans = entry.answers.find(ans => ans && ans.trim() !== "");
+        return ans ? esc(ans.substring(0, 50)) + (ans.length > 50 ? "..." : "") : "";
+      };
+
       const dots = dates.map(k => {
         const a = entryOf(k, "mica"), b = entryOf(k, "tati");
+        const shortDate = new Date(k + "T00:00:00Z").toLocaleDateString(LOCALE[state.lang], { day:"numeric", month:"short", timeZone:"UTC" });
+        
         const aMood = a && typeof a.mood === "number" ? moods()[a.mood] : "Sin registro";
         const bMood = b && typeof b.mood === "number" ? moods()[b.mood] : "Sin registro";
         
-        const shortDate = new Date(k + "T00:00:00Z").toLocaleDateString(LOCALE[state.lang], { day:"numeric", month:"short", timeZone:"UTC" });
+        const aSnip = getSnippet(a);
+        const bSnip = getSnippet(b);
+
+        // El texto flotante que aparece al pasar el mouse
+        const titleA = a ? `Mica | ${shortDate} | ${aMood}&#10;&#10;"${aSnip}"` : `Mica | ${shortDate} | Sin registro`;
+        const titleB = b ? `Tati | ${shortDate} | ${bMood}&#10;&#10;"${bSnip}"` : `Tati | ${shortDate} | Sin registro`;
+
         return `<div class="mood-dot-col">
-                  <div class="mood-dot mica ${!a?'empty':''}" title="Mica: ${aMood} (${shortDate})"></div>
-                  <div class="mood-dot tati ${!b?'empty':''}" title="Tati: ${bMood} (${shortDate})"></div>
+                  <div class="mood-dot mica ${!a?'empty':''}" title="${titleA}"></div>
+                  <div class="mood-dot tati ${!b?'empty':''}" title="${titleB}"></div>
                 </div>`;
       }).join("");
       historyHTML = `<div class="mood-dots-grid">${dots}</div>`;
@@ -576,9 +603,7 @@ function viewNosotras(){
       <div class="stat"><span class="n">${state.entries.length}</span><span class="l">${esc(t("savedAnswers"))}</span></div>
       <div class="stat-img">
         <picture>
-          <!-- Para computadora: reemplazá con el nombre de tu foto apaisada -->
           <source media="(min-width: 680px)" srcset="IMAGES/foto-pc.png">
-          <!-- Para celular: reemplazá con el nombre de tu foto cuadrada -->
           <img src="IMAGES/foto-celular.png" alt="Nosotras">
         </picture>
       </div>
