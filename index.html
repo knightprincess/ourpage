@@ -153,10 +153,19 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .pair{display:grid;gap:14px}
 @media(min-width:680px){.pair.two{grid-template-columns:1fr 1fr;align-items:start}}
 
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin-bottom:26px}
-.stat{padding:16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper-2)}
-.stat .n{font-family:Newsreader,serif;font-size:2rem;line-height:1;display:block}
-.stat .l{font-size:.8rem;color:var(--ink-soft);margin-top:6px;display:block}
+/* CONFIGURACIÓN BASE (CELULAR) */
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 26px; }
+.stat { padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper-2); }
+
+/* NUEVO BLOQUE DE IMAGEN */
+.stat-img { padding: 0; border: none; background: transparent; overflow: hidden; display: flex; }
+.stat-img img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line); }
+
+/* CONFIGURACIÓN PARA COMPUTADORAS (Pantallas mayores a 680px) */
+@media(min-width: 680px) {
+  .stats { grid-template-columns: repeat(3, 1fr); }
+  .stat-img { grid-column: 1 / -1; height: 180px; } /* Ocupa toda la fila de abajo */
+}
 .bars{display:flex;align-items:flex-end;gap:5px;height:76px;margin-top:8px}
 .barcol{flex:1;display:flex;flex-direction:column-reverse;gap:2px;height:100%}
 .bar{border-radius:3px;min-height:3px}
@@ -534,16 +543,21 @@ function viewNosotras(){
 
   const notes = [...state.notes].sort((a,b) => b.created_at.localeCompare(a.created_at)).slice(0, 30);
   
-  return `
+return `
     <div class="stats">
       <div class="stat"><span class="n">${together}</span><span class="l">${esc(t("daysTogether"))}</span></div>
       <div class="stat"><span class="n">${streak}</span><span class="l">${esc(t("streak"))}</span></div>
       <div class="stat"><span class="n">${state.entries.length}</span><span class="l">${esc(t("savedAnswers"))}</span></div>
+      <div class="stat-img">
+        <picture>
+          <!-- Esta imagen apaisada se carga SOLO en computadora -->
+          <source media="(min-width: 680px)" srcset="images/foto-pc.jpg">
+          <!-- Esta imagen cuadrada se carga en celular -->
+          <img src="images/foto-celular.jpg" alt="Nosotras">
+        </picture>
+      </div>
     </div>
     <div class="card" style="margin-bottom:16px"><h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("howWeAre"))}</h3><p class="hint" style="margin:0 0 8px">${esc(t("moodSub", { n: last.length }))}</p>
-      ${last.length ? `<div class="mood-history-list">${historyList}</div><div class="legend" style="margin-top:10px;"><span><i style="background:var(--mica)"></i>${esc(nameOf("mica"))}</span><span><i style="background:var(--tati)"></i>${esc(nameOf("tati"))}</span></div>` : `<p class="empty">${esc(t("moodEmpty"))}</p>`}
-    </div>
-    <div class="card">
       <h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("thinking"))}</h3>
       <p class="hint" style="margin:0 0 12px">${esc(t("notesSub"))}</p>
       <form id="noteForm" class="thread-form"><input type="text" id="noteText" maxlength="240" placeholder="${esc(t("noteHere"))}"><button class="btn btn-sm" type="submit">${esc(t("leave"))}</button></form>
