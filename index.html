@@ -550,16 +550,15 @@ return `
       <div class="stat"><span class="n">${state.entries.length}</span><span class="l">${esc(t("savedAnswers"))}</span></div>
       <div class="stat-img">
         <picture>
-          <!-- Esta imagen apaisada se carga SOLO en computadora -->
-          <img src="[https://picsum.photos/400](https://picsum.photos/400)" alt="Prueba">
-
-           <!--  <source media="(min-width: 680px)" srcset="images/foto-pc.png">   -->
-          
-          <!-- Esta imagen cuadrada se carga en celular -->
-          <img src="images/foto-celular.png" alt="Nosotras">
+          <!-- Para computadora -->
+          <source media="(min-width: 680px)" srcset="https://picsum.photos/800/300">
+          <!-- Para celular -->
+          <img src="https://picsum.photos/400" alt="Prueba">
         </picture>
       </div>
     </div>
+
+    
     <div class="card" style="margin-bottom:16px"><h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("howWeAre"))}</h3><p class="hint" style="margin:0 0 8px">${esc(t("moodSub", { n: last.length }))}</p>
       <h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("thinking"))}</h3>
       <p class="hint" style="margin:0 0 12px">${esc(t("notesSub"))}</p>
