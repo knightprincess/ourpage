@@ -153,19 +153,26 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .pair{display:grid;gap:14px}
 @media(min-width:680px){.pair.two{grid-template-columns:1fr 1fr;align-items:start}}
 
+
+
 /* CONFIGURACIÓN BASE (CELULAR) */
 .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 26px; }
-.stat { padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper-2); }
+.stat { padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper-2); display: flex; flex-direction: column; justify-content: center; }
 
-/* NUEVO BLOQUE DE IMAGEN */
-.stat-img { padding: 0; border: none; background: transparent; overflow: hidden; display: flex; }
-.stat-img img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line); }
+.stat-img { padding: 0; border: none; background: transparent; overflow: hidden; display: block; width: 100%; height: 100%; min-height: 110px; }
+.stat-img picture { width: 100%; height: 100%; display: block; }
+.stat-img img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line); display: block; }
 
-/* CONFIGURACIÓN PARA COMPUTADORAS (Pantallas mayores a 680px) */
+/* CONFIGURACIÓN PARA COMPUTADORAS */
 @media(min-width: 680px) {
   .stats { grid-template-columns: repeat(3, 1fr); }
-  .stat-img { grid-column: 1 / -1; height: 180px; } /* Ocupa toda la fila de abajo */
+  .stat-img { grid-column: 1 / -1; height: 180px; } 
 }
+
+
+
+
+  
 .bars{display:flex;align-items:flex-end;gap:5px;height:76px;margin-top:8px}
 .barcol{flex:1;display:flex;flex-direction:column-reverse;gap:2px;height:100%}
 .bar{border-radius:3px;min-height:3px}
@@ -560,20 +567,24 @@ function viewNosotras(){
 
   const notes = [...state.notes].sort((a,b) => b.created_at.localeCompare(a.created_at)).slice(0, 30);
   
-return `
+
+
+  return `
     <div class="stats">
       <div class="stat"><span class="n">${together}</span><span class="l">${esc(t("daysTogether"))}</span></div>
       <div class="stat"><span class="n">${streak}</span><span class="l">${esc(t("streak"))}</span></div>
       <div class="stat"><span class="n">${state.entries.length}</span><span class="l">${esc(t("savedAnswers"))}</span></div>
       <div class="stat-img">
         <picture>
-          <!-- Para computadora -->
-          <source media="(min-width: 680px)" srcset="https://picsum.photos/800/300">
-          <!-- Para celular -->
-          <img src="https://picsum.photos/400" alt="Prueba">
+          <!-- Para computadora: reemplazá con el nombre de tu foto apaisada -->
+          <source media="(min-width: 680px)" srcset="images/foto-pc.png">
+          <!-- Para celular: reemplazá con el nombre de tu foto cuadrada -->
+          <img src="images/foto-celular.png" alt="Nosotras">
         </picture>
       </div>
     </div>
+
+  
 
     
     <div class="card" style="margin-bottom:16px"><h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("howWeAre"))}</h3><p class="hint" style="margin:0 0 8px">${esc(t("moodSub", { n: last.length }))}</p>
