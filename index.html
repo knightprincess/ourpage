@@ -97,9 +97,10 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:16px;flex-wrap:wrap}
 .brand{font-family:Newsreader,serif;font-style:italic;font-size:1.15rem}
 .me{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--ink-soft)}
-.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:26px}
-.tab{background:none;border:none;padding:10px 2px;margin-right:20px;color:var(--ink-soft);position:relative}
-.tab[aria-selected="true"]{color:var(--ink)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:26px; overflow-x: auto; white-space: nowrap;}
+.tabs::-webkit-scrollbar { display: none; }
+.tab{background:none;border:none;padding:10px 2px;margin-right:20px;color:var(--ink-soft);position:relative; font-size: 0.95rem;}
+.tab[aria-selected="true"]{color:var(--ink); font-weight: 500;}
 .tab[aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent)}
 
 .card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
@@ -150,39 +151,50 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .day{margin-bottom:34px}
 .day-label{font-family:Newsreader,serif;font-size:1.05rem;color:var(--ink-soft);margin-bottom:10px;display:flex;align-items:center;gap:10px}
 .day-label::after{content:"";flex:1;height:1px;background:var(--line)}
-.pair{display:grid;gap:14px}
-@media(min-width:680px){.pair.two{grid-template-columns:1fr 1fr;align-items:start}}
 
-
-
-/* CONFIGURACIÓN BASE (CELULAR) */
+/* STATS Y FOTO RESPONSIVE */
 .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 26px; }
 .stat { padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper-2); display: flex; flex-direction: column; justify-content: center; }
-
+.stat .n{font-family:Newsreader,serif;font-size:2rem;line-height:1;display:block}
+.stat .l{font-size:.8rem;color:var(--ink-soft);margin-top:6px;display:block}
 .stat-img { padding: 0; border: none; background: transparent; overflow: hidden; display: block; width: 100%; height: 100%; min-height: 110px; }
 .stat-img picture { width: 100%; height: 100%; display: block; }
 .stat-img img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line); display: block; }
 
-/* CONFIGURACIÓN PARA COMPUTADORAS */
 @media(min-width: 680px) {
   .stats { grid-template-columns: repeat(3, 1fr); }
   .stat-img { grid-column: 1 / -1; height: 180px; } 
 }
 
-
-
-
-  
+/* HISTORIAL DE ÁNIMO (BARRAS ORIGINALES) */
 .bars{display:flex;align-items:flex-end;gap:5px;height:76px;margin-top:8px}
 .barcol{flex:1;display:flex;flex-direction:column-reverse;gap:2px;height:100%}
 .bar{border-radius:3px;min-height:3px}
 .bar.mica{background:var(--mica)} .bar.tati{background:var(--tati)}
+
+/* HISTORIAL DE ÁNIMO (PUNTITOS COMPACTOS) */
+.mood-dots-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.mood-dot-col { display: flex; flex-direction: column; gap: 4px; padding: 4px; border-radius: 6px; transition: background 0.2s; }
+.mood-dot-col:hover { background: var(--line); }
+.mood-dot { width: 12px; height: 12px; border-radius: 50%; opacity: 0.85; }
+.mood-dot.mica { background: var(--mica); }
+.mood-dot.tati { background: var(--tati); }
+.mood-dot.empty { background: transparent; border: 1px solid var(--ink-soft); opacity: 0.3; }
+
 .legend{font-size:.8rem;color:var(--ink-soft);display:flex;gap:14px;margin-top:10px}
 .legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
-.notes{display:flex;flex-direction:column;gap:10px;margin-top:14px}
-.note{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--paper-2);font-family:Newsreader,serif;font-size:1.02rem}
+
+/* DISEÑO DE NOTAS RICH (YOUTUBE, IMAGES, LINKS) */
+.notes{display:flex;flex-direction:column;gap:14px;margin-top:14px}
+.note{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--paper-2);font-family:Newsreader,serif;font-size:1.05rem; overflow-wrap: break-word;}
 .note.mica{border-left:3px solid var(--mica)} .note.tati{border-left:3px solid var(--tati)}
-.note .t{display:block;font-family:"DM Sans",sans-serif;font-size:.76rem;color:var(--ink-soft);margin-top:6px}
+.note .t{display:block;font-family:"DM Sans",sans-serif;font-size:.76rem;color:var(--ink-soft);margin-top:10px}
+.note a { color: var(--accent); text-decoration: none; font-weight: 500; }
+.note a:hover { text-decoration: underline; }
+.note-yt { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--line); }
+.note-yt iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.note-img-embed { width: 100%; max-height: 350px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--line); }
+
 .empty{color:var(--ink-soft);font-family:Newsreader,serif;font-style:italic}
 .banner{border:1px dashed var(--line);border-radius:12px;padding:12px 14px;font-size:.85rem;color:var(--ink-soft);margin-bottom:20px}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));
@@ -206,31 +218,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .journal-content .entry.mica, .journal-content .entry.tati { border-left: none; }
 .journal-content .entry-head { display: none; }
 
-/* HISTORIAL DE ÁNIMO EN TEXTO */
-.mood-history-list { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-top: 12px; }
-.mood-day { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 76px; padding: 10px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
-.mood-date { font-size: 0.72rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
-.mood-texts { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.mood-txt { font-size: 0.85rem; font-weight: 600; font-family: Newsreader, serif; }
-.mood-txt.mica { color: var(--mica); }
-.mood-txt.tati { color: var(--tati); }
-
-
-
-
-/* CONFIGURACIÓN BASE (CELULAR) */
-.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 26px; }
-.stat { padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper-2); }
-
-.stat-img { padding: 0; border: none; background: transparent; overflow: hidden; display: flex; width: 100%; height: 100%; min-height: 120px; }
-.stat-img img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line); }
-
-/* CONFIGURACIÓN PARA COMPUTADORAS */
-@media(min-width: 680px) {
-  .stats { grid-template-columns: repeat(3, 1fr); }
-  .stat-img { grid-column: 1 / -1; height: 180px; } 
-}
-  
 </style>
 </head>
 <body>
@@ -268,7 +255,7 @@ const QUESTIONS = {
 };
 
 const BONUS = {
-  en: ["What song reminded you of me this week?", "If we were together right now, what would we be doing?", "Tell me something about your day you didn't tell anyone else.", "What's the first thing you want to do when we see each other?", "What do you miss about me today?"],
+  en: ["What song reminded you of me this week?", "If we were together right now, what would we be doing?", "Tell me something about your day you didn't tell anyone else?", "What's the first thing you want to do when we see each other?", "What do you miss about me today?"],
   es: ["¿Qué canción te hizo acordar a mí esta semana?", "Si estuviéramos juntas ahora mismo, ¿qué estaríamos haciendo?", "Contame algo de tu día que no le contaste a nadie más.", "¿Qué es lo primero que querés hacer cuando nos veamos?", "¿Qué cosa mía extrañás hoy?"],
   ru: ["Какая песня напомнила тебе обо мне на этой неделе?", "Если бы мы были вместе прямо сейчас, что бы мы делали?", "Расскажи то из своего дня, о чём не рассказала никому другому.", "Что ты хочешь сделать первым делом, когда мы увидимся?", "По чему во мне ты скучаешь сегодня?"]
 };
@@ -280,9 +267,9 @@ const MOODS = {
 };
 
 const UI = {
-  en: { brand: "Our check-in", tagline: "One check-in a day, both of us.", yourKey: "Your key", enter: "Enter", wrongKey: "Wrong key.", enteringAs: "Entering as {name}.", signOut: "Sign out", yourPassword: "Your password", signIn: "Sign in", wrongPassword: "Wrong email or password.", authError: "Couldn't reach server.", signingIn: "Signing in…", tabToday: "Today", tabJournal: "Journal", tabUs: "Us", localBanner: "Test mode.", degradedBanner: "Offline.", todayTitle: "Your check-in today", howFeel: "How are you feeling?", writeHere: "Write whatever comes…", bonusHere: "Today's extra question.", save: "Save", saveChanges: "Save changes", editHint: "Edit until UTC midnight.", yours: "Yours", hersLabel: "{name}'s", editToday: "Edit today", nextIn: "Next opens in {t}.", notYet: "{name} hasn't checked in.", veil: "Write your check-in to read {name}'s.", emptyJournal: "Nothing written yet.", commentHere: "Say something…", send: "Send", daysTogether: "days together", streak: "days in a row", savedAnswers: "answers saved", howWeAre: "How we're doing", moodSub: "Mood history.", moodEmpty: "No data.", thinking: "This made me think of you", notesSub: "Small things, songs, or moments.", noteHere: "A song, a verse, a thought...", leave: "Leave", noNotes: "No notes yet.", today: "Today", yesterday: "Yesterday", edited: "edited", saved: "Saved", changed: "Changes saved", noteSent: "Sent", writeSomething: "Write something.", saveFailed: "Failed.", translate: "Translate", original: "Show original", translating: "Translating…", trFailed: "Error", trNote: "Machine translation", language: "Language", lightMode: "Light Mode", darkMode: "Dark Mode" },
-  es: { brand: "Nuestro check-in", tagline: "Un check-in por día, las dos.", yourKey: "Tu clave", enter: "Entrar", wrongKey: "Clave incorrecta.", enteringAs: "Entrando como {name}.", signOut: "Salir", yourPassword: "Tu contraseña", signIn: "Entrar", wrongPassword: "Email o contraseña incorrectos.", authError: "Error de conexión.", signingIn: "Entrando…", tabToday: "Hoy", tabJournal: "Diario", tabUs: "Nosotras", localBanner: "Modo prueba.", degradedBanner: "Sin conexión.", todayTitle: "Tu check-in de hoy", howFeel: "¿Cómo te sentís?", writeHere: "Escribí lo que salga…", bonusHere: "Pregunta extra de hoy.", save: "Guardar", saveChanges: "Guardar cambios", editHint: "Se puede editar hasta la medianoche UTC.", yours: "Lo tuyo", hersLabel: "Lo de {name}", editToday: "Editar", nextIn: "Mañana se abre en {t}.", notYet: "{name} todavía no hizo el check-in.", veil: "Respondé para leer a {name}.", emptyJournal: "Sin registros.", commentHere: "Comentar algo…", send: "Enviar", daysTogether: "días juntas", streak: "días seguidos", savedAnswers: "respuestas", howWeAre: "Cómo venimos", moodSub: "Ánimo histórico.", moodEmpty: "Sin datos.", thinking: "Esto me hizo acordar a vos", notesSub: "Detalles, canciones o momentos sueltos.", noteHere: "Una canción, un verso, un pensamiento...", leave: "Dejar", noNotes: "Todavía no hay nada.", today: "Hoy", yesterday: "Ayer", edited: "editado", saved: "Guardado", changed: "Cambios guardados", noteSent: "Enviado", writeSomething: "Escribí algo.", saveFailed: "Error al guardar.", translate: "Traducir", original: "Original", translating: "Traduciendo…", trFailed: "Error", trNote: "Traducción automática", language: "Idioma", lightMode: "Modo claro", darkMode: "Modo oscuro" },
-  ru: { brand: "Наш чек-ин", tagline: "Один чек-ин в день, обе.", yourKey: "Твой код", enter: "Войти", wrongKey: "Неверный код.", enteringAs: "Вход как {name}.", signOut: "Выйти", yourPassword: "Твой пароль", signIn: "Войти", wrongPassword: "Неверный email/пароль.", authError: "Ошибка подключения.", signingIn: "Входим…", tabToday: "Сегодня", tabJournal: "Дневник", tabUs: "Мы", localBanner: "Тестовый режим.", degradedBanner: "Офлайн.", todayTitle: "Твой чек-ин", howFeel: "Как ты себя чувствуешь?", writeHere: "Пиши что придёт…", bonusHere: "Дополнительный вопрос.", save: "Сохранить", saveChanges: "Изменить", editHint: "Можно редактировать до полуночи UTC.", yours: "Твоё", hersLabel: "Её: {name}", editToday: "Изменить", nextIn: "Завтра откроется через {t}.", notYet: "{name} ещё не сделала чек-ин.", veil: "Напиши чтобы прочитать.", emptyJournal: "Пусто.", commentHere: "Написать…", send: "Отправить", daysTogether: "дней вместе", streak: "дней подряд", savedAnswers: "ответов", howWeAre: "Как у нас дела", moodSub: "История настроения.", moodEmpty: "Нет данных.", thinking: "Это напомнило мне о тебе", notesSub: "Песни, стихи или моменты.", noteHere: "Песня, стих, мысль...", leave: "Оставить", noNotes: "Пока нет.", today: "Сегодня", yesterday: "Вчера", edited: "изменено", saved: "Сохранено", changed: "Изменено", noteSent: "Отправлено", writeSomething: "Напиши что-то.", saveFailed: "Ошибка.", translate: "Перевести", original: "Оригинал", translating: "Перевожу…", trFailed: "Ошибка", trNote: "Машинный перевод", language: "Язык", lightMode: "Светлая тема", darkMode: "Тёмная тема" }
+  en: { brand: "Our check-in", tagline: "One check-in a day, both of us.", yourKey: "Your key", enter: "Enter", wrongKey: "Wrong key.", enteringAs: "Entering as {name}.", signOut: "Sign out", yourPassword: "Your password", signIn: "Sign in", wrongPassword: "Wrong email or password.", authError: "Couldn't reach server.", signingIn: "Signing in…", tabToday: "Today", tabJournal: "Journal", tabUs: "Us", tabPensando: "Thinking of you", localBanner: "Test mode.", degradedBanner: "Offline.", todayTitle: "Your check-in today", howFeel: "How are you feeling?", writeHere: "Write whatever comes…", bonusHere: "Today's extra question.", save: "Save", saveChanges: "Save changes", editHint: "Edit until UTC midnight.", yours: "Yours", hersLabel: "{name}'s", editToday: "Edit today", nextIn: "Next opens in {t}.", notYet: "{name} hasn't checked in.", veil: "Write your check-in to read {name}'s.", emptyJournal: "Nothing written yet.", commentHere: "Say something…", send: "Send", daysTogether: "days together", streak: "days in a row", savedAnswers: "answers saved", howWeAre: "How we're doing", moodSub: "Mood history.", moodEmpty: "No data.", thinking: "This made me think of you", notesSub: "Upload an image, paste a YouTube link, or write a thought.", noteHere: "A song, a verse, a thought...", leave: "Leave", noNotes: "No notes yet.", today: "Today", yesterday: "Yesterday", edited: "edited", saved: "Saved", changed: "Changes saved", noteSent: "Sent", writeSomething: "Write something.", saveFailed: "Failed.", translate: "Translate", original: "Show original", translating: "Translating…", trFailed: "Error", trNote: "Machine translation", language: "Language", lightMode: "Light Mode", darkMode: "Dark Mode" },
+  es: { brand: "Nuestro check-in", tagline: "Un check-in por día, las dos.", yourKey: "Tu clave", enter: "Entrar", wrongKey: "Clave incorrecta.", enteringAs: "Entrando como {name}.", signOut: "Salir", yourPassword: "Tu contraseña", signIn: "Entrar", wrongPassword: "Email o contraseña incorrectos.", authError: "Error de conexión.", signingIn: "Entrando…", tabToday: "Hoy", tabJournal: "Diario", tabUs: "Nosotras", tabPensando: "Pensando en vos", localBanner: "Modo prueba.", degradedBanner: "Sin conexión.", todayTitle: "Tu check-in de hoy", howFeel: "¿Cómo te sentís?", writeHere: "Escribí lo que salga…", bonusHere: "Pregunta extra de hoy.", save: "Guardar", saveChanges: "Guardar cambios", editHint: "Se puede editar hasta la medianoche UTC.", yours: "Lo tuyo", hersLabel: "Lo de {name}", editToday: "Editar", nextIn: "Mañana se abre en {t}.", notYet: "{name} todavía no hizo el check-in.", veil: "Respondé para leer a {name}.", emptyJournal: "Sin registros.", commentHere: "Comentar algo…", send: "Enviar", daysTogether: "días juntas", streak: "días seguidos", savedAnswers: "respuestas", howWeAre: "Cómo venimos", moodSub: "Ánimo histórico.", moodEmpty: "Sin datos.", thinking: "Esto me hizo acordar a vos", notesSub: "Subí una foto, pegá un link de YouTube, o dejá un pensamiento.", noteHere: "Una canción, un verso, un pensamiento...", leave: "Dejar", noNotes: "Todavía no hay nada.", today: "Hoy", yesterday: "Ayer", edited: "editado", saved: "Guardado", changed: "Cambios guardados", noteSent: "Enviado", writeSomething: "Escribí algo.", saveFailed: "Error al guardar.", translate: "Traducir", original: "Original", translating: "Traduciendo…", trFailed: "Error", trNote: "Traducción automática", language: "Idioma", lightMode: "Modo claro", darkMode: "Modo oscuro" },
+  ru: { brand: "Наш чек-ин", tagline: "Один чек-ин в день, обе.", yourKey: "Твой код", enter: "Войти", wrongKey: "Неверный код.", enteringAs: "Вход как {name}.", signOut: "Выйти", yourPassword: "Твой пароль", signIn: "Войти", wrongPassword: "Неверный email/пароль.", authError: "Ошибка подключения.", signingIn: "Входим…", tabToday: "Сегодня", tabJournal: "Дневник", tabUs: "Мы", tabPensando: "Думаю о тебе", localBanner: "Тестовый режим.", degradedBanner: "Офлайн.", todayTitle: "Твой чек-ин", howFeel: "Как ты себя чувствуешь?", writeHere: "Пиши что придёт…", bonusHere: "Дополнительный вопрос.", save: "Сохранить", saveChanges: "Изменить", editHint: "Можно редактировать до полуночи UTC.", yours: "Твоё", hersLabel: "Её: {name}", editToday: "Изменить", nextIn: "Завтра откроется через {t}.", notYet: "{name} ещё не сделала чек-ин.", veil: "Напиши чтобы прочитать.", emptyJournal: "Пусто.", commentHere: "Написать…", send: "Отправить", daysTogether: "дней вместе", streak: "дней подряд", savedAnswers: "ответов", howWeAre: "Как у нас дела", moodSub: "История настроения.", moodEmpty: "Нет данных.", thinking: "Это напомнило мне о тебе", notesSub: "Загрузи фото, вставь ссылку на YouTube или напиши мысль.", noteHere: "Песня, стих, мысль...", leave: "Оставить", noNotes: "Пока нет.", today: "Сегодня", yesterday: "Вчера", edited: "изменено", saved: "Сохранено", changed: "Изменено", noteSent: "Отправлено", writeSomething: "Напиши что-то.", saveFailed: "Ошибка.", translate: "Перевести", original: "Оригинал", translating: "Перевожу…", trFailed: "Ошибка", trNote: "Машинный перевод", language: "Язык", lightMode: "Светлая тема", darkMode: "Тёмная тема" }
 };
 
 const $ = (s, el = document) => el.querySelector(s);
@@ -300,6 +287,7 @@ const ls = { get(k){ try { return localStorage.getItem(k); } catch { return null
              del(k){ try { localStorage.removeItem(k); } catch {} } };
 
 const state = { store: null, me: null, userId: null, lang: CONFIG.defaultLang, tab: "hoy", entries: [], comments: [], notes: [], editing: false, degraded: false, tx: {}, txOn: {}, langOpen: false };
+let pendingImage = null; 
 
 const savedTheme = ls.get("ci_theme") || "light";
 document.documentElement.setAttribute("data-theme", savedTheme);
@@ -409,7 +397,8 @@ function renderLogin(){
       <div class="login-top">${langHTML()}</div>
       
       <div style="text-align: center; margin-bottom: 10px;">
-        <img src="IMAGES/portada.jpg" alt="" style="max-width: 140px; border-radius: 16px; margin-bottom: 18px; object-fit: cover; box-shadow: var(--shadow);">
+        <!-- REEMPLAZÁ CON EL LINK DE TU FOTO SI QUERÉS O MANTENÉ IMAGES/PORTADA.JPG -->
+        <img src="images/portada.jpg" alt="" style="max-width: 140px; border-radius: 16px; margin-bottom: 18px; object-fit: cover; box-shadow: var(--shadow);">
         
         <p class="eyebrow">${esc(prettyDate(key))}</p>
         <h1 style="margin-bottom: 8px;">${esc(questions()[0])}</h1>
@@ -453,6 +442,7 @@ function shell(inner){
       <button class="tab" role="tab" data-tab="hoy" aria-selected="${state.tab==="hoy"}">${esc(t("tabToday"))}</button>
       <button class="tab" role="tab" data-tab="diario" aria-selected="${state.tab==="diario"}">${esc(t("tabJournal"))}</button>
       <button class="tab" role="tab" data-tab="nosotras" aria-selected="${state.tab==="nosotras"}">${esc(t("tabUs"))}</button>
+      <button class="tab" role="tab" data-tab="pensando" aria-selected="${state.tab==="pensando"}">${esc(t("tabPensando"))}</button>
     </nav>
     ${state.store.mode === "local" ? `<div class="banner">${esc(t("localBanner"))}</div>` : ""}
     ${state.degraded ? `<div class="banner">${esc(t("degradedBanner"))}</div>` : ""}
@@ -552,22 +542,32 @@ function viewNosotras(){
   let streak = 0; const d = new Date(); if (!(entryOf(todayKey(), "mica") && entryOf(todayKey(), "tati"))) d.setUTCDate(d.getUTCDate() - 1);
   for (;;){ const k = `${d.getUTCFullYear()}-${pad(d.getUTCMonth()+1)}-${pad(d.getUTCDate())}`; if (entryOf(k, "mica") && entryOf(k, "tati")){ streak++; d.setUTCDate(d.getUTCDate() - 1); } else break; }
   
-  const last = dates.slice(-14); 
-  
-  const historyList = last.map(k => { 
-    const a = entryOf(k, "mica"), b = entryOf(k, "tati"); 
-    const dateObj = new Date(k + "T00:00:00Z");
-    const shortDate = dateObj.toLocaleDateString(LOCALE[state.lang], { day:"numeric", month:"short", timeZone:"UTC" });
-    
-    const aMood = a && typeof a.mood === "number" ? `<span class="mood-txt mica">${esc(moods()[a.mood])}</span>` : "";
-    const bMood = b && typeof b.mood === "number" ? `<span class="mood-txt tati">${esc(moods()[b.mood])}</span>` : "";
-    
-    return `<div class="mood-day"><span class="mood-date">${esc(shortDate)}</span><div class="mood-texts">${aMood}${bMood}</div></div>`;
-  }).join("");
-
-  const notes = [...state.notes].sort((a,b) => b.created_at.localeCompare(a.created_at)).slice(0, 30);
-  
-
+  let historyHTML = "";
+  if (dates.length > 0) {
+    if (dates.length <= 14) {
+      // SI HAY POCOS DÍAS: Usa las barras originales
+      const h = e => e && typeof e.mood === "number" ? 12 + e.mood * 14 : 0;
+      const bars = dates.map(k => { 
+        const a = entryOf(k, "mica"), b = entryOf(k, "tati"); 
+        return `<div class="barcol">${a ? `<div class="bar mica" style="height:${h(a)}%"></div>` : ""}${b ? `<div class="bar tati" style="height:${h(b)}%"></div>` : ""}</div>`; 
+      }).join("");
+      historyHTML = `<div class="bars">${bars}</div>`;
+    } else {
+      // SI HAY MÁS DE 14 DÍAS: Usa los puntos compactos
+      const dots = dates.map(k => {
+        const a = entryOf(k, "mica"), b = entryOf(k, "tati");
+        const aMood = a && typeof a.mood === "number" ? moods()[a.mood] : "Sin registro";
+        const bMood = b && typeof b.mood === "number" ? moods()[b.mood] : "Sin registro";
+        
+        const shortDate = new Date(k + "T00:00:00Z").toLocaleDateString(LOCALE[state.lang], { day:"numeric", month:"short", timeZone:"UTC" });
+        return `<div class="mood-dot-col">
+                  <div class="mood-dot mica ${!a?'empty':''}" title="Mica: ${aMood} (${shortDate})"></div>
+                  <div class="mood-dot tati ${!b?'empty':''}" title="Tati: ${bMood} (${shortDate})"></div>
+                </div>`;
+      }).join("");
+      historyHTML = `<div class="mood-dots-grid">${dots}</div>`;
+    }
+  }
 
   return `
     <div class="stats">
@@ -583,19 +583,52 @@ function viewNosotras(){
         </picture>
       </div>
     </div>
+    <div class="card" style="margin-bottom:16px">
+      <h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("howWeAre"))}</h3>
+      <p class="hint" style="margin:0 0 8px">${esc(t("moodSub", { n: dates.length }))}</p>
+      ${dates.length ? `${historyHTML}<div class="legend" style="margin-top:10px;"><span><i style="background:var(--mica)"></i>${esc(nameOf("mica"))}</span><span><i style="background:var(--tati)"></i>${esc(nameOf("tati"))}</span></div>` : `<p class="empty">${esc(t("moodEmpty"))}</p>`}
+    </div>`;
+}
 
+function viewPensando() {
+  const notes = [...state.notes].sort((a,b) => b.created_at.localeCompare(a.created_at));
   
-
+  // Función mágica que detecta Links, YouTube o Imágenes Base64
+  const renderRichNote = (n) => {
+    if (n.image) return `<img src="${n.image}" class="note-img-embed"> <div style="margin-top:4px;">${esc(n.text)}</div>`;
     
-    <div class="card" style="margin-bottom:16px"><h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("howWeAre"))}</h3><p class="hint" style="margin:0 0 8px">${esc(t("moodSub", { n: last.length }))}</p>
+    let text = n.text;
+    const yt = text.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+    if (yt) {
+      return `<div class="note-yt"><iframe src="https://www.youtube.com/embed/${yt[1]}" frameborder="0" allowfullscreen></iframe></div><div style="margin-top:8px">${esc(text.replace(yt[0], ''))}</div>`;
+    }
+    
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return esc(text).replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
+  }
+
+  return `
+    <div class="card">
       <h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("thinking"))}</h3>
       <p class="hint" style="margin:0 0 12px">${esc(t("notesSub"))}</p>
-      <form id="noteForm" class="thread-form"><input type="text" id="noteText" maxlength="240" placeholder="${esc(t("noteHere"))}"><button class="btn btn-sm" type="submit">${esc(t("leave"))}</button></form>
+      
+      <form id="noteForm" class="thread-form" style="align-items: center;">
+        <button type="button" id="imgBtn" class="btn btn-ghost" style="padding: 11px 14px; font-size:1.2rem;" title="Subir foto">📷</button>
+        <input type="file" id="noteImg" accept="image/*" class="hidden">
+        <input type="text" id="noteText" maxlength="240" placeholder="${esc(t("noteHere"))}">
+        <button class="btn btn-sm" type="submit">${esc(t("leave"))}</button>
+      </form>
+      
+      <div id="imgPreview" style="display:none; margin-top:10px; position:relative; width: max-content;">
+        <img id="previewEl" style="max-height:100px; border-radius:8px; border: 1px solid var(--line);"> 
+        <button type="button" id="clearImg" style="position:absolute; top:-10px; right:-10px; background:var(--ink); color:var(--paper); border:none; border-radius:50%; width:24px; height:24px; cursor:pointer;">x</button>
+      </div>
+
       <div class="notes">
         ${notes.length ? notes.map(n => {
-          const shown = state.tx["note:" + n.id] && state.txOn["note:" + n.id] && state.tx["note:" + n.id].lang === state.lang ? state.tx["note:" + n.id].text : n.text;
-          const can = CONFIG.translateApi && (n.lang || "es") !== state.lang;
-          return `<div class="note ${n.author}">${esc(shown)}<span class="t">${esc(nameOf(n.author))} ·${new Date(n.created_at).toLocaleString(LOCALE[state.lang], {day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</span>
+          const shown = state.tx["note:" + n.id] && state.txOn["note:" + n.id] && state.tx["note:" + n.id].lang === state.lang ? state.tx["note:" + n.id].text : renderRichNote(n);
+          const can = CONFIG.translateApi && (n.lang || "es") !== state.lang && !n.image;
+          return `<div class="note ${n.author}">${shown}<span class="t">${esc(nameOf(n.author))} ·${new Date(n.created_at).toLocaleString(LOCALE[state.lang], {day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</span>
             ${can ? `<button class="tr" data-trnote="${n.id}" style="margin-top:6px">${esc(state.txOn["note:" + n.id] ? t("original") : t("translate"))}</button>` : ""}</div>`;
         }).join("") : `<p class="empty">${esc(t("noNotes"))}</p>`}
       </div>
@@ -617,12 +650,13 @@ function wireUI(rerender){
 }
 
 function render(){
-  const inner = state.tab === "hoy" ? viewHoy() : state.tab === "diario" ? viewDiario() : viewNosotras();
+  const inner = state.tab === "hoy" ? viewHoy() : state.tab === "diario" ? viewDiario() : state.tab === "nosotras" ? viewNosotras() : viewPensando();
   root.innerHTML = shell(inner);
   wireUI(render);
   $("#logout")?.addEventListener("click", async () => { state.me = null; state.userId = null; state.editing = false; ls.del("ci_me"); if (CONFIG.useAuth && state.store.mode === "remote"){ try { await state.store.signOut(); } catch {} } renderLogin(); });
-  root.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { state.tab = b.dataset.tab; state.editing = false; render(); }));
+  root.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { state.tab = b.dataset.tab; state.editing = false; pendingImage = null; render(); }));
   $("#editBtn")?.addEventListener("click", () => { state.editing = true; render(); });
+  
   const form = $("#checkin");
   if (form){
     let mood = entryOf(todayKey(), state.me)?.mood ?? null;
@@ -636,11 +670,42 @@ function render(){
       state.editing = false; delete state.tx[entry.id]; await refresh(); render(); toast(prev ? t("changed") : t("saved"));
     });
   }
+  
+  // Lógica mágica para procesar imágenes en Base64
+  $("#imgBtn")?.addEventListener("click", () => $("#noteImg").click());
+  $("#noteImg")?.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const r = new FileReader();
+    r.onload = ev => {
+      const img = new Image();
+      img.onload = () => {
+        const c = document.createElement("canvas"); const ctx = c.getContext("2d");
+        const max = 800; let w = img.width, h = img.height;
+        if (w > max || h > max) { if (w > h) { h *= max / w; w = max; } else { w *= max / h; h = max; } }
+        c.width = w; c.height = h; ctx.drawImage(img, 0, 0, w, h);
+        pendingImage = c.toDataURL("image/jpeg", 0.7);
+        $("#previewEl").src = pendingImage; $("#imgPreview").style.display = "block";
+      };
+      img.src = ev.target.result;
+    };
+    r.readAsDataURL(file);
+  });
+  $("#clearImg")?.addEventListener("click", () => { pendingImage = null; $("#imgPreview").style.display = "none"; $("#noteImg").value = ""; });
+
+  $("#noteForm")?.addEventListener("submit", async ev => { 
+    ev.preventDefault(); 
+    const text = $("#noteText").value.trim(); 
+    if (!text && !pendingImage) return; 
+    try { await state.store.addNote(withAuthor({ id: uid(), author: state.me, text, image: pendingImage, lang: state.lang, created_at: new Date().toISOString() })); } 
+    catch { toast(t("saveFailed")); return; } 
+    pendingImage = null; await refresh(); render(); toast(t("noteSent")); 
+  });
+  
   root.querySelectorAll(".react[data-entry]").forEach(b => b.addEventListener("click", async () => { const e = state.entries.find(x => x.id === b.dataset.entry); if (!e) return; const r = { ...(e.reactions || {}) }; if (r[state.me] === b.dataset.r) delete r[state.me]; else r[state.me] = b.dataset.r; try { await state.store.saveEntry({ ...e, reactions: r }); } catch { toast(t("saveFailed")); return; } await refresh(); render(); }));
   root.querySelectorAll(".thread-form[data-entry]").forEach(f => f.addEventListener("submit", async ev => { ev.preventDefault(); const input = f.querySelector("input"), text = input.value.trim(); if (!text) return; try { await state.store.addComment(withAuthor({ id: uid(), entry_id: f.dataset.entry, author: state.me, text, lang: state.lang, created_at: new Date().toISOString() })); } catch { toast(t("saveFailed")); return; } delete state.tx[f.dataset.entry]; await refresh(); render(); }));
   root.querySelectorAll("[data-tr]").forEach(b => b.addEventListener("click", async () => { const id = b.dataset.tr; if (state.txOn[id]){ state.txOn[id] = false; render(); return; } const e = state.entries.find(x => x.id === id); if (!e) return; b.textContent = t("translating"); try { await translateEntry(e); state.txOn[id] = true; render(); } catch { b.textContent = t("trFailed"); } }));
   root.querySelectorAll("[data-trnote]").forEach(b => b.addEventListener("click", async () => { const n = state.notes.find(x => x.id === b.dataset.trnote); if (!n) return; const k = "note:" + n.id; if (state.txOn[k]){ state.txOn[k] = false; render(); return; } b.textContent = t("translating"); try { state.tx[k] = { lang: state.lang, text: await translate(n.text, n.lang || "es", state.lang) }; state.txOn[k] = true; render(); } catch { b.textContent = t("trFailed"); } }));
-  $("#noteForm")?.addEventListener("submit", async ev => { ev.preventDefault(); const text = $("#noteText").value.trim(); if (!text) return; try { await state.store.addNote(withAuthor({ id: uid(), author: state.me, text, lang: state.lang, created_at: new Date().toISOString() })); } catch { toast(t("saveFailed")); return; } await refresh(); render(); toast(t("noteSent")); });
 }
 
 async function start(){ await refresh(); render(); }
