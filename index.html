@@ -207,6 +207,23 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .mood-txt { font-size: 0.85rem; font-weight: 600; font-family: Newsreader, serif; }
 .mood-txt.mica { color: var(--mica); }
 .mood-txt.tati { color: var(--tati); }
+
+
+
+
+/* CONFIGURACIÓN BASE (CELULAR) */
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 26px; }
+.stat { padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper-2); }
+
+.stat-img { padding: 0; border: none; background: transparent; overflow: hidden; display: flex; width: 100%; height: 100%; min-height: 120px; }
+.stat-img img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line); }
+
+/* CONFIGURACIÓN PARA COMPUTADORAS */
+@media(min-width: 680px) {
+  .stats { grid-template-columns: repeat(3, 1fr); }
+  .stat-img { grid-column: 1 / -1; height: 180px; } 
+}
+  
 </style>
 </head>
 <body>
