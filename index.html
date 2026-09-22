@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Our check-in</title>
 
-<!-- Favicon: Reemplazá este enlace por el link directo de Postimages -->
+<!-- Favicon -->
 <link rel="icon" href="https://i.ibb.co/vCZ1wvCF/favicon.png" type="image/png">
   
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -170,7 +170,7 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
   .stat-img { grid-column: 1 / -1; height: 180px; } 
 }
 
-/* HISTORIAL DE ÁNIMO CON SOMBRAS */
+/* HISTORIAL DE ÁNIMO CON SOMBRAS SÓLIDAS */
 .bars{display:flex;align-items:flex-end;gap:5px;height:76px;margin-top:8px}
 .barcol{flex:1;display:flex;flex-direction:column-reverse;gap:2px;height:100%}
 .bar{border-radius:3px;min-height:3px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);}
@@ -179,7 +179,8 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .mood-day { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 76px; padding: 10px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
 .mood-date { font-size: 0.72rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
 .mood-texts { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.mood-txt { font-size: 0.85rem; font-weight: 700; font-family: Newsreader, serif; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+/* Sombra sólida de 1px, sin desenfoque */
+.mood-txt { font-size: 0.85rem; font-weight: 700; font-family: Newsreader, serif; text-align: center; text-shadow: 1px 1px 0px rgba(0,0,0,0.25); }
 .mood-txt.mica { color: var(--mica); }
 .mood-txt.tati { color: var(--tati); }
 
@@ -424,8 +425,7 @@ function renderLogin(){
       <div class="login-top">${langHTML()}</div>
       
       <div style="text-align: center; margin-bottom: 10px;">
-        <!-- Imagen de portada con enlace a Postimages -->
-        <img src="https://i.postimg.cc/mD83W2W3/portada.jpg" alt="" style="max-width: 140px; border-radius: 16px; margin-bottom: 18px; object-fit: cover; box-shadow: var(--shadow);">
+        <img src="https://i.ibb.co/mD83W2W3/portada.jpg" alt="" style="max-width: 140px; border-radius: 16px; margin-bottom: 18px; object-fit: cover; box-shadow: var(--shadow);">
         
         <p class="eyebrow">${esc(prettyDate(key))}</p>
         <h1 style="margin-bottom: 8px;">${esc(questions()[0])}</h1>
@@ -617,7 +617,6 @@ function viewNosotras(){
       <div class="stat"><span class="n">${state.entries.length}</span><span class="l">${esc(t("savedAnswers"))}</span></div>
       <div class="stat-img">
         <picture>
-          <!-- FOTOS DE NOSOTRAS CON POSTIMAGES -->
           <source media="(min-width: 680px)" srcset="https://i.ibb.co/Z6c0Gjt8/foto-pc.png">
           <img src="https://i.ibb.co/2YPhW6Wy/foto-celular.png" alt="Nosotras">
         </picture>
