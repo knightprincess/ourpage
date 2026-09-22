@@ -166,7 +166,7 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
   .stat-img { grid-column: 1 / -1; height: 180px; } 
 }
 
-/* HISTORIAL DE ÁNIMO (TEXTOS HASTA 14 DÍAS) */
+/* HISTORIAL DE ÁNIMO */
 .mood-history-list { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-top: 12px; }
 .mood-day { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 76px; padding: 10px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
 .mood-date { font-size: 0.72rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -175,7 +175,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .mood-txt.mica { color: var(--mica); }
 .mood-txt.tati { color: var(--tati); }
 
-/* HISTORIAL DE ÁNIMO (PUNTITOS COMPACTOS DESPUÉS DE 14 DÍAS) */
 .mood-dots-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
 .mood-dot-col { display: flex; flex-direction: column; gap: 5px; padding: 4px; border-radius: 6px; transition: background 0.2s; cursor: help; }
 .mood-dot-col:hover { background: var(--line); }
@@ -198,9 +197,16 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .note .t { display: block; font-family: "DM Sans", sans-serif; font-size: 0.76rem; color: var(--ink-soft); margin-top: 10px; }
 .note a { color: var(--accent); text-decoration: none; font-weight: 500; }
 .note a:hover { text-decoration: underline; }
-.note-yt { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--line); }
+
+/* AJUSTES PARA QUE FOTOS/VIDEOS SE VEAN MÁS CHICOS EN EL CELULAR */
+.note-yt { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--line); max-height: 180px; }
 .note-yt iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-.note-img-embed { width: 100%; max-height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--line); }
+.note-img-embed { width: 100%; max-height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--line); }
+
+@media(min-width: 680px) {
+  .note-yt { max-height: none; }
+  .note-img-embed { max-height: 250px; }
+}
 
 /* COMENTARIOS EN NOTAS */
 .note-comment-btn { position: absolute; bottom: 8px; right: 12px; background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--ink-soft); transition: transform 0.2s; opacity: 0.8; }
@@ -289,7 +295,6 @@ const $ = (s, el = document) => el.querySelector(s);
 const root = $("#root");
 const pad = n => String(n).padStart(2, "0");
 
-// EL DÍA CORTA A LAS 00:00 HORA ARGENTINA (UTC-3)
 const todayKey = () => { const d = new Date(Date.now() - 3 * 3600000); return `${d.getUTCFullYear()}-${pad(d.getUTCMonth()+1)}-${pad(d.getUTCDate())}`; };
 
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -597,8 +602,8 @@ function viewNosotras(){
       <div class="stat"><span class="n">${state.entries.length}</span><span class="l">${esc(t("savedAnswers"))}</span></div>
       <div class="stat-img">
         <picture>
-          <source media="(min-width: 680px)" srcset="https://raw.githubusercontent.com/tu-usuario/tu-repo/main/images/foto-pc.png">
-          <img src="https://raw.githubusercontent.com/tu-usuario/tu-repo/main/images/foto-celu.png" alt="Nosotras">
+          <source media="(min-width: 680px)" srcset="images/foto-pc.png">
+          <img src="images/foto-celular.png" alt="Nosotras">
         </picture>
       </div>
     </div>
