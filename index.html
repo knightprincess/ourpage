@@ -256,7 +256,7 @@ const CONFIG = {
     appId: "1:427311237218:web:5b7aa71bcd6100bea8293b"
   },
   useAuth: true,
-  since: "2026-04-01",
+  since: "2026-04-16",
   defaultLang: "en",
   translateApi: true,
   translateEmail: "",
@@ -558,7 +558,7 @@ function viewDiario(){
 }
   
 function viewNosotras(){
-  const since = new Date(CONFIG.since + "T00:00:00Z"); const together = Math.max(0, Math.round((Date.now() - 3 * 3600000 - since) / 86400000));
+  const since = new Date(CONFIG.since + "T00:00:00Z"); const together = Math.max(0, Math.floor((Date.now() - 3 * 3600000 - since) / 86400000));
   const dates = [...new Set(state.entries.map(e => e.date))].sort();
   let streak = 0; const d = new Date(Date.now() - 3 * 3600000); if (!(entryOf(todayKey(), "mica") && entryOf(todayKey(), "tati"))) d.setUTCDate(d.getUTCDate() - 1);
   for (;;){ const k = `${d.getUTCFullYear()}-${pad(d.getUTCMonth()+1)}-${pad(d.getUTCDate())}`; if (entryOf(k, "mica") && entryOf(k, "tati")){ streak++; d.setUTCDate(d.getUTCDate() - 1); } else break; }
