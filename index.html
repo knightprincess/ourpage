@@ -166,8 +166,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
   .stat-img { grid-column: 1 / -1; height: 180px; } 
 }
 
-
-
 /* HISTORIAL DE ÁNIMO (TEXTOS HASTA 14 DÍAS) */
 .mood-history-list { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-top: 12px; }
 .mood-day { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 76px; padding: 10px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
@@ -184,24 +182,31 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .mood-dot { width: 14px; height: 14px; border-radius: 50%; opacity: 0.9; }
 .mood-dot.mica { background: var(--mica); }
 .mood-dot.tati { background: var(--tati); }
-.mood-dot.empty { background: transparent; border: 1px solid var(--ink-soft); opacity: 0.25; }  
+.mood-dot.empty { background: transparent; border: 1px solid var(--ink-soft); opacity: 0.25; }
 
-
-
-  
 .legend{font-size:.8rem;color:var(--ink-soft);display:flex;gap:14px;margin-top:10px}
 .legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
 
-/* DISEÑO DE NOTAS RICH (YOUTUBE, IMAGES, LINKS) */
-.notes{display:flex;flex-direction:column;gap:14px;margin-top:14px}
-.note{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--paper-2);font-family:Newsreader,serif;font-size:1.05rem; overflow-wrap: break-word;}
-.note.mica{border-left:3px solid var(--mica)} .note.tati{border-left:3px solid var(--tati)}
-.note .t{display:block;font-family:"DM Sans",sans-serif;font-size:.76rem;color:var(--ink-soft);margin-top:10px}
+/* DISEÑO DE NOTAS RICH (GRILLA ESTILO PINTEREST) */
+.notes-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 14px; align-items: start; }
+@media(min-width: 680px) {
+  .notes-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+}
+.note { position: relative; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px 38px 16px; background: var(--paper-2); font-family: Newsreader, serif; font-size: 1.05rem; overflow-wrap: break-word; }
+.note.mica { border-left: 3px solid var(--mica); } 
+.note.tati { border-left: 3px solid var(--tati); }
+.note .t { display: block; font-family: "DM Sans", sans-serif; font-size: 0.76rem; color: var(--ink-soft); margin-top: 10px; }
 .note a { color: var(--accent); text-decoration: none; font-weight: 500; }
 .note a:hover { text-decoration: underline; }
 .note-yt { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--line); }
 .note-yt iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-.note-img-embed { width: 100%; max-height: 350px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--line); }
+.note-img-embed { width: 100%; max-height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--line); }
+
+/* COMENTARIOS EN NOTAS */
+.note-comment-btn { position: absolute; bottom: 8px; right: 12px; background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--ink-soft); transition: transform 0.2s; opacity: 0.8; }
+.note-comment-btn:hover { transform: scale(1.1); opacity: 1; }
+.note-comments { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line); }
+.note-badge { font-family: sans-serif; font-size: 0.75rem; background: var(--accent); color: var(--paper-2); border-radius: 999px; padding: 2px 6px; position: absolute; top: -4px; right: -8px; font-weight: bold; }
 
 .empty{color:var(--ink-soft);font-family:Newsreader,serif;font-style:italic}
 .banner{border:1px dashed var(--line);border-radius:12px;padding:12px 14px;font-size:.85rem;color:var(--ink-soft);margin-bottom:20px}
@@ -263,7 +268,7 @@ const QUESTIONS = {
 };
 
 const BONUS = {
-  en: ["What song reminded you of me this week?", "If we were together right now, what would we be doing?", "Tell me something about your day you didn't tell anyone else?", "What's the first thing you want to do when we see each other?", "What do you miss about me today?"],
+  en: ["What song reminded you of me this week?", "If we were together right now, what would we be doing?", "Tell me something about your day you didn't tell anyone else.", "What's the first thing you want to do when we see each other?", "What do you miss about me today?"],
   es: ["¿Qué canción te hizo acordar a mí esta semana?", "Si estuviéramos juntas ahora mismo, ¿qué estaríamos haciendo?", "Contame algo de tu día que no le contaste a nadie más.", "¿Qué es lo primero que querés hacer cuando nos veamos?", "¿Qué cosa mía extrañás hoy?"],
   ru: ["Какая песня напомнила тебе обо мне на этой неделе?", "Если бы мы были вместе прямо сейчас, что бы мы делали?", "Расскажи то из своего дня, о чём не рассказала никому другому.", "Что ты хочешь сделать первым делом, когда мы увидимся?", "По чему во мне ты скучаешь сегодня?"]
 };
@@ -294,7 +299,7 @@ const ls = { get(k){ try { return localStorage.getItem(k); } catch { return null
              set(k,v){ try { localStorage.setItem(k,v); } catch {} },
              del(k){ try { localStorage.removeItem(k); } catch {} } };
 
-const state = { store: null, me: null, userId: null, lang: CONFIG.defaultLang, tab: "hoy", entries: [], comments: [], notes: [], editing: false, degraded: false, tx: {}, txOn: {}, langOpen: false };
+const state = { store: null, me: null, userId: null, lang: CONFIG.defaultLang, tab: "hoy", entries: [], comments: [], notes: [], editing: false, degraded: false, tx: {}, txOn: {}, langOpen: false, openNotes: new Set() };
 let pendingImage = null; 
 
 const savedTheme = ls.get("ci_theme") || "light";
@@ -405,7 +410,6 @@ function renderLogin(){
       <div class="login-top">${langHTML()}</div>
       
       <div style="text-align: center; margin-bottom: 10px;">
-        <!-- REEMPLAZÁ CON EL LINK DE TU FOTO SI QUERÉS O MANTENÉ IMAGES/PORTADA.JPG -->
         <img src="images/portada.jpg" alt="" style="max-width: 140px; border-radius: 16px; margin-bottom: 18px; object-fit: cover; box-shadow: var(--shadow);">
         
         <p class="eyebrow">${esc(prettyDate(key))}</p>
@@ -553,40 +557,29 @@ function viewNosotras(){
   let historyHTML = "";
   if (dates.length > 0) {
     if (dates.length <= 14) {
-      // VISTA 1: TARJETAS DE TEXTO (hasta 14 días)
       const historyList = dates.map(k => { 
         const a = entryOf(k, "mica"), b = entryOf(k, "tati"); 
         const dateObj = new Date(k + "T00:00:00Z");
         const shortDate = dateObj.toLocaleDateString(LOCALE[state.lang], { day:"numeric", month:"short", timeZone:"UTC" });
-        
         const aMood = a && typeof a.mood === "number" ? `<span class="mood-txt mica">${esc(moods()[a.mood])}</span>` : "";
         const bMood = b && typeof b.mood === "number" ? `<span class="mood-txt tati">${esc(moods()[b.mood])}</span>` : "";
-        
         return `<div class="mood-day"><span class="mood-date">${esc(shortDate)}</span><div class="mood-texts">${aMood}${bMood}</div></div>`;
       }).join("");
       historyHTML = `<div class="mood-history-list">${historyList}</div>`;
     } else {
-      // VISTA 2: PUNTITOS COMPACTOS CON TOOLTIPS (más de 14 días)
       const getSnippet = (entry) => {
         if (!entry || !entry.answers) return "";
         const ans = entry.answers.find(ans => ans && ans.trim() !== "");
         return ans ? esc(ans.substring(0, 50)) + (ans.length > 50 ? "..." : "") : "";
       };
-
       const dots = dates.map(k => {
         const a = entryOf(k, "mica"), b = entryOf(k, "tati");
         const shortDate = new Date(k + "T00:00:00Z").toLocaleDateString(LOCALE[state.lang], { day:"numeric", month:"short", timeZone:"UTC" });
-        
         const aMood = a && typeof a.mood === "number" ? moods()[a.mood] : "Sin registro";
         const bMood = b && typeof b.mood === "number" ? moods()[b.mood] : "Sin registro";
-        
-        const aSnip = getSnippet(a);
-        const bSnip = getSnippet(b);
-
-        // El texto flotante que aparece al pasar el mouse
+        const aSnip = getSnippet(a); const bSnip = getSnippet(b);
         const titleA = a ? `Mica | ${shortDate} | ${aMood}&#10;&#10;"${aSnip}"` : `Mica | ${shortDate} | Sin registro`;
         const titleB = b ? `Tati | ${shortDate} | ${bMood}&#10;&#10;"${bSnip}"` : `Tati | ${shortDate} | Sin registro`;
-
         return `<div class="mood-dot-col">
                   <div class="mood-dot mica ${!a?'empty':''}" title="${titleA}"></div>
                   <div class="mood-dot tati ${!b?'empty':''}" title="${titleB}"></div>
@@ -603,8 +596,8 @@ function viewNosotras(){
       <div class="stat"><span class="n">${state.entries.length}</span><span class="l">${esc(t("savedAnswers"))}</span></div>
       <div class="stat-img">
         <picture>
-          <source media="(min-width: 680px)" srcset="IMAGES/foto-pc.png">
-          <img src="IMAGES/foto-celular.png" alt="Nosotras">
+          <source media="(min-width: 680px)" srcset="https://raw.githubusercontent.com/tu-usuario/tu-repo/main/images/foto-pc.png">
+          <img src="https://raw.githubusercontent.com/tu-usuario/tu-repo/main/images/foto-celu.png" alt="Nosotras">
         </picture>
       </div>
     </div>
@@ -618,7 +611,6 @@ function viewNosotras(){
 function viewPensando() {
   const notes = [...state.notes].sort((a,b) => b.created_at.localeCompare(a.created_at));
   
-  // Función mágica que detecta Links, YouTube o Imágenes Base64
   const renderRichNote = (n) => {
     if (n.image) return `<img src="${n.image}" class="note-img-embed"> <div style="margin-top:4px;">${esc(n.text)}</div>`;
     
@@ -637,24 +629,40 @@ function viewPensando() {
       <h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("thinking"))}</h3>
       <p class="hint" style="margin:0 0 12px">${esc(t("notesSub"))}</p>
       
-      <form id="noteForm" class="thread-form" style="align-items: center;">
+      <form id="noteForm" class="thread-form" style="align-items: center; margin-bottom: 20px;">
         <button type="button" id="imgBtn" class="btn btn-ghost" style="padding: 11px 14px; font-size:1.2rem;" title="Subir foto">📷</button>
         <input type="file" id="noteImg" accept="image/*" class="hidden">
         <input type="text" id="noteText" maxlength="240" placeholder="${esc(t("noteHere"))}">
         <button class="btn btn-sm" type="submit">${esc(t("leave"))}</button>
       </form>
       
-      <div id="imgPreview" style="display:none; margin-top:10px; position:relative; width: max-content;">
+      <div id="imgPreview" style="display:none; margin-top:10px; margin-bottom: 10px; position:relative; width: max-content;">
         <img id="previewEl" style="max-height:100px; border-radius:8px; border: 1px solid var(--line);"> 
         <button type="button" id="clearImg" style="position:absolute; top:-10px; right:-10px; background:var(--ink); color:var(--paper); border:none; border-radius:50%; width:24px; height:24px; cursor:pointer;">x</button>
       </div>
 
-      <div class="notes">
+      <div class="notes-grid">
         ${notes.length ? notes.map(n => {
           const shown = state.tx["note:" + n.id] && state.txOn["note:" + n.id] && state.tx["note:" + n.id].lang === state.lang ? state.tx["note:" + n.id].text : renderRichNote(n);
           const can = CONFIG.translateApi && (n.lang || "es") !== state.lang && !n.image;
-          return `<div class="note ${n.author}">${shown}<span class="t">${esc(nameOf(n.author))} ·${new Date(n.created_at).toLocaleString(LOCALE[state.lang], {day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</span>
-            ${can ? `<button class="tr" data-trnote="${n.id}" style="margin-top:6px">${esc(state.txOn["note:" + n.id] ? t("original") : t("translate"))}</button>` : ""}</div>`;
+          
+          const noteComments = state.comments.filter(c => c.entry_id === n.id);
+          const commentCount = noteComments.length;
+          const isOpen = state.openNotes.has(n.id);
+
+          return `<div class="note ${n.author}">
+            ${shown}
+            <span class="t">${esc(nameOf(n.author))} ·${new Date(n.created_at).toLocaleString(LOCALE[state.lang], {day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</span>
+            ${can ? `<button class="tr" data-trnote="${n.id}" style="margin-top:6px">${esc(state.txOn["note:" + n.id] ? t("original") : t("translate"))}</button>` : ""}
+            
+            <button class="note-comment-btn" data-toggle="${n.id}" title="Comentarios">
+              💭 ${commentCount > 0 ? `<span class="note-badge">${commentCount}</span>` : ""}
+            </button>
+
+            <div class="note-comments ${isOpen ? '' : 'hidden'}" id="comments-${n.id}">
+              ${threadHTML(n.id, null)}
+            </div>
+          </div>`;
         }).join("") : `<p class="empty">${esc(t("noNotes"))}</p>`}
       </div>
     </div>`;
@@ -696,6 +704,16 @@ function render(){
     });
   }
   
+  // Lógica para botones de comentarios en las notas
+  root.querySelectorAll(".note-comment-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.toggle;
+      if (state.openNotes.has(id)) state.openNotes.delete(id);
+      else state.openNotes.add(id);
+      render();
+    });
+  });
+
   // Lógica mágica para procesar imágenes en Base64
   $("#imgBtn")?.addEventListener("click", () => $("#noteImg").click());
   $("#noteImg")?.addEventListener("change", (e) => {
