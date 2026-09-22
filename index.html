@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Our check-in</title>
 
-<link rel="icon" href="images/favicon.png?v=2" type="image/png">
+<!-- Favicon con enlace directo absoluto a tu GitHub -->
+<link rel="icon" href="https://raw.githubusercontent.com/knightprincess/ourpage/main/images/favicon.png" type="image/png">
   
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,10 +18,10 @@
   --paper:#F9F5F6;       
   --paper-2:#F8E8EE;     
   --line:#FDCEDF;        
-  --mica:#d4587a; 
-  --tati:#c98a2e;
-  --mica-wash:rgba(212,88,122,.10); 
-  --tati-wash:rgba(201,138,46,.12);
+  --mica:#D9EFBD; /* Verde de Mica */
+  --tati:#FF85BB; /* Rosa de Tati */
+  --mica-wash:rgba(217, 239, 189, 0.4); /* Aura verde suave */
+  --tati-wash:rgba(255, 133, 187, 0.3); /* Aura rosa suave */
   --accent:#b7a6ef;
   --shadow:0 1px 0 rgba(0,0,0,.2), 0 18px 40px -22px rgba(0,0,0, 0.05); 
   --radius:14px;
@@ -34,10 +35,10 @@
   --paper:#222831;       
   --paper-2:#393E46;     
   --line:#332c53;
-  --mica:#f09ab2; 
-  --tati:#f0bd6a; 
-  --mica-wash:rgba(240,154,178,.10); 
-  --tati-wash:rgba(240,189,106,.10);
+  --mica:#D9EFBD; 
+  --tati:#FF85BB; 
+  --mica-wash:rgba(217, 239, 189, 0.15); 
+  --tati-wash:rgba(255, 133, 187, 0.15);
   --accent:#b7a6ef; 
   --shadow:0 1px 0 rgba(0,0,0,.2), 0 18px 40px -22px rgba(0,0,0,.9);
 }
@@ -158,7 +159,7 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 /* STATS Y FOTO RESPONSIVE */
 .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 26px; }
 .stat { padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper-2); display: flex; flex-direction: column; justify-content: center; }
-.stat .n{font-family:Newsreader,serif;font-size:2rem;line-height:1;display:block}
+.stat .n{font-family:Newsreader,serif;font-size:2rem;line-height:1;display:block;color:var(--ink)}
 .stat .l{font-size:.8rem;color:var(--ink-soft);margin-top:6px;display:block}
 .stat-img { padding: 0; border: none; background: transparent; overflow: hidden; display: block; width: 100%; height: 100%; min-height: 110px; }
 .stat-img picture { width: 100%; height: 100%; display: block; }
@@ -288,14 +289,12 @@ const MOODS = {
   ru: ["Тяжело", "Так себе", "Нормально", "Хорошо", "Прекрасно"]
 };
 
-
 const UI = {
   en: { brand: "Our check-in", tagline: "One check-in a day, both of us.", yourKey: "Your key", enter: "Enter", wrongKey: "Wrong key.", enteringAs: "Entering as {name}.", signOut: "Sign out", yourPassword: "Your password", signIn: "Sign in", wrongPassword: "Wrong email or password.", authError: "Couldn't reach server.", signingIn: "Signing in…", tabToday: "Today", tabJournal: "Journal", tabUs: "Us", tabPensando: "Thinking of you", localBanner: "Test mode.", degradedBanner: "Offline.", todayTitle: "Your check-in today", howFeel: "How are you feeling?", writeHere: "Write whatever comes…", bonusHere: "Today's extra question.", save: "Save", saveChanges: "Save changes", editHint: "Edit until your midnight.", yours: "Yours", hersLabel: "{name}'s", editToday: "Edit today", nextIn: "Next opens in {t}.", notYet: "{name} hasn't checked in.", veil: "Write your check-in to read {name}'s.", emptyJournal: "Nothing written yet.", commentHere: "Say something…", send: "Send", daysTogether: "days together", streak: "days in sync", savedAnswers: "letters exchanged", howWeAre: "How we're doing", moodSub: "Mood history.", moodEmpty: "No data.", thinking: "This made me think of you", notesSub: "Upload an image, paste a YouTube link, or write a thought.", noteHere: "A song, a verse, a thought...", leave: "Leave", noNotes: "No notes yet.", today: "Today", yesterday: "Yesterday", edited: "edited", saved: "Saved", changed: "Changes saved", noteSent: "Sent", writeSomething: "Write something.", saveFailed: "Failed.", translate: "Translate", original: "Show original", translating: "Translating…", trFailed: "Error", trNote: "Machine translation", language: "Language", lightMode: "Light Mode", darkMode: "Dark Mode" },
   es: { brand: "Nuestro check-in", tagline: "Un check-in por día, las dos.", yourKey: "Tu clave", enter: "Entrar", wrongKey: "Clave incorrecta.", enteringAs: "Entrando como {name}.", signOut: "Salir", yourPassword: "Tu contraseña", signIn: "Entrar", wrongPassword: "Email o contraseña incorrectos.", authError: "Error de conexión.", signingIn: "Entrando…", tabToday: "Hoy", tabJournal: "Diario", tabUs: "Nosotras", tabPensando: "Pensando en vos", localBanner: "Modo prueba.", degradedBanner: "Sin conexión.", todayTitle: "Tu check-in de hoy", howFeel: "¿Cómo te sentís?", writeHere: "Escribí lo que salga…", bonusHere: "Pregunta extra de hoy.", save: "Guardar", saveChanges: "Guardar cambios", editHint: "Se puede editar hasta la medianoche (Hora Arg).", yours: "Lo tuyo", hersLabel: "Lo de {name}", editToday: "Editar", nextIn: "Mañana se abre en {t}.", notYet: "{name} todavía no hizo el check-in.", veil: "Respondé para leer a {name}.", emptyJournal: "Sin registros.", commentHere: "Comentar algo…", send: "Enviar", daysTogether: "días juntas", streak: "días en sintonía", savedAnswers: "cartas intercambiadas", howWeAre: "Cómo venimos", moodSub: "Ánimo histórico.", moodEmpty: "Sin datos.", thinking: "Esto me hizo acordar a vos", notesSub: "Subí una foto, pegá un link de YouTube, o dejá un pensamiento.", noteHere: "Una canción, un verso, un pensamiento...", leave: "Dejar", noNotes: "Todavía no hay nada.", today: "Hoy", yesterday: "Ayer", edited: "editado", saved: "Guardado", changed: "Cambios guardados", noteSent: "Enviado", writeSomething: "Escribí algo.", saveFailed: "Error al guardar.", translate: "Traducir", original: "Original", translating: "Traduciendo…", trFailed: "Error", trNote: "Traducción automática", language: "Idioma", lightMode: "Modo claro", darkMode: "Modo oscuro" },
   ru: { brand: "Наш чек-ин", tagline: "Один чек-ин в день, обе.", yourKey: "Твой код", enter: "Войти", wrongKey: "Неверный код.", enteringAs: "Вход как {name}.", signOut: "Выйти", yourPassword: "Твой пароль", signIn: "Войти", wrongPassword: "Неверный email/пароль.", authError: "Ошибка подключения.", signingIn: "Входим…", tabToday: "Сегодня", tabJournal: "Дневник", tabUs: "Мы", tabPensando: "Думаю о тебе", localBanner: "Тестовый режим.", degradedBanner: "Офлайн.", todayTitle: "Твой чек-ин", howFeel: "Как ты себя чувствуешь?", writeHere: "Пиши что придёт…", bonusHere: "Дополнительный вопрос.", save: "Сохранить", saveChanges: "Изменить", editHint: "Можно редактировать до полуночи (Аргентина).", yours: "Твоё", hersLabel: "Её: {name}", editToday: "Изменить", nextIn: "Завтра откроется через {t}.", notYet: "{name} ещё не сделала чек-ин.", veil: "Напиши чтобы прочитать.", emptyJournal: "Пусто.", commentHere: "Написать…", send: "Отправить", daysTogether: "дней вместе", streak: "дней в унисон", savedAnswers: "писем друг другу", howWeAre: "Как у нас дела", moodSub: "История настроения.", moodEmpty: "Нет данных.", thinking: "Это напомнило мне о тебе", notesSub: "Загрузи фото, вставь ссылку на YouTube или напиши мысль.", noteHere: "Песня, стих, мысль...", leave: "Оставить", noNotes: "Пока нет.", today: "Сегодня", yesterday: "Вчера", edited: "изменено", saved: "Сохранено", changed: "Изменено", noteSent: "Отправлено", writeSomething: "Напиши что-то.", saveFailed: "Ошибка.", translate: "Перевести", original: "Оригинал", translating: "Перевожу…", trFailed: "Ошибка", trNote: "Машинный перевод", language: "Язык", lightMode: "Светлая тема", darkMode: "Тёмная тема" }
 };
 
-  
 const $ = (s, el = document) => el.querySelector(s);
 const root = $("#root");
 const pad = n => String(n).padStart(2, "0");
@@ -421,7 +420,8 @@ function renderLogin(){
       <div class="login-top">${langHTML()}</div>
       
       <div style="text-align: center; margin-bottom: 10px;">
-        <img src="images/portada.jpg" alt="" style="max-width: 140px; border-radius: 16px; margin-bottom: 18px; object-fit: cover; box-shadow: var(--shadow);">
+        <!-- Imagen de portada con enlace directo absoluto -->
+        <img src="https://raw.githubusercontent.com/knightprincess/ourpage/main/images/portada.jpg" alt="" style="max-width: 140px; border-radius: 16px; margin-bottom: 18px; object-fit: cover; box-shadow: var(--shadow);">
         
         <p class="eyebrow">${esc(prettyDate(key))}</p>
         <h1 style="margin-bottom: 8px;">${esc(questions()[0])}</h1>
@@ -563,7 +563,7 @@ function viewNosotras(){
   const since = new Date(CONFIG.since + "T00:00:00Z"); const together = Math.max(0, Math.floor((Date.now() - 3 * 3600000 - since) / 86400000));
   const dates = [...new Set(state.entries.map(e => e.date))].sort();
   
-  // NUEVO: Calculador de "Días en sintonía"
+  // Calculador de "Días en sintonía"
   let inSync = 0;
   dates.forEach(k => {
     const a = entryOf(k, "mica"), b = entryOf(k, "tati");
@@ -614,8 +614,8 @@ function viewNosotras(){
       <div class="stat"><span class="n">${state.entries.length}</span><span class="l">${esc(t("savedAnswers"))}</span></div>
       <div class="stat-img">
         <picture>
-          <source media="(min-width: 680px)" srcset="images/foto-pc.png">
-          <img src="images/foto-celular.png" alt="Nosotras">
+          <source media="(min-width: 680px)" srcset="https://raw.githubusercontent.com/knightprincess/ourpage/main/images/foto-pc.png">
+          <img src="https://raw.githubusercontent.com/knightprincess/ourpage/main/images/foto-celular.png" alt="Nosotras">
         </picture>
       </div>
     </div>
