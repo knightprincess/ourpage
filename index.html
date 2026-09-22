@@ -558,10 +558,8 @@ function viewDiario(){
     return items.join("");
   }).join("") + `</div>`;
 }
-  
 
-
- function viewNosotras(){
+function viewNosotras(){
   const since = new Date(CONFIG.since + "T00:00:00Z"); const together = Math.max(0, Math.floor((Date.now() - 3 * 3600000 - since) / 86400000));
   const dates = [...new Set(state.entries.map(e => e.date))].sort();
   
@@ -613,28 +611,6 @@ function viewDiario(){
     <div class="stats">
       <div class="stat"><span class="n">${together}</span><span class="l">${esc(t("daysTogether"))}</span></div>
       <div class="stat"><span class="n">${inSync}</span><span class="l">${esc(t("streak"))}</span></div>
-      <div class="stat"><span class="n">${state.entries.length}</span><span class="l">${esc(t("savedAnswers"))}</span></div>
-      <div class="stat-img">
-        <picture>
-          <source media="(min-width: 680px)" srcset="https://raw.githubusercontent.com/tu-usuario/tu-repo/main/images/foto-pc.png">
-          <img src="https://raw.githubusercontent.com/tu-usuario/tu-repo/main/images/foto-celu.png" alt="Nosotras">
-        </picture>
-      </div>
-    </div>
-    <div class="card" style="margin-bottom:16px">
-      <h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("howWeAre"))}</h3>
-      <p class="hint" style="margin:0 0 8px">${esc(t("moodSub", { n: dates.length }))}</p>
-      ${dates.length ? `${historyHTML}<div class="legend" style="margin-top:10px;"><span><i style="background:var(--mica)"></i>${esc(nameOf("mica"))}</span><span><i style="background:var(--tati)"></i>${esc(nameOf("tati"))}</span></div>` : `<p class="empty">${esc(t("moodEmpty"))}</p>`}
-    </div>`;
-} 
-
-
-  
-
-  return `
-    <div class="stats">
-      <div class="stat"><span class="n">${together}</span><span class="l">${esc(t("daysTogether"))}</span></div>
-      <div class="stat"><span class="n">${streak}</span><span class="l">${esc(t("streak"))}</span></div>
       <div class="stat"><span class="n">${state.entries.length}</span><span class="l">${esc(t("savedAnswers"))}</span></div>
       <div class="stat-img">
         <picture>
