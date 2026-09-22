@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Our check-in</title>
 
-<!-- Favicon con enlace directo absoluto a tu GitHub -->
-<link rel="icon" href="https://raw.githubusercontent.com/knightprincess/ourpage/main/images/favicon.png" type="image/png">
+<!-- Favicon: Reemplazá este enlace por el link directo de Postimages -->
+<link rel="icon" href="https://i.postimg.cc/TU_ENLACE_FAVICON.png" type="image/png">
   
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -170,25 +170,29 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
   .stat-img { grid-column: 1 / -1; height: 180px; } 
 }
 
-/* HISTORIAL DE ÁNIMO */
+/* HISTORIAL DE ÁNIMO CON SOMBRAS */
+.bars{display:flex;align-items:flex-end;gap:5px;height:76px;margin-top:8px}
+.barcol{flex:1;display:flex;flex-direction:column-reverse;gap:2px;height:100%}
+.bar{border-radius:3px;min-height:3px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);}
+
 .mood-history-list { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-top: 12px; }
 .mood-day { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 76px; padding: 10px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
 .mood-date { font-size: 0.72rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
 .mood-texts { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.mood-txt { font-size: 0.85rem; font-weight: 600; font-family: Newsreader, serif; text-align: center; }
+.mood-txt { font-size: 0.85rem; font-weight: 700; font-family: Newsreader, serif; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.15); }
 .mood-txt.mica { color: var(--mica); }
 .mood-txt.tati { color: var(--tati); }
 
 .mood-dots-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
 .mood-dot-col { display: flex; flex-direction: column; gap: 5px; padding: 4px; border-radius: 6px; transition: background 0.2s; cursor: help; }
 .mood-dot-col:hover { background: var(--line); }
-.mood-dot { width: 14px; height: 14px; border-radius: 50%; opacity: 0.9; }
+.mood-dot { width: 14px; height: 14px; border-radius: 50%; opacity: 0.9; box-shadow: 0 2px 4px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.05); }
 .mood-dot.mica { background: var(--mica); }
 .mood-dot.tati { background: var(--tati); }
-.mood-dot.empty { background: transparent; border: 1px solid var(--ink-soft); opacity: 0.25; }
+.mood-dot.empty { background: transparent; border: 1px solid var(--ink-soft); opacity: 0.25; box-shadow: none; }
 
 .legend{font-size:.8rem;color:var(--ink-soft);display:flex;gap:14px;margin-top:10px}
-.legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px; box-shadow: 0 1px 2px rgba(0,0,0,0.15);}
 
 /* DISEÑO DE NOTAS RICH (GRILLA ESTILO PINTEREST) */
 .notes-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 14px; align-items: start; }
@@ -420,8 +424,8 @@ function renderLogin(){
       <div class="login-top">${langHTML()}</div>
       
       <div style="text-align: center; margin-bottom: 10px;">
-        <!-- Imagen de portada con enlace directo absoluto -->
-        <img src="https://raw.githubusercontent.com/knightprincess/ourpage/main/images/portada.jpg" alt="" style="max-width: 140px; border-radius: 16px; margin-bottom: 18px; object-fit: cover; box-shadow: var(--shadow);">
+        <!-- Imagen de portada con enlace a Postimages -->
+        <img src="https://i.postimg.cc/mD83W2W3/portada.jpg" alt="" style="max-width: 140px; border-radius: 16px; margin-bottom: 18px; object-fit: cover; box-shadow: var(--shadow);">
         
         <p class="eyebrow">${esc(prettyDate(key))}</p>
         <h1 style="margin-bottom: 8px;">${esc(questions()[0])}</h1>
@@ -563,7 +567,6 @@ function viewNosotras(){
   const since = new Date(CONFIG.since + "T00:00:00Z"); const together = Math.max(0, Math.floor((Date.now() - 3 * 3600000 - since) / 86400000));
   const dates = [...new Set(state.entries.map(e => e.date))].sort();
   
-  // Calculador de "Días en sintonía"
   let inSync = 0;
   dates.forEach(k => {
     const a = entryOf(k, "mica"), b = entryOf(k, "tati");
@@ -614,8 +617,9 @@ function viewNosotras(){
       <div class="stat"><span class="n">${state.entries.length}</span><span class="l">${esc(t("savedAnswers"))}</span></div>
       <div class="stat-img">
         <picture>
-          <source media="(min-width: 680px)" srcset="https://raw.githubusercontent.com/knightprincess/ourpage/main/images/foto-pc.png">
-          <img src="https://raw.githubusercontent.com/knightprincess/ourpage/main/images/foto-celular.png" alt="Nosotras">
+          <!-- FOTOS DE NOSOTRAS CON POSTIMAGES -->
+          <source media="(min-width: 680px)" srcset="https://i.postimg.cc/LINK_FOTO_PC.png">
+          <img src="https://i.postimg.cc/LINK_FOTO_CELULAR.png" alt="Nosotras">
         </picture>
       </div>
     </div>
