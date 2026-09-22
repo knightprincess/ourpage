@@ -19,9 +19,9 @@
   --paper-2:#F8E8EE;     
   --line:#FDCEDF;        
   --mica:#D9EFBD; /* Verde de Mica */
-  --tati:#FF85BB; /* Rosa de Tati */
+  --tati:#F5AFAF; /* Nuevo rosa pastel de Tati */
   --mica-wash:rgba(217, 239, 189, 0.4); /* Aura verde suave */
-  --tati-wash:rgba(255, 133, 187, 0.3); /* Aura rosa suave */
+  --tati-wash:rgba(245, 175, 175, 0.3); /* Aura rosa suave */
   --accent:#b7a6ef;
   --shadow:0 1px 0 rgba(0,0,0,.2), 0 18px 40px -22px rgba(0,0,0, 0.05); 
   --radius:14px;
@@ -36,9 +36,9 @@
   --paper-2:#393E46;     
   --line:#332c53;
   --mica:#D9EFBD; 
-  --tati:#FF85BB; 
+  --tati:#F5AFAF; 
   --mica-wash:rgba(217, 239, 189, 0.15); 
-  --tati-wash:rgba(255, 133, 187, 0.15);
+  --tati-wash:rgba(245, 175, 175, 0.15);
   --accent:#b7a6ef; 
   --shadow:0 1px 0 rgba(0,0,0,.2), 0 18px 40px -22px rgba(0,0,0,.9);
 }
@@ -235,7 +235,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .journal-summary { padding: 18px 20px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-family: Newsreader, serif; font-size: 1.15rem; color: var(--ink); }
 .journal-summary::-webkit-details-marker { display: none; } 
 
-
 .journal-details[open] .journal-summary { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: 1px dashed var(--line); }
 .journal-details[open] .icon { transform: rotate(45deg); color: var(--accent); }
 
@@ -423,7 +422,7 @@ function renderLogin(){
     <section class="login">
       <div class="login-top">${langHTML()}</div>
       
-      <div style="text-align: center; margin-bottom: 10px;">        
+      <div style="text-align: center; margin-bottom: 10px;">
         <p class="eyebrow">${esc(prettyDate(key))}</p>
         <h1 style="margin-bottom: 8px;">${esc(questions()[0])}</h1>
         <p class="sub" style="margin: 0 auto;">${esc(t("tagline"))}</p>
