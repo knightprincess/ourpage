@@ -578,9 +578,9 @@ function viewDiario(){
     const makeItem = (e, who, isLocked) => {
       const body = entryHTML(e, { reactable: !isLocked, thread: !isLocked, veiled: isLocked, veilMsg: t("veil", { name: nameOf(other(state.me)) }) });
       return `
-        <details class="tl-details">
+      <details class="tl-details">
           <summary class="tl-summary ${who}">
-            <span><strong>${esc(nameOf(who))}</strong></span>
+            <span>${esc(nameOf(who))}</span>
             <span class="icon">+</span>
           </summary>
           <div class="journal-content">${body}</div>
