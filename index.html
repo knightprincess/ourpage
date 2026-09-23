@@ -18,10 +18,10 @@
   --paper:#F9F5F6;       
   --paper-2:#F8E8EE;     
   --line:#FDCEDF;        
-  --mica:#D9EFBD; /* Verde de Mica */
-  --tati:#F5AFAF; /* Nuevo rosa pastel de Tati */
-  --mica-wash:rgba(217, 239, 189, 0.4); /* Aura verde suave */
-  --tati-wash:rgba(245, 175, 175, 0.3); /* Aura rosa suave */
+  --mica:#D9EFBD; 
+  --tati:#F5AFAF; 
+  --mica-wash:rgba(217, 239, 189, 0.4); 
+  --tati-wash:rgba(245, 175, 175, 0.3); 
   --accent:#b7a6ef;
   --shadow:0 1px 0 rgba(0,0,0,.2), 0 18px 40px -22px rgba(0,0,0, 0.05); 
   --radius:14px;
@@ -179,7 +179,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .mood-day { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 76px; padding: 10px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
 .mood-date { font-size: 0.72rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
 .mood-texts { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-/* Sombra sólida de 1px, sin desenfoque */
 .mood-txt { font-size: 0.75rem; font-weight: 400; font-family: "DM Sans", sans-serif; text-align: center; padding: 3px 8px; border-radius: 8px; color: #241f36; letter-spacing: 0.3px; }
 .mood-txt.mica { background-color: var(--mica); }
 .mood-txt.tati { background-color: var(--tati); }
@@ -265,8 +264,8 @@ const CONFIG = {
   translateApi: true,
   translateEmail: "",
   people: {
-    mica: { name: "Mica", email: "azorzoni@gmail.com", pin: "1111" },
-    tati: { name: "Tati", email: "boldohonova01@mail.ru", pin: "2222" }
+    mica: { name: "Mica", email: "azorzoni@gmail.com", pin: "1111", tz: -3 }, // Hora Argentina
+    tati: { name: "Tati", email: "boldohonova01@mail.ru", pin: "2222", tz: 3 } // Hora Moscú (Si es otra, podés cambiar el 3 por la zona correcta)
   },
   reactions: ["❤️", "🥹", "🫂", "😭", "😂", "🌙"]
 };
@@ -294,15 +293,21 @@ const MOODS = {
 
 const UI = {
   en: { brand: "Our check-in", tagline: "One check-in a day, both of us.", yourKey: "Your key", enter: "Enter", wrongKey: "Wrong key.", enteringAs: "Entering as {name}.", signOut: "Sign out", yourPassword: "Your password", signIn: "Sign in", wrongPassword: "Wrong email or password.", authError: "Couldn't reach server.", signingIn: "Signing in…", tabToday: "Today", tabJournal: "Journal", tabUs: "Us", tabPensando: "Thinking of you", localBanner: "Test mode.", degradedBanner: "Offline.", todayTitle: "Your check-in today", howFeel: "How are you feeling?", writeHere: "...", bonusHere: "Today's extra question.", save: "Save", saveChanges: "Save changes", editHint: "Edit until your midnight.", yours: "Yours", hersLabel: "{name}'s", editToday: "Edit today", nextIn: "Next opens in {t}.", notYet: "{name} hasn't checked in.", veil: "Write your check-in to read {name}'s.", emptyJournal: "Nothing written yet.", commentHere: "Say something…", send: "Send", daysTogether: "days together", streak: "days in sync", savedAnswers: "letters exchanged", howWeAre: "How we're doing", moodSub: "Mood history.", moodEmpty: "No data.", thinking: "This made me think of you", notesSub: "Upload an image, paste a YouTube link, or write a thought.", noteHere: "A song, a verse, a thought...", leave: "Save memory", noNotes: "No notes yet.", today: "Today", yesterday: "Yesterday", edited: "edited", saved: "Saved", changed: "Changes saved", noteSent: "Sent", writeSomething: "Write something.", saveFailed: "Failed.", translate: "Translate", original: "Show original", translating: "Translating…", trFailed: "Error", trNote: "Machine translation", language: "Language", lightMode: "Light Mode", darkMode: "Dark Mode" },
-  es: { brand: "Nuestro check-in", tagline: "Un check-in por día, las dos.", yourKey: "Tu clave", enter: "Entrar", wrongKey: "Clave incorrecta.", enteringAs: "Entrando como {name}.", signOut: "Salir", yourPassword: "Tu contraseña", signIn: "Entrar", wrongPassword: "Email o contraseña incorrectos.", authError: "Error de conexión.", signingIn: "Entrando…", tabToday: "Hoy", tabJournal: "Diario", tabUs: "Nosotras", tabPensando: "Pensando en vos", localBanner: "Modo prueba.", degradedBanner: "Sin conexión.", todayTitle: "Tu check-in de hoy", howFeel: "¿Cómo te sentís?", writeHere: "...", bonusHere: "Pregunta extra de hoy.", save: "Guardar", saveChanges: "Guardar cambios", editHint: "Se puede editar hasta la medianoche (Hora Arg).", yours: "Lo tuyo", hersLabel: "Lo de {name}", editToday: "Editar", nextIn: "Mañana se abre en {t}.", notYet: "{name} todavía no hizo el check-in.", veil: "Respondé para leer a {name}.", emptyJournal: "Sin registros.", commentHere: "Comentar algo…", send: "Enviar", daysTogether: "días juntas", streak: "días en sintonía", savedAnswers: "cartas intercambiadas", howWeAre: "Cómo venimos", moodSub: "Ánimo histórico.", moodEmpty: "Sin datos.", thinking: "Esto me hizo acordar a vos", notesSub: "Subí una foto, pegá un link de YouTube, o dejá un pensamiento.", noteHere: "Una canción, un verso, un pensamiento...", leave: "Guardar", noNotes: "Todavía no hay nada.", today: "Hoy", yesterday: "Ayer", edited: "editado", saved: "Guardado", changed: "Cambios guardados", noteSent: "Enviado", writeSomething: "Escribí algo.", saveFailed: "Error al guardar.", translate: "Traducir", original: "Original", translating: "Traduciendo…", trFailed: "Error", trNote: "Traducción automática", language: "Idioma", lightMode: "Modo claro", darkMode: "Modo oscuro" },
-  ru: { brand: "Наш чек-ин", tagline: "Один чек-ин в день, обе.", yourKey: "Твой код", enter: "Войти", wrongKey: "Неверный код.", enteringAs: "Вход как {name}.", signOut: "Выйти", yourPassword: "Твой пароль", signIn: "Войти", wrongPassword: "Неверный email/пароль.", authError: "Ошибка подключения.", signingIn: "Входим…", tabToday: "Сегодня", tabJournal: "Дневник", tabUs: "Мы", tabPensando: "Думаю о тебе", localBanner: "Тестовый режим.", degradedBanner: "Офлайн.", todayTitle: "Твой чек-ин", howFeel: "Как ты себя чувствуешь?", writeHere: "...", bonusHere: "Дополнительный вопрос.", save: "Сохранить", saveChanges: "Изменить", editHint: "Можно редактировать до полуночи (Аргентина).", yours: "Твоё", hersLabel: "Её: {name}", editToday: "Изменить", nextIn: "Завтра откроется через {t}.", notYet: "{name} ещё не сделала чек-ин.", veil: "Напиши чтобы прочитать.", emptyJournal: "Пусто.", commentHere: "Написать…", send: "Отправить", daysTogether: "дней вместе", streak: "дней в унисон", savedAnswers: "писем друг другу", howWeAre: "Как у нас дела", moodSub: "История настроения.", moodEmpty: "Нет данных.", thinking: "Это напомнило мне о тебе", notesSub: "Загрузи фото, вставь ссылку на YouTube или напиши мысль.", noteHere: "Песня, стих, мысль...", leave: "Сохранить", noNotes: "Пока нет.", today: "Сегодня", yesterday: "Вчера", edited: "изменено", saved: "Сохранено", changed: "Изменено", noteSent: "Отправлено", writeSomething: "Напиши что-то.", saveFailed: "Ошибка.", translate: "Перевести", original: "Оригинал", translating: "Перевожу…", trFailed: "Ошибка", trNote: "Машинный перевод", language: "Язык", lightMode: "Светлая тема", darkMode: "Тёмная тема" }
+  es: { brand: "Nuestro check-in", tagline: "Un check-in por día, las dos.", yourKey: "Tu clave", enter: "Entrar", wrongKey: "Clave incorrecta.", enteringAs: "Entrando como {name}.", signOut: "Salir", yourPassword: "Tu contraseña", signIn: "Entrar", wrongPassword: "Email o contraseña incorrectos.", authError: "Error de conexión.", signingIn: "Entrando…", tabToday: "Hoy", tabJournal: "Diario", tabUs: "Nosotras", tabPensando: "Pensando en vos", localBanner: "Modo prueba.", degradedBanner: "Sin conexión.", todayTitle: "Tu check-in de hoy", howFeel: "¿Cómo te sentís?", writeHere: "...", bonusHere: "Pregunta extra de hoy.", save: "Guardar", saveChanges: "Guardar cambios", editHint: "Se puede editar hasta tu medianoche.", yours: "Lo tuyo", hersLabel: "Lo de {name}", editToday: "Editar", nextIn: "Mañana se abre en {t}.", notYet: "{name} todavía no hizo el check-in.", veil: "Respondé para leer a {name}.", emptyJournal: "Sin registros.", commentHere: "Comentar algo…", send: "Enviar", daysTogether: "días juntas", streak: "días en sintonía", savedAnswers: "cartas intercambiadas", howWeAre: "Cómo venimos", moodSub: "Ánimo histórico.", moodEmpty: "Sin datos.", thinking: "Esto me hizo acordar a vos", notesSub: "Subí una foto, pegá un link de YouTube, o dejá un pensamiento.", noteHere: "Una canción, un verso, un pensamiento...", leave: "Guardar", noNotes: "Todavía no hay nada.", today: "Hoy", yesterday: "Ayer", edited: "editado", saved: "Guardado", changed: "Cambios guardados", noteSent: "Enviado", writeSomething: "Escribí algo.", saveFailed: "Error al guardar.", translate: "Traducir", original: "Original", translating: "Traduciendo…", trFailed: "Error", trNote: "Traducción automática", language: "Idioma", lightMode: "Modo claro", darkMode: "Modo oscuro" },
+  ru: { brand: "Наш чек-ин", tagline: "Один чек-ин в день, обе.", yourKey: "Твой код", enter: "Войти", wrongKey: "Неверный код.", enteringAs: "Вход как {name}.", signOut: "Выйти", yourPassword: "Твой пароль", signIn: "Войти", wrongPassword: "Неверный email/пароль.", authError: "Ошибка подключения.", signingIn: "Входим…", tabToday: "Сегодня", tabJournal: "Дневник", tabUs: "Мы", tabPensando: "Думаю о тебе", localBanner: "Тестовый режим.", degradedBanner: "Офлайн.", todayTitle: "Твой чек-ин", howFeel: "Как ты себя чувствуешь?", writeHere: "...", bonusHere: "Дополнительный вопрос.", save: "Сохранить", saveChanges: "Изменить", editHint: "Можно редактировать до твоей полуночи.", yours: "Твоё", hersLabel: "Её: {name}", editToday: "Изменить", nextIn: "Завтра откроется через {t}.", notYet: "{name} ещё не сделала чек-ин.", veil: "Напиши чтобы прочитать.", emptyJournal: "Пусто.", commentHere: "Написать…", send: "Отправить", daysTogether: "дней вместе", streak: "дней в унисон", savedAnswers: "писем друг другу", howWeAre: "Как у нас дела", moodSub: "История настроения.", moodEmpty: "Нет данных.", thinking: "Это напомнило мне о тебе", notesSub: "Загрузи фото, вставь ссылку на YouTube или напиши мысль.", noteHere: "Песня, стих, мысль...", leave: "Сохранить", noNotes: "Пока нет.", today: "Сегодня", yesterday: "Вчера", edited: "изменено", saved: "Сохранено", changed: "Изменено", noteSent: "Отправлено", writeSomething: "Напиши что-то.", saveFailed: "Ошибка.", translate: "Перевести", original: "Оригинал", translating: "Перевожу…", trFailed: "Ошибка", trNote: "Машинный перевод", language: "Язык", lightMode: "Светлая тема", darkMode: "Тёмная тема" }
 };
 
 const $ = (s, el = document) => el.querySelector(s);
 const root = $("#root");
 const pad = n => String(n).padStart(2, "0");
 
-const todayKey = () => { const d = new Date(Date.now() - 3 * 3600000); return `${d.getUTCFullYear()}-${pad(d.getUTCMonth()+1)}-${pad(d.getUTCDate())}`; };
+// NUEVA LÓGICA DE ZONA HORARIA INTELIGENTE POR USUARIO
+const getOffset = () => (state.me && CONFIG.people[state.me]?.tz !== undefined) ? CONFIG.people[state.me].tz : -3;
+
+const todayKey = () => { 
+  const d = new Date(Date.now() + getOffset() * 3600000); 
+  return `${d.getUTCFullYear()}-${pad(d.getUTCMonth()+1)}-${pad(d.getUTCDate())}`; 
+};
 
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const other = who => who === "mica" ? "tati" : "mica";
@@ -328,9 +333,10 @@ function dayTitle(key){ if (key === todayKey()) return t("today"); return pretty
 const timeOf = iso => { try { return new Date(iso).toLocaleTimeString(LOCALE[state.lang], {hour:"2-digit", minute:"2-digit"}); } catch { return ""; } };
 
 function countdown(){
-  const now = new Date(Date.now() - 3 * 3600000);
+  const offset = getOffset();
+  const now = new Date(Date.now() + offset * 3600000);
   const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()+1));
-  const ms = next - now;
+  const ms = next.getTime() - now.getTime();
   return `${Math.floor(ms/3600000)}h ${Math.floor(ms%3600000/60000)}m`;
 }
 function toast(msg){ const el = document.createElement("div"); el.className = "toast"; el.textContent = msg; document.body.appendChild(el); setTimeout(() => el.remove(), 2600); }
@@ -560,7 +566,8 @@ function viewDiario(){
 }
 
 function viewNosotras(){
-  const since = new Date(CONFIG.since + "T00:00:00Z"); const together = Math.max(0, Math.floor((Date.now() - 3 * 3600000 - since) / 86400000));
+  const since = new Date(CONFIG.since + "T00:00:00Z"); 
+  const together = Math.max(0, Math.floor((Date.now() + getOffset() * 3600000 - since.getTime()) / 86400000));
   const dates = [...new Set(state.entries.map(e => e.date))].sort();
   
   let inSync = 0;
