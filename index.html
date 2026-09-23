@@ -18,10 +18,10 @@
   --paper:#F9F5F6;       
   --paper-2:#F8E8EE;     
   --line:#FDCEDF;        
-  --mica:#D9EFBD; 
-  --tati:#F5AFAF; 
-  --mica-wash:rgba(217, 239, 189, 0.4); 
-  --tati-wash:rgba(245, 175, 175, 0.3); 
+  --mica:#D9EFBD; /* Verde de Mica */
+  --tati:#F5AFAF; /* Nuevo rosa pastel de Tati */
+  --mica-wash:rgba(217, 239, 189, 0.4); /* Aura verde suave */
+  --tati-wash:rgba(245, 175, 175, 0.3); /* Aura rosa suave */
   --accent:#b7a6ef;
   --shadow:0 1px 0 rgba(0,0,0,.2), 0 18px 40px -22px rgba(0,0,0, 0.05); 
   --radius:14px;
@@ -179,6 +179,7 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .mood-day { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 76px; padding: 10px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
 .mood-date { font-size: 0.72rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
 .mood-texts { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+/* Sombra sólida de 1px, sin desenfoque */
 .mood-txt { font-size: 0.75rem; font-weight: 400; font-family: "DM Sans", sans-serif; text-align: center; padding: 3px 8px; border-radius: 8px; color: #241f36; letter-spacing: 0.3px; }
 .mood-txt.mica { background-color: var(--mica); }
 .mood-txt.tati { background-color: var(--tati); }
@@ -265,7 +266,7 @@ const CONFIG = {
   translateEmail: "",
   people: {
     mica: { name: "Mica", email: "azorzoni@gmail.com", pin: "1111", tz: -3 }, // Hora Argentina
-    tati: { name: "Tati", email: "boldohonova01@mail.ru", pin: "2222", tz: 3 } // Hora Moscú (Si es otra, podés cambiar el 3 por la zona correcta)
+    tati: { name: "Tati", email: "boldohonova01@mail.ru", pin: "2222", tz: 8 } // Hora Ulan-Udé, Siberia (+8)
   },
   reactions: ["❤️", "🥹", "🫂", "😭", "😂", "🌙"]
 };
