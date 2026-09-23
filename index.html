@@ -674,8 +674,9 @@ function viewPensando() {
             <span class="t">${esc(nameOf(n.author))} ·${new Date(n.created_at).toLocaleString(LOCALE[state.lang], {day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</span>
             ${can ? `<button class="tr" data-trnote="${n.id}" style="margin-top:6px">${esc(state.txOn["note:" + n.id] ? t("original") : t("translate"))}</button>` : ""}
             
-            <button class="note-comment-btn" data-toggle="${n.id}" title="Comentarios">
-              💭 ${commentCount > 0 ? `<span class="note-badge">${commentCount}</span>` : ""}
+           <button class="note-comment-btn" data-toggle="${n.id}" title="Comentarios" style="display: flex; align-items: center; justify-content: center; position: absolute; bottom: 8px; right: 12px; background: none; border: none; cursor: pointer; padding: 4px;">
+              <img src="https://i.ibb.co/GQPTFW0G/comment.png" style="width: 20px; height: 20px; object-fit: contain;">
+              ${commentCount > 0 ? `<span class="note-badge" style="top: -2px; right: -6px;">${commentCount}</span>` : ""}
             </button>
 
             <div class="note-comments ${isOpen ? '' : 'hidden'}" id="comments-${n.id}">
