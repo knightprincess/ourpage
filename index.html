@@ -236,10 +236,11 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
   background-position: left; background-size: 2px 10px; background-repeat: repeat-y; opacity: 0.25; 
 }
 .tl-day { position: relative; margin-bottom: 28px; }
-.tl-dot { position: absolute; left: -25px; top: 6px; width: 12px; height: 12px; border-radius: 50%; z-index: 2; box-shadow: 0 0 0 6px var(--paper); }
-.tl-dot.mica { background: var(--mica); }
-.tl-dot.tati { background: var(--tati); }
-.tl-dot.both { background: linear-gradient(135deg, var(--mica) 50%, var(--tati) 50%); }
+/* Tus estrellas personalizadas */
+.tl-dot { position: absolute; left: -27px; top: 3px; width: 18px; height: 18px; border-radius: 50%; z-index: 2; box-shadow: 0 0 0 4px var(--paper); background-color: var(--paper); background-size: contain; background-position: center; background-repeat: no-repeat; }
+.tl-dot.mica { background-image: url('PEGÁ_ACÁ_TU_LINK_ESTRELLA_MICA'); }
+.tl-dot.tati { background-image: url('PEGÁ_ACÁ_TU_LINK_ESTRELLA_TATI'); }
+.tl-dot.both { background-image: url('PEGÁ_ACÁ_TU_LINK_ESTRELLA_AMBAS'); }
 
 .tl-date { font-family: Newsreader, serif; font-size: 1.25rem; font-style: italic; color: var(--ink); margin-bottom: 12px; line-height: 1; display: inline-block; }
 .tl-entries { display: flex; flex-direction: column; gap: 10px; }
