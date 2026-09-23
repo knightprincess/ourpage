@@ -647,7 +647,9 @@ function viewPensando() {
       <p class="hint" style="margin:0 0 12px">${esc(t("notesSub"))}</p>
       
       <form id="noteForm" class="thread-form" style="align-items: center; margin-bottom: 20px;">
-        <button type="button" id="imgBtn" class="btn btn-ghost" style="padding: 11px 14px; font-size:1.2rem;" title="Subir foto">📷</button>
+       <button type="button" id="imgBtn" class="btn btn-ghost" style="padding: 8px; display: flex; align-items: center; justify-content: center;" title="Subir foto">
+  <img src="https://i.ibb.co/BKBm119h/camara.png" style="width: 24px; height: 24px; object-fit: contain;">
+</button>
         <input type="file" id="noteImg" accept="image/*" class="hidden">
         <input type="text" id="noteText" maxlength="240" placeholder="${esc(t("noteHere"))}">
         <button class="btn btn-sm" type="submit">${esc(t("leave"))}</button>
