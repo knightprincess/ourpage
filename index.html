@@ -14,33 +14,39 @@
 <style>
 :root{
   --ink:#241f36; 
-  --ink-soft:#5b5273; 
+  --ink-soft:#3d3554; 
   --paper:#F9F5F6;       
   --paper-2:#F8E8EE;     
-  --line:#FDCEDF;        
-  --mica:#D9EFBD; /* Verde de Mica */
-  --tati:#F5AFAF; /* Rosa de Tati */
+  --line:#e8b8c9;        
+  --mica:#D9EFBD; 
+  --tati:#F5AFAF; 
+  --mica-text:#467318;
+  --tati-text:#b53d3d;
   --mica-wash:rgba(217, 239, 189, 0.4); 
   --tati-wash:rgba(245, 175, 175, 0.3); 
   --accent:#b7a6ef;
-  --shadow:0 1px 0 rgba(0,0,0,.2), 0 18px 40px -22px rgba(0,0,0, 0.05); 
-  --radius:14px;
+  --accent-ink:#241f36;
+  --shadow:0 1px 0 rgba(0,0,0,.12), 0 12px 30px -18px rgba(36, 31, 54, 0.12); 
+  --radius:4px;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
 
 :root[data-theme="dark"]{
-  --ink:#ece7f5; 
-  --ink-soft:#a79ac4; 
+  --ink:#f2eef9; 
+  --ink-soft:#c5badc; 
   --paper:#222831;       
-  --paper-2:#393E46;     
-  --line:#332c53;
+  --paper-2:#31363F;     
+  --line:#453d66;
   --mica:#D9EFBD; 
   --tati:#F5AFAF; 
-  --mica-wash:rgba(217, 239, 189, 0.15); 
-  --tati-wash:rgba(245, 175, 175, 0.15);
+  --mica-text:#dff4c4;
+  --tati-text:#ffc2c2;
+  --mica-wash:rgba(217, 239, 189, 0.12); 
+  --tati-wash:rgba(245, 175, 175, 0.12);
   --accent:#b7a6ef; 
-  --shadow:0 1px 0 rgba(0,0,0,.2), 0 18px 40px -22px rgba(0,0,0,.9);
+  --accent-ink:#1c172b;
+  --shadow:0 1px 0 rgba(0,0,0,.3), 0 18px 40px -22px rgba(0,0,0,.85);
 }
   
 *,*::before,*::after{box-sizing:inherit}
@@ -54,18 +60,18 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
 h1,h2,h3{font-family:Newsreader,Georgia,serif;font-weight:400;margin:0;letter-spacing:-.01em}
 p{margin:0 0 .8em}
 button{font:inherit;cursor:pointer}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:var(--radius)}
 .hidden{display:none !important}
 
 .lang{position:relative; display:inline-flex; align-items:center; gap:8px;}
-.lang-btn, .theme-btn{background:transparent;border:1px solid var(--line);border-radius:999px;color:var(--ink-soft);
+.lang-btn, .theme-btn{background:transparent;border:1px solid var(--line);border-radius:var(--radius);color:var(--ink-soft);
   padding:5px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:.82rem; height: 32px;}
 .lang-btn svg, .theme-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.6}
 .lang-menu{position:absolute;right:0;top:calc(100% + 6px);background:var(--paper-2);border:1px solid var(--line);
-  border-radius:12px;box-shadow:var(--shadow);overflow:hidden;z-index:20;min-width:140px}
+  border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;z-index:20;min-width:140px}
 .lang-menu button{display:block;width:100%;text-align:left;background:none;border:none;color:var(--ink);padding:9px 14px;font-size:.9rem}
 .lang-menu button:hover{background:var(--paper)}
-.lang-menu button[aria-current="true"]{color:var(--accent);font-weight:500}
+.lang-menu button[aria-current="true"]{color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 
 .login{min-height:70vh;display:flex;flex-direction:column;justify-content:center;gap:26px}
 .login-top{display:flex;justify-content:flex-end}
@@ -81,73 +87,72 @@ button{font:inherit;cursor:pointer}
 .who-btn:active{transform:scale(.99)}
 .who-btn strong{font-family:Newsreader,serif;font-size:1.35rem;font-weight:400;display:block}
 .who-btn span{font-size:.85rem;color:var(--ink-soft);display:none;}
-.dot{width:12px;height:12px;border-radius:50%;flex:none;}
-.dot.mica{background:var(--mica)} .dot.tati{background:var(--tati)}
+.dot{width:11px;height:11px;border-radius:50%;flex:none;}
+.dot.mica{background:var(--mica);border:1px solid rgba(0,0,0,0.15)} 
+.dot.tati{background:var(--tati);border:1px solid rgba(0,0,0,0.15)}
 
 .pin-row{display:flex;gap:8px;margin-top:10px}
 .pin-row input{flex:1;min-width:0}
 
-input[type="password"],input[type="text"],textarea{width:100%;background:var(--paper-2);color:var(--ink);
-  border:1px solid var(--line);border-radius:10px;padding:11px 13px;font:inherit;resize:vertical;transition:border-color .15s ease}
+input[type="password"],input[type="text"],textarea{width:100%;background:var(--paper);color:var(--ink);
+  border:1px solid var(--line);border-radius:var(--radius);padding:11px 13px;font:inherit;resize:vertical;transition:border-color .15s ease}
 textarea{font-family:Newsreader,Georgia,serif;font-size:1.05rem;line-height:1.55;min-height:88px}
 input:focus,textarea:focus{border-color:var(--accent);outline:none}
-.btn{border:none;border-radius:10px;padding:12px 18px;font-weight:500;background:var(--ink);color:var(--paper);
+.btn{border:none;border-radius:var(--radius);padding:12px 18px;font-weight:500;background:var(--ink);color:var(--paper);
   transition:opacity .15s ease, transform .15s ease}
 .btn:hover{opacity:.88}
 .btn:active{transform:scale(.985)}
 .btn-ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
-.btn-sm{padding:7px 12px;font-size:.86rem;border-radius:8px}
+.btn-sm{padding:7px 12px;font-size:.86rem;border-radius:var(--radius)}
 
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:16px;flex-wrap:wrap}
 .brand{font-family:Newsreader,serif;font-style:italic;font-size:1.15rem}
 .me{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--ink-soft)}
-.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:26px; overflow-x: auto; white-space: nowrap;}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:24px; overflow-x: auto; white-space: nowrap;}
 .tabs::-webkit-scrollbar { display: none; }
-.tab{background:none;border:none;padding:10px 2px;margin-right:20px;color:var(--ink-soft);position:relative; font-size: 0.95rem;}
-.tab[aria-selected="true"]{color:var(--ink); font-weight: 500;}
+.tab{background:none;border:none;padding:10px 4px;margin-right:16px;color:var(--ink-soft);position:relative; font-size: 0.92rem;}
+.tab[aria-selected="true"]{color:var(--ink); font-weight: 600;}
 .tab[aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent)}
 
 .card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
-.q{font-family:Newsreader,serif;font-style:italic;font-size:1.22rem;line-height:1.35;margin:0 0 10px;font-weight:300}
+.q{font-family:Newsreader,serif;font-style:italic;font-size:1.22rem;line-height:1.35;margin:0 0 10px;font-weight:400;color:var(--ink)}
 .field{margin-bottom:22px}
 .bonus{border-left:2px solid var(--accent);padding-left:14px}
 .moods{display:flex;gap:6px;flex-wrap:wrap}
-.mood{flex:1 1 84px;padding:10px 6px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink-soft);font-size:.84rem;text-align:center}
-.mood[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--paper-2);font-weight:500}
-.hint{font-size:.83rem;color:var(--ink-soft);margin:6px 0 0}
+.mood{flex:1 1 84px;padding:10px 6px;border-radius:var(--radius);border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:.86rem;text-align:center;transition:background .15s ease, border-color .15s ease}
+.mood[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink);font-weight:700}
+.hint{font-size:.85rem;color:var(--ink-soft);margin:6px 0 0}
 
 .entry{border-radius:var(--radius);border:1px solid var(--line);padding:18px 20px;background:var(--paper-2); position:relative;}
-.entry.mica{border-left:3px solid var(--mica)}
-.entry.tati{border-left:3px solid var(--tati)}
 .entry-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:12px}
-.author{font-family:Newsreader,serif;font-size:1.1rem}
-.author.mica{color:var(--mica)} .author.tati{color:var(--tati)}
+.author{font-family:Newsreader,serif;font-size:1.15rem;font-weight:500}
+.author.mica{color:var(--mica-text)} .author.tati{color:var(--tati-text)}
 .stamp{font-size:.78rem;color:var(--ink-soft)}
 .qa{margin-bottom:14px}
 .qa:last-child{margin-bottom:0}
-.qa .lbl{font-family:Newsreader,serif;font-style:italic;color:var(--ink-soft);font-size:.98rem;margin-bottom:2px}
-.qa .ans{font-family:Newsreader,serif;font-size:1.06rem;line-height:1.6;white-space:pre-wrap}
+.qa .lbl{font-family:Newsreader,serif;font-style:italic;color:var(--ink-soft);font-size:.98rem;margin-bottom:4px}
+.qa .ans{font-family:Newsreader,serif;font-size:1.06rem;line-height:1.6;white-space:pre-wrap;color:var(--ink)}
 
-.decor{text-align:center; margin-top:20px; opacity:0.3;}
+.decor{text-align:center; margin-top:20px; opacity:0.35;}
 .decor svg {width:20px; height:20px;}
 
-.moodchip{display:inline-block;font-size:.78rem;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--ink-soft)}
+.moodchip{display:inline-block;font-size:.8rem;border:1px solid var(--line);border-radius:var(--radius);padding:2px 10px;color:var(--ink);background:var(--paper)}
 .trbar{margin-top:12px}
-.tr{background:none;border:none;padding:0;color:var(--accent);font-size:.82rem;text-decoration:underline;text-underline-offset:3px}
+.tr{background:none;border:none;padding:0;color:var(--ink);font-size:.82rem;font-weight:500;text-decoration:underline;text-underline-offset:3px}
 .trnote{font-size:.76rem;color:var(--ink-soft);margin-top:4px}
 .veil{position:relative}
 .veil .entry{filter:blur(7px);pointer-events:none;user-select:none}
 .veil-msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;
-  font-family:Newsreader,serif;font-style:italic;font-size:1.05rem;color:var(--ink-soft)}
+  font-family:Newsreader,serif;font-style:italic;font-size:1.05rem;color:var(--ink)}
 @keyframes reveal{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .revealed{animation:reveal .5s ease both}
 .reacts{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap}
-.react{border:1px solid var(--line);background:transparent;border-radius:999px;padding:4px 10px;font-size:.95rem;line-height:1.3}
+.react{border:1px solid var(--line);background:var(--paper);border-radius:var(--radius);padding:4px 10px;font-size:.95rem;line-height:1.3}
 .react[aria-pressed="true"]{border-color:var(--accent);background:var(--accent)}
 .thread{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
-.msg{font-size:.92rem;margin-bottom:8px}
-.msg b{font-weight:500}
-.msg.mica b{color:var(--mica)} .msg.tati b{color:var(--tati)}
+.msg{font-size:.92rem;margin-bottom:8px;color:var(--ink)}
+.msg b{font-weight:600;margin-right:6px}
+.msg.mica b{color:var(--mica-text)} .msg.tati b{color:var(--tati-text)}
 .msg .t{color:var(--ink-soft);font-size:.76rem;margin-left:6px}
 .thread-form{display:flex;gap:8px;margin-top:10px}
 .thread-form input{flex:1;min-width:0}
@@ -156,7 +161,27 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .day-label{font-family:Newsreader,serif;font-size:1.05rem;color:var(--ink-soft);margin-bottom:10px;display:flex;align-items:center;gap:10px}
 .day-label::after{content:"";flex:1;height:1px;background:var(--line)}
 
-/* STATS Y FOTO RESPONSIVE */
+/* MONTH FILTER PILLS (OPTION B) */
+.month-bar{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:18px;border-bottom:1px dashed var(--line)}
+.month-bar::-webkit-scrollbar{display:none}
+.month-pill{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);padding:6px 12px;font-size:.84rem;color:var(--ink-soft);white-space:nowrap;transition:all .15s ease}
+.month-pill[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+
+/* WEEKLY REPORT SHARED CARD */
+.wk-header{display:flex;flex-direction:column;gap:3px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px dashed var(--line)}
+.wk-title{font-family:Newsreader,serif;font-size:1.32rem;font-style:italic;color:var(--ink);line-height:1.2}
+.wk-range{font-size:.82rem;color:var(--ink-soft);letter-spacing:0.02em}
+.wk-block{margin-bottom:18px}
+.wk-block:last-child{margin-bottom:0}
+.wk-q{font-family:Newsreader,serif;font-style:italic;font-size:1.06rem;color:var(--ink-soft);margin-bottom:8px}
+.wk-pair{display:flex;flex-direction:column;gap:8px}
+.wk-ans{padding:10px 12px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);font-family:Newsreader,serif;font-size:1.02rem;line-height:1.55;white-space:pre-wrap}
+.wk-who{font-family:Newsreader,serif;font-size:1rem;font-weight:500;display:block;margin-bottom:4px}
+.wk-who.mica{color:var(--mica-text)}
+.wk-who.tati{color:var(--tati-text)}
+.wk-empty{font-style:italic;color:var(--ink-soft);font-size:.94rem}
+
+/* STATS & RESPONSIVE PHOTO */
 .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 26px; }
 .stat { padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper-2); display: flex; flex-direction: column; justify-content: center; }
 .stat .n{font-family:Newsreader,serif;font-size:2rem;line-height:1;display:block;color:var(--ink)}
@@ -170,95 +195,87 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
   .stat-img { grid-column: 1 / -1; height: 180px; } 
 }
 
-/* HISTORIAL DE ÁNIMO CON SOMBRAS SÓLIDAS */
-.bars{display:flex;align-items:flex-end;gap:5px;height:76px;margin-top:8px}
-.barcol{flex:1;display:flex;flex-direction:column-reverse;gap:2px;height:100%}
-.bar{border-radius:3px;min-height:3px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);}
-
+/* MOOD HISTORY */
 .mood-history-list { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-top: 12px; }
-.mood-day { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 76px; padding: 10px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+.mood-day { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 76px; padding: 10px 8px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
 .mood-date { font-size: 0.72rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
 .mood-texts { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.mood-txt { font-size: 0.75rem; font-weight: 400; font-family: "DM Sans", sans-serif; text-align: center; padding: 3px 8px; border-radius: 8px; color: #241f36; letter-spacing: 0.3px; }
+.mood-txt { font-size: 0.75rem; font-weight: 500; font-family: "DM Sans", sans-serif; text-align: center; padding: 3px 8px; border-radius: var(--radius); color: #241f36; letter-spacing: 0.3px; }
 .mood-txt.mica { background-color: var(--mica); }
 .mood-txt.tati { background-color: var(--tati); }
 
 .mood-dots-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
-.mood-dot-col { display: flex; flex-direction: column; gap: 5px; padding: 4px; border-radius: 6px; transition: background 0.2s; cursor: help; }
+.mood-dot-col { display: flex; flex-direction: column; gap: 5px; padding: 4px; border-radius: var(--radius); transition: background 0.2s; cursor: help; }
 .mood-dot-col:hover { background: var(--line); }
-.mood-dot { width: 14px; height: 14px; border-radius: 50%; opacity: 0.9; box-shadow: 0 2px 4px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.05); }
+.mood-dot { width: 14px; height: 14px; border-radius: 50%; opacity: 0.95; box-shadow: 0 2px 4px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.08); }
 .mood-dot.mica { background: var(--mica); }
 .mood-dot.tati { background: var(--tati); }
-.mood-dot.empty { background: transparent; border: 1px solid var(--ink-soft); opacity: 0.25; box-shadow: none; }
+.mood-dot.empty { background: transparent; border: 1px solid var(--ink-soft); opacity: 0.35; box-shadow: none; }
 
-.legend{font-size:.8rem;color:var(--ink-soft);display:flex;gap:14px;margin-top:10px}
-.legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px; box-shadow: 0 1px 2px rgba(0,0,0,0.15);}
+.legend{font-size:.82rem;color:var(--ink-soft);display:flex;gap:14px;margin-top:10px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px; border:1px solid rgba(0,0,0,0.1)}
 
-/* DISEÑO DE NOTAS RICH (GRILLA ESTILO PINTEREST) */
+/* RICH NOTES GRID */
 .notes-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 14px; align-items: start; }
 @media(min-width: 680px) {
   .notes-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
 }
-.note { position: relative; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px 38px 16px; background: var(--paper-2); font-family: Newsreader, serif; font-size: 1.05rem; overflow-wrap: break-word; }
+.note { position: relative; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px 38px 16px; background: var(--paper-2); font-family: Newsreader, serif; font-size: 1.05rem; overflow-wrap: break-word; }
 .note.mica { border-left: 3px solid var(--mica); } 
 .note.tati { border-left: 3px solid var(--tati); }
-.note .t { display: block; font-family: "DM Sans", sans-serif; font-size: 0.76rem; color: var(--ink-soft); margin-top: 10px; }
-.note a { color: var(--accent); text-decoration: none; font-weight: 500; }
-.note a:hover { text-decoration: underline; }
+.note .t { display: block; font-family: "DM Sans", sans-serif; font-size: 0.78rem; color: var(--ink-soft); margin-top: 10px; }
+.note a { color: var(--ink); text-decoration: underline; font-weight: 500; }
 
-/* AJUSTES PARA QUE FOTOS/VIDEOS SE VEAN MÁS CHICOS EN EL CELULAR */
-.note-yt { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--line); max-height: 180px; }
+.note-yt { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--radius); margin-bottom: 10px; border: 1px solid var(--line); max-height: 180px; }
 .note-yt iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-.note-img-embed { width: 100%; max-height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--line); }
+.note-img-embed { width: 100%; max-height: 180px; object-fit: cover; border-radius: var(--radius); margin-bottom: 10px; border: 1px solid var(--line); }
 
 @media(min-width: 680px) {
   .note-yt { max-height: none; }
   .note-img-embed { max-height: 250px; }
 }
 
-/* COMENTARIOS EN NOTAS */
-.note-comment-btn { position: absolute; bottom: 8px; right: 12px; background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--ink-soft); transition: transform 0.2s; opacity: 0.8; }
+.note-comment-btn { position: absolute; bottom: 8px; right: 12px; background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--ink-soft); transition: transform 0.2s; opacity: 0.85; }
 .note-comment-btn:hover { transform: scale(1.1); opacity: 1; }
 .note-comments { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line); }
-.note-badge { font-family: sans-serif; font-size: 0.75rem; background: var(--accent); color: var(--paper-2); border-radius: 999px; padding: 2px 6px; position: absolute; top: -4px; right: -8px; font-weight: bold; }
+.note-badge { font-family: sans-serif; font-size: 0.75rem; background: var(--accent); color: var(--accent-ink); border-radius: var(--radius); padding: 1px 5px; position: absolute; top: -4px; right: -6px; font-weight: 700; }
 
 .empty{color:var(--ink-soft);font-family:Newsreader,serif;font-style:italic}
-.banner{border:1px dashed var(--line);border-radius:12px;padding:12px 14px;font-size:.85rem;color:var(--ink-soft);margin-bottom:20px}
+.banner{border:1px dashed var(--line);border-radius:var(--radius);padding:12px 14px;font-size:.85rem;color:var(--ink-soft);margin-bottom:20px}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));
-  background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-size:.88rem;z-index:50;box-shadow:var(--shadow)}
+  background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:var(--radius);font-size:.88rem;z-index:50;box-shadow:var(--shadow)}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
 
-/* LÍNEA DE TIEMPO DEL DIARIO */
+/* JOURNAL TIMELINE */
 .timeline { position: relative; padding-left: 26px; margin: 10px 0 30px; }
 .timeline::before { 
   content: ""; position: absolute; top: 8px; bottom: 0; left: 6px; width: 2px; 
   background-image: linear-gradient(to bottom, var(--ink-soft) 50%, rgba(255,255,255,0) 0%); 
-  background-position: left; background-size: 2px 10px; background-repeat: repeat-y; opacity: 0.25; 
+  background-position: left; background-size: 2px 10px; background-repeat: repeat-y; opacity: 0.3; 
 }
-.tl-day { position: relative; margin-bottom: 28px; }
-/* Tus estrellas personalizadas */
+.tl-day { position: relative; margin-bottom: 26px; }
 .tl-dot { position: absolute; left: -27px; top: 3px; width: 18px; height: 18px; border-radius: 50%; z-index: 2; box-shadow: 0 0 0 4px var(--paper); background-color: var(--paper); background-size: contain; background-position: center; background-repeat: no-repeat; }
 .tl-dot.mica { background-image: url('https://i.ibb.co/Y4mh9656/estrella-mica.png'); }
 .tl-dot.tati { background-image: url('https://i.ibb.co/QFCcMK90/estrella-tati.png'); }
 .tl-dot.both { background-image: url('https://i.ibb.co/HRYWBqf/estrella-ambas.png'); }
 
-.tl-date { font-family: Newsreader, serif; font-size: 1.25rem; font-style: italic; color: var(--ink); margin-bottom: 12px; line-height: 1; display: inline-block; }
+.tl-date { font-family: Newsreader, serif; font-size: 1.22rem; font-style: italic; color: var(--ink); margin-bottom: 10px; line-height: 1; display: inline-block; }
 .tl-entries { display: flex; flex-direction: column; gap: 10px; }
 
 .tl-details { background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); transition: all 0.2s ease; overflow: hidden; }
-.tl-summary { padding: 14px 18px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-family: "DM Sans", sans-serif; font-size: 0.95rem; color: var(--ink); }
+.tl-summary { padding: 13px 16px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-family: Newsreader, serif; font-size: 1.05rem; color: var(--ink); }
 .tl-summary::-webkit-details-marker { display: none; } 
-
+.tl-summary .who-lbl { font-weight: 500; }
+.tl-summary .who-lbl.mica { color: var(--mica-text); }
+.tl-summary .who-lbl.tati { color: var(--tati-text); }
 
 .tl-details[open] .tl-summary { border-bottom: 1px dashed var(--line); background: rgba(0,0,0,0.02); }
-.tl-details[open] .icon { transform: rotate(45deg); color: var(--accent); }
+.tl-details[open] .icon { transform: rotate(45deg); color: var(--ink); }
 
-.icon { font-size: 1.6rem; font-family: sans-serif; transition: transform 0.2s; color: var(--ink-soft); line-height: 0.8; font-weight: 300; }
-.journal-content { padding: 16px 20px; }
+.icon { font-size: 1.5rem; font-family: sans-serif; transition: transform 0.2s; color: var(--ink-soft); line-height: 0.8; font-weight: 300; }
+.journal-content { padding: 16px 18px; }
 .journal-content .entry { border: none; box-shadow: none; padding: 0; background: transparent; }
-.journal-content .entry.mica, .journal-content .entry.tati { border-left: none; }
 .journal-content .entry-head { display: none; }
-
 </style>
 </head>
 <body>
@@ -280,8 +297,8 @@ const CONFIG = {
   translateApi: true,
   translateEmail: "",
   people: {
-    mica: { name: "Mica", email: "azorzoni@gmail.com", pin: "1111", tz: -3 }, // Hora Argentina
-    tati: { name: "Tati", email: "boldohonova01@mail.ru", pin: "2222", tz: 8 } // Hora Ulan-Udé, Siberia (+8)
+    mica: { name: "Aile", email: "azorzoni@gmail.com", pin: "1111", tz: -3 }, // Buenos Aires (-3)
+    tati: { name: "Tati", email: "boldohonova01@mail.ru", pin: "2222", tz: 8 }  // Ulan-Ude, Siberia (+8)
   },
   reactions: ["❤️", "🥹", "🫂", "😭", "😂", "🌙"]
 };
@@ -295,10 +312,88 @@ const QUESTIONS = {
   ru: ["Как прошёл твой день, честно?", "Что было самым хорошим за сегодня?", "Что далось тяжело сегодня?", "Что тебе нужно от меня завтра?", "Есть что-то, что ты хотела сказать мне сегодня и не сказала?"]
 };
 
+const WEEKLY_QUESTIONS = {
+  en: ["This week I showed up:", "This week I fell short by:", "What I'll do different next week:"],
+  es: ["Esta semana estuve presente en:", "Esta semana me quedé corta en:", "Qué voy a hacer diferente la próxima semana:"],
+  ru: ["На этой неделе я проявила себя в:", "На этой неделе мне не хватило:", "Что я сделаю иначе на следующей неделе:"]
+};
+
 const BONUS = {
-  en: ["What song reminded you of me this week?", "If we were together right now, what would we be doing?", "Tell me something about your day you didn't tell anyone else.", "What's the first thing you want to do when we see each other?", "What do you miss about me today?"],
-  es: ["¿Qué canción te hizo acordar a mí esta semana?", "Si estuviéramos juntas ahora mismo, ¿qué estaríamos haciendo?", "Contame algo de tu día que no le contaste a nadie más.", "¿Qué es lo primero que querés hacer cuando nos veamos?", "¿Qué cosa mía extrañás hoy?"],
-  ru: ["Какая песня напомнила тебе обо мне на этой неделе?", "Если бы мы были вместе прямо сейчас, что бы мы делали?", "Расскажи то из своего дня, о чём не рассказала никому другому.", "Что ты хочешь сделать первым делом, когда мы увидимся?", "По чему во мне ты скучаешь сегодня?"]
+  en: [
+    "What song reminded you of me this week?",
+    "If we were together right now, what would we be doing?",
+    "Tell me something about your day you didn't tell anyone else.",
+    "What's the first thing you want to do when we see each other?",
+    "What do you miss about me today?",
+    "What is a small, ordinary moment from today that you wish I had been standing next to you for?",
+    "When did you feel most loved or understood by me this week?",
+    "What is something about our future life together that you daydreamed about recently?",
+    "Is there a part of you or your day right now that feels unseen that you want me to witness?",
+    "What is a comfort ritual or physical touch from me you're craving most right now?",
+    "What song, smell, or random detail made you stop and think of me today?",
+    "How can I show up for you across the distance tomorrow in a way that feels grounding?",
+    "What is one fear or insecurity about the distance that you want us to hold gently together?",
+    "If we had 24 hours together with zero responsibilities, how would we spend the first hour?",
+    "What is something you admire about how I handle stress or hard days?",
+    "When you look at photos of us, what memory brings an immediate smile to your face?",
+    "What is a boundary, habit, or communication tweak that would make our calls feel even closer?",
+    "What made you feel proud of yourself today, even if it seemed tiny?",
+    "If you could bottle up one feeling from this week to share with me, what would it be?",
+    "What is a book, movie, or piece of art you want us to experience together soon?",
+    "How has loving me changed the way you treat yourself?",
+    "What is a quiet dream you have for the two of us a year from now?",
+    "What is one thing I do—even over text or voice notes—that always softens your mood?"
+  ],
+  es: [
+    "¿Qué canción te hizo acordar a mí esta semana?",
+    "Si estuviéramos juntas ahora mismo, ¿qué estaríamos haciendo?",
+    "Contame algo de tu día que no le contaste a nadie más.",
+    "¿Qué es lo primero que querés hacer cuando nos veamos?",
+    "¿Qué cosa mía extrañás hoy?",
+    "¿Cuál fue un momento chiquito y cotidiano de hoy en el que deseaste que yo estuviera al lado tuyo?",
+    "¿Cuándo te sentiste más amada o comprendida por mí esta semana?",
+    "¿Qué cosa sobre nuestra vida futura juntas estuviste imaginando últimamente?",
+    "¿Hay alguna parte de vos o de tu día que sientas invisible y quieras que yo acompañe?",
+    "¿Qué gesto de cariño o contacto físico mío es lo que más necesitás ahora mismo?",
+    "¿Qué canción, olor o detalle al azar te hizo frenar y pensar en mí hoy?",
+    "¿Cómo puedo estar presente para vos mañana a la distancia de una forma que te dé calma?",
+    "¿Qué miedo o inseguridad sobre la distancia querés que sostengamos juntas con ternura?",
+    "Si tuviéramos 24 horas juntas sin ninguna obligación, ¿cómo pasaríamos la primera hora?",
+    "¿Qué es algo que admirás de cómo manejo el estrés o los días difíciles?",
+    "Cuando mirás fotos nuestras, ¿qué recuerdo te saca una sonrisa inmediata?",
+    "¿Qué hábito o pequeño cambio en nuestra comunicación haría que nuestras llamadas se sientan aún más cerca?",
+    "¿Qué te hizo sentir orgullosa de vos misma hoy, aunque parezca algo chiquito?",
+    "Si pudieras guardar en un frasco una sensación de esta semana para compartirla conmigo, ¿cuál sería?",
+    "¿Qué libro, película o pieza de arte querés que compartamos pronto?",
+    "¿Cómo cambió la forma en que te tratás a vos misma desde que nos amamos?",
+    "¿Qué sueño tranquilo tenés para nosotras dos de acá a un año?",
+    "¿Qué es algo que hago —incluso por mensaje o audio— que siempre te ablanda el ánimo?"
+  ],
+  ru: [
+    "Какая песня напомнила тебе обо мне на этой неделе?",
+    "Если бы мы были вместе прямо сейчас, что бы мы делали?",
+    "Расскажи то из своего дня, о чём не рассказала никому другому.",
+    "Что ты хочешь сделать первым делом, когда мы увидимся?",
+    "По чему во мне ты скучаешь сегодня?",
+    "Какой маленький, обычный момент сегодняшнего дня тебе хотелось бы разделить со мной рядом?",
+    "Когда на этой неделе ты чувствовала себя наиболее любимой и понятой мной?",
+    "О чём в нашей будущей совместной жизни ты недавно мечтала?",
+    "Есть ли часть тебя или твоего дня, которая осталась незамеченной, но ты хочешь, чтобы я её увидела?",
+    "По какому моему прикосновению или ритуалу нежности ты скучаешь сильнее всего прямо сейчас?",
+    "Какая песня, запах или случайная мелочь заставила тебя остановиться и подумать обо мне сегодня?",
+    "Как я могу поддержать тебя на расстоянии завтра, чтобы ты почувствовала опору?",
+    "Какой страх или неуверенность из-за расстояния ты хочешь, чтобы мы бережно прожили вместе?",
+    "Если бы у нас было 24 часа вдвоём без всяких дел, как бы мы провели первый час?",
+    "Чем ты восхищаешься в том, как я справляюсь со стрессом или тяжёлыми днями?",
+    "Когда ты смотришь на наши фото, какое воспоминание сразу вызывает у тебя улыбку?",
+    "Какая привычка или мелочь в общении сделала бы наши созвоны ещё ближе?",
+    "Чем ты гордишься в себе сегодня, даже если это кажется совсем мелочью?",
+    "Если бы можно было сохранить одно чувство этой недели, чтобы поделиться со мной, что бы это было?",
+    "Какую книгу, фильм или произведение искусства ты хочешь, чтобы мы скоро разделили вместе?",
+    "Как любовь ко мне изменила то, как ты относишься к самой себе?",
+    "Какая тихая мечта о нас двоих через год живёт в твоём сердце?",
+    "Что из того, что я делаю — даже в переписке или голосовых — всегда смягчает твоё настроение?"
+  ]
 };
 
 const MOODS = {
@@ -308,20 +403,38 @@ const MOODS = {
 };
 
 const UI = {
-  en: { brand: "Our check-in", tagline: "One check-in a day, both of us.", yourKey: "Your key", enter: "Enter", wrongKey: "Wrong key.", enteringAs: "Entering as {name}.", signOut: "Sign out", yourPassword: "Your password", signIn: "Sign in", wrongPassword: "Wrong email or password.", authError: "Couldn't reach server.", signingIn: "Signing in…", tabToday: "Today", tabJournal: "Journal", tabUs: "Us", tabPensando: "Thinking of you", localBanner: "Test mode.", degradedBanner: "Offline.", todayTitle: "Your check-in today", howFeel: "How are you feeling?", writeHere: "...", bonusHere: "Today's extra question.", save: "Save", saveChanges: "Save changes", editHint: "Edit until your midnight.", yours: "Yours", hersLabel: "{name}'s", editToday: "Edit today", nextIn: "Next opens in {t}.", notYet: "{name} hasn't checked in.", veil: "Write your check-in to read {name}'s.", emptyJournal: "Nothing written yet.", commentHere: "Say something…", send: "Send", daysTogether: "days together", streak: "days in sync", savedAnswers: "letters exchanged", howWeAre: "How we're doing", moodSub: "Mood history.", moodEmpty: "No data.", thinking: "This made me think of you", notesSub: "Upload an image, paste a YouTube link, or write a thought.", noteHere: "A song, a verse, a thought...", leave: "Save memory", noNotes: "No notes yet.", today: "Today", yesterday: "Yesterday", edited: "edited", saved: "Saved", changed: "Changes saved", noteSent: "Sent", writeSomething: "Write something.", saveFailed: "Failed.", translate: "Translate", original: "Show original", translating: "Translating…", trFailed: "Error", trNote: "Machine translation", language: "Language", lightMode: "Light Mode", darkMode: "Dark Mode" },
-  es: { brand: "Nuestro check-in", tagline: "Un check-in por día, las dos.", yourKey: "Tu clave", enter: "Entrar", wrongKey: "Clave incorrecta.", enteringAs: "Entrando como {name}.", signOut: "Salir", yourPassword: "Tu contraseña", signIn: "Entrar", wrongPassword: "Email o contraseña incorrectos.", authError: "Error de conexión.", signingIn: "Entrando…", tabToday: "Hoy", tabJournal: "Diario", tabUs: "Nosotras", tabPensando: "Pensando en vos", localBanner: "Modo prueba.", degradedBanner: "Sin conexión.", todayTitle: "Tu check-in de hoy", howFeel: "¿Cómo te sentís?", writeHere: "...", bonusHere: "Pregunta extra de hoy.", save: "Guardar", saveChanges: "Guardar cambios", editHint: "Se puede editar hasta tu medianoche.", yours: "Lo tuyo", hersLabel: "Lo de {name}", editToday: "Editar", nextIn: "Mañana se abre en {t}.", notYet: "{name} todavía no hizo el check-in.", veil: "Respondé para leer a {name}.", emptyJournal: "Sin registros.", commentHere: "Comentar algo…", send: "Enviar", daysTogether: "días juntas", streak: "días en sintonía", savedAnswers: "cartas intercambiadas", howWeAre: "Cómo venimos", moodSub: "Ánimo histórico.", moodEmpty: "Sin datos.", thinking: "Esto me hizo acordar a vos", notesSub: "Subí una foto, pegá un link de YouTube, o dejá un pensamiento.", noteHere: "Una canción, un verso, un pensamiento...", leave: "Guardar", noNotes: "Todavía no hay nada.", today: "Hoy", yesterday: "Ayer", edited: "editado", saved: "Guardado", changed: "Cambios guardados", noteSent: "Enviado", writeSomething: "Escribí algo.", saveFailed: "Error al guardar.", translate: "Traducir", original: "Original", translating: "Traduciendo…", trFailed: "Error", trNote: "Traducción automática", language: "Idioma", lightMode: "Modo claro", darkMode: "Modo oscuro" },
-  ru: { brand: "Наш чек-ин", tagline: "Один чек-ин в день, обе.", yourKey: "Твой код", enter: "Войти", wrongKey: "Неверный код.", enteringAs: "Вход как {name}.", signOut: "Выйти", yourPassword: "Твой пароль", signIn: "Войти", wrongPassword: "Неверный email/пароль.", authError: "Ошибка подключения.", signingIn: "Входим…", tabToday: "Сегодня", tabJournal: "Дневник", tabUs: "Мы", tabPensando: "Думаю о тебе", localBanner: "Тестовый режим.", degradedBanner: "Офлайн.", todayTitle: "Твой чек-ин", howFeel: "Как ты себя чувствуешь?", writeHere: "...", bonusHere: "Дополнительный вопрос.", save: "Сохранить", saveChanges: "Изменить", editHint: "Можно редактировать до твоей полуночи.", yours: "Твоё", hersLabel: "Её: {name}", editToday: "Изменить", nextIn: "Завтра откроется через {t}.", notYet: "{name} ещё не сделала чек-ин.", veil: "Напиши чтобы прочитать.", emptyJournal: "Пусто.", commentHere: "Написать…", send: "Отправить", daysTogether: "дней вместе", streak: "дней в унисон", savedAnswers: "писем друг другу", howWeAre: "Как у нас дела", moodSub: "История настроения.", moodEmpty: "Нет данных.", thinking: "Это напомнило мне о тебе", notesSub: "Загрузи фото, вставь ссылку на YouTube или напиши мысль.", noteHere: "Песня, стих, мысль...", leave: "Сохранить", noNotes: "Пока нет.", today: "Сегодня", yesterday: "Вчера", edited: "изменено", saved: "Сохранено", changed: "Изменено", noteSent: "Отправлено", writeSomething: "Напиши что-то.", saveFailed: "Ошибка.", translate: "Перевести", original: "Оригинал", translating: "Перевожу…", trFailed: "Ошибка", trNote: "Машинный перевод", language: "Язык", lightMode: "Светлая тема", darkMode: "Тёмная тема" }
+  en: {
+    brand: "Our check-in", tagline: "One check-in a day, both of us.", yourKey: "Your key", enter: "Enter", wrongKey: "Wrong key.", enteringAs: "Entering as {name}.", signOut: "Sign out", yourPassword: "Your password", signIn: "Sign in", wrongPassword: "Wrong email or password.", authError: "Couldn't reach server.", signingIn: "Signing in…",
+    tabToday: "Today", tabJournal: "Journal", tabWeekly: "Weekly", tabUs: "Us", tabPensando: "Thinking of you",
+    localBanner: "Test mode.", degradedBanner: "Offline.", todayTitle: "Your check-in today", howFeel: "How are you feeling?", writeHere: "...", bonusHere: "Today's extra question.", save: "Save", saveChanges: "Save changes", editHint: "Edit until your midnight.", yours: "Yours", hersLabel: "{name}'s", editToday: "Edit today", nextIn: "Next opens in {t}.", notYet: "{name} hasn't checked in.", veil: "Write your check-in to read {name}'s.", emptyJournal: "Nothing written yet.",
+    weeklyTitle: "Weekend Reflection", weeklySub: "Open for 48 hours on your local Saturday & Sunday.", weeklyLocked: "Weekly check-in opens on your weekend (Saturday 00:00).", weeklyOpensIn: "Your weekend window opens in {t}.", weeklyClosesIn: "Closes at your Sunday midnight ({t} left).", weeklyEmpty: "No weekly reports yet.", weeklyWaiting: "Waiting for {name}...",
+    commentHere: "Say something…", send: "Send", daysTogether: "days together", streak: "days in sync", savedAnswers: "letters exchanged", howWeAre: "How we're doing", moodSub: "Mood history.", moodEmpty: "No data.", thinking: "This made me think of you", notesSub: "Upload an image, paste a YouTube link, or write a thought.", noteHere: "A song, a verse, a thought...", leave: "Save memory", noNotes: "No notes yet.", today: "Today", yesterday: "Yesterday", edited: "edited", saved: "Saved", changed: "Changes saved", noteSent: "Sent", writeSomething: "Write something.", saveFailed: "Failed.", translate: "Translate", original: "Show original", translating: "Translating…", trFailed: "Error", trNote: "Machine translation", language: "Language", lightMode: "Light Mode", darkMode: "Dark Mode"
+  },
+  es: {
+    brand: "Nuestro check-in", tagline: "Un check-in por día, las dos.", yourKey: "Tu clave", enter: "Entrar", wrongKey: "Clave incorrecta.", enteringAs: "Entrando como {name}.", signOut: "Salir", yourPassword: "Tu contraseña", signIn: "Entrar", wrongPassword: "Email o contraseña incorrectos.", authError: "Error de conexión.", signingIn: "Entrando…",
+    tabToday: "Hoy", tabJournal: "Diario", tabWeekly: "Semanal", tabUs: "Nosotras", tabPensando: "Pensando en vos",
+    localBanner: "Modo prueba.", degradedBanner: "Sin conexión.", todayTitle: "Tu check-in de hoy", howFeel: "¿Cómo te sentís?", writeHere: "...", bonusHere: "Pregunta extra de hoy.", save: "Guardar", saveChanges: "Guardar cambios", editHint: "Se puede editar hasta tu medianoche.", yours: "Lo tuyo", hersLabel: "Lo de {name}", editToday: "Editar", nextIn: "Mañana se abre en {t}.", notYet: "{name} todavía no hizo el check-in.", veil: "Respondé para leer a {name}.", emptyJournal: "Sin registros.",
+    weeklyTitle: "Reporte Semanal", weeklySub: "Disponible durante 48 horas tu sábado y domingo locales.", weeklyLocked: "El reporte semanal se abre tu fin de semana (sábado 00:00).", weeklyOpensIn: "Tu ventana de fin de semana abre en {t}.", weeklyClosesIn: "Cierra el domingo a tu medianoche (quedan {t}).", weeklyEmpty: "Todavía no hay reportes semanales.", weeklyWaiting: "Esperando a {name}...",
+    commentHere: "Comentar algo…", send: "Enviar", daysTogether: "días juntas", streak: "días en sintonía", savedAnswers: "cartas intercambiadas", howWeAre: "Cómo venimos", moodSub: "Ánimo histórico.", moodEmpty: "Sin datos.", thinking: "Esto me hizo acordar a vos", notesSub: "Subí una foto, pegá un link de YouTube, o dejá un pensamiento.", noteHere: "Una canción, un verso, un pensamiento...", leave: "Guardar", noNotes: "Todavía no hay nada.", today: "Hoy", yesterday: "Ayer", edited: "editado", saved: "Guardado", changed: "Cambios guardados", noteSent: "Enviado", writeSomething: "Escribí algo.", saveFailed: "Error al guardar.", translate: "Traducir", original: "Original", translating: "Traduciendo…", trFailed: "Error", trNote: "Traducción automática", language: "Idioma", lightMode: "Modo claro", darkMode: "Modo oscuro"
+  },
+  ru: {
+    brand: "Наш чек-ин", tagline: "Один чек-ин в день, обе.", yourKey: "Твой код", enter: "Войти", wrongKey: "Неверный код.", enteringAs: "Вход как {name}.", signOut: "Выйти", yourPassword: "Твой пароль", signIn: "Войти", wrongPassword: "Неверный email/пароль.", authError: "Ошибка подключения.", signingIn: "Входим…",
+    tabToday: "Сегодня", tabJournal: "Дневник", tabWeekly: "Неделя", tabUs: "Мы", tabPensando: "Думаю о тебе",
+    localBanner: "Тестовый режим.", degradedBanner: "Офлайн.", todayTitle: "Твой чек-ин", howFeel: "Как ты себя чувствуешь?", writeHere: "...", bonusHere: "Дополнительный вопрос.", save: "Сохранить", saveChanges: "Изменить", editHint: "Можно редактировать до твоей полуночи.", yours: "Твоё", hersLabel: "Её: {name}", editToday: "Изменить", nextIn: "Завтра откроется через {t}.", notYet: "{name} ещё не сделала чек-ин.", veil: "Напиши чтобы прочитать.", emptyJournal: "Пусто.",
+    weeklyTitle: "Итоги недели", weeklySub: "Доступно 48 часов в твои субботу и воскресенье.", weeklyLocked: "Еженедельный отчёт откроется в твои выходные (суббота 00:00).", weeklyOpensIn: "Откроется через {t}.", weeklyClosesIn: "Закроется в полночь воскресенья (осталось {t}).", weeklyEmpty: "Пока нет недельных отчётов.", weeklyWaiting: "Ждём {name}...",
+    commentHere: "Написать…", send: "Отправить", daysTogether: "дней вместе", streak: "дней в унисон", savedAnswers: "писем друг другу", howWeAre: "Как у нас дела", moodSub: "История настроения.", moodEmpty: "Нет данных.", thinking: "Это напомнило мне о тебе", notesSub: "Загрузи фото, вставь ссылку на YouTube или напиши мысль.", noteHere: "Песня, стих, мысль...", leave: "Сохранить", noNotes: "Пока нет.", today: "Сегодня", yesterday: "Вчера", edited: "изменено", saved: "Сохранено", changed: "Изменено", noteSent: "Отправлено", writeSomething: "Напиши что-то.", saveFailed: "Ошибка.", translate: "Перевести", original: "Оригинал", translating: "Перевожу…", trFailed: "Ошибка", trNote: "Машинный перевод", language: "Язык", lightMode: "Светлая тема", darkMode: "Тёмная тема"
+  }
 };
 
 const $ = (s, el = document) => el.querySelector(s);
 const root = $("#root");
 const pad = n => String(n).padStart(2, "0");
 
-// LÓGICA DE ZONA HORARIA INTELIGENTE POR USUARIO
 const getOffset = () => (state.me && CONFIG.people[state.me]?.tz !== undefined) ? CONFIG.people[state.me].tz : -3;
+const localNow = () => new Date(Date.now() + getOffset() * 3600000);
 
 const todayKey = () => { 
-  const d = new Date(Date.now() + getOffset() * 3600000); 
+  const d = localNow(); 
   return `${d.getUTCFullYear()}-${pad(d.getUTCMonth()+1)}-${pad(d.getUTCDate())}`; 
 };
 
@@ -333,7 +446,12 @@ const ls = { get(k){ try { return localStorage.getItem(k); } catch { return null
              set(k,v){ try { localStorage.setItem(k,v); } catch {} },
              del(k){ try { localStorage.removeItem(k); } catch {} } };
 
-const state = { store: null, me: null, userId: null, lang: CONFIG.defaultLang, tab: "hoy", entries: [], comments: [], notes: [], editing: false, degraded: false, tx: {}, txOn: {}, langOpen: false, openNotes: new Set() };
+const state = {
+  store: null, me: null, userId: null, lang: CONFIG.defaultLang, tab: "hoy",
+  entries: [], weekly: [], comments: [], notes: [],
+  editing: false, editingWeekly: false, selectedMonth: null,
+  degraded: false, tx: {}, txOn: {}, langOpen: false, openNotes: new Set()
+};
 let pendingImage = null; 
 
 const savedTheme = ls.get("ci_theme") || "light";
@@ -341,20 +459,73 @@ document.documentElement.setAttribute("data-theme", savedTheme);
 
 const t = (k, vars) => { let s = (UI[state.lang] || UI.en)[k] || k; if (vars) for (const v in vars) s = s.replace(`{${v}}`, vars[v]); return s; };
 const questions = () => QUESTIONS[state.lang] || QUESTIONS.en;
+const weeklyQuestions = () => WEEKLY_QUESTIONS[state.lang] || WEEKLY_QUESTIONS.en;
 const moods = () => MOODS[state.lang] || MOODS.en;
 
 function bonusFor(key){ const [y,m,d] = key.split("-").map(Number); const list = BONUS[state.lang] || BONUS.en; return list[Math.floor(Date.UTC(y, m-1, d) / 86400000) % list.length]; }
 function prettyDate(key){ const [y,m,d] = key.split("-").map(Number); const s = new Date(Date.UTC(y, m-1, d)).toLocaleDateString(LOCALE[state.lang], { weekday:"long", day:"numeric", month:"long", timeZone:"UTC" }); return s.charAt(0).toUpperCase() + s.slice(1); }
-function dayTitle(key){ if (key === todayKey()) return t("today"); return prettyDate(key); }
 const timeOf = iso => { try { return new Date(iso).toLocaleTimeString(LOCALE[state.lang], {hour:"2-digit", minute:"2-digit"}); } catch { return ""; } };
 
 function countdown(){
-  const offset = getOffset();
-  const now = new Date(Date.now() + offset * 3600000);
+  const now = localNow();
   const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()+1));
   const ms = next.getTime() - now.getTime();
   return `${Math.floor(ms/3600000)}h ${Math.floor(ms%3600000/60000)}m`;
 }
+
+// WEEKEND & WEEKLY REPORT HELPERS (48H LOCAL SATURDAY & SUNDAY)
+function getWeekendStatus() {
+  const now = localNow();
+  const day = now.getUTCDay(); // 0 = Sun, 1 = Mon ... 6 = Sat
+  const isWeekend = (day === 0 || day === 6);
+  
+  const diffToMon = (day === 0 ? -6 : 1 - day);
+  const mon = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + diffToMon));
+  const sun = new Date(Date.UTC(mon.getUTCFullYear(), mon.getUTCMonth(), mon.getUTCDate() + 6));
+  const weekId = `${mon.getUTCFullYear()}-${pad(mon.getUTCMonth()+1)}-${pad(mon.getUTCDate())}`;
+
+  let timeStr = "";
+  if (isWeekend) {
+    const endSun = new Date(Date.UTC(sun.getUTCFullYear(), sun.getUTCMonth(), sun.getUTCDate() + 1));
+    const ms = endSun.getTime() - now.getTime();
+    timeStr = `${Math.floor(ms/3600000)}h ${Math.floor(ms%3600000/60000)}m`;
+  } else {
+    const daysUntilSat = 6 - day;
+    const nextSat = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + daysUntilSat));
+    const ms = nextSat.getTime() - now.getTime();
+    const d = Math.floor(ms / 86400000);
+    const h = Math.floor((ms % 86400000) / 3600000);
+    timeStr = d > 0 ? `${d}d ${h}h` : `${h}h ${Math.floor((ms % 3600000) / 60000)}m`;
+  }
+
+  return { isWeekend, weekId, mon, sun, timeStr };
+}
+
+function formatWeekMeta(weekId) {
+  const [y, m, d] = weekId.split("-").map(Number);
+  const mon = new Date(Date.UTC(y, m - 1, d));
+  const sun = new Date(Date.UTC(y, m - 1, d + 6));
+  
+  const refDate = sun;
+  const weekNum = Math.ceil(refDate.getUTCDate() / 7);
+  const monthName = refDate.toLocaleDateString(LOCALE[state.lang], { month: "long", timeZone: "UTC" });
+  const capMonth = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+
+  const monStr = mon.toLocaleDateString(LOCALE[state.lang], { month: "short", day: "numeric", timeZone: "UTC" });
+  const sunStr = mon.getUTCMonth() === sun.getUTCMonth()
+    ? sun.getUTCDate()
+    : sun.toLocaleDateString(LOCALE[state.lang], { month: "short", day: "numeric", timeZone: "UTC" });
+
+  const title = state.lang === "es"
+    ? `Semana ${weekNum} · ${capMonth}`
+    : state.lang === "ru"
+    ? `Неделя ${weekNum} · ${capMonth}`
+    : `Week ${weekNum} · ${capMonth}`;
+
+  const range = `${monStr} – ${sunStr}, ${sun.getUTCFullYear()}`;
+  return { title, range };
+}
+
 function toast(msg){ const el = document.createElement("div"); el.className = "toast"; el.textContent = msg; document.body.appendChild(el); setTimeout(() => el.remove(), 2600); }
 
 let tcache = {};
@@ -398,11 +569,31 @@ async function translateEntry(e){
   state.tx[e.id] = { lang: to, answers, bonus, comments: cmts };
 }
 
+async function translateWeekly(wDoc, who) {
+  const part = wDoc[who];
+  if (!part) return;
+  const from = part.lang || "es", to = state.lang;
+  const answers = await Promise.all((part.answers || []).map(a => translate(a, from, to)));
+  state.tx[`wk:${wDoc.id}:${who}`] = { lang: to, answers };
+}
+
 const local = {
   mode: "local", read(k){ try { return JSON.parse(ls.get(k) || "[]"); } catch { return []; } }, write(k, v){ ls.set(k, JSON.stringify(v)); },
-  async init(){ return true; }, async entries(){ return this.read("ci_entries"); }, async saveEntry(e){ const all = this.read("ci_entries").filter(x => x.id !== e.id); all.push(e); this.write("ci_entries", all); },
-  async comments(){ return this.read("ci_comments"); }, async addComment(c){ const all = this.read("ci_comments"); all.push(c); this.write("ci_comments", all); },
-  async notes(){ return this.read("ci_notes"); }, async addNote(n){ const all = this.read("ci_notes"); all.push(n); this.write("ci_notes", all); }
+  async init(){ return true; },
+  async entries(){ return this.read("ci_entries"); },
+  async saveEntry(e){ const all = this.read("ci_entries").filter(x => x.id !== e.id); all.push(e); this.write("ci_entries", all); },
+  async weekly(){ return this.read("ci_weekly"); },
+  async saveWeekly(weekId, who, data){
+    const all = this.read("ci_weekly");
+    let doc = all.find(x => x.id === weekId);
+    if (!doc) { doc = { id: weekId }; all.push(doc); }
+    doc[who] = data;
+    this.write("ci_weekly", all);
+  },
+  async comments(){ return this.read("ci_comments"); },
+  async addComment(c){ const all = this.read("ci_comments"); all.push(c); this.write("ci_comments", all); },
+  async notes(){ return this.read("ci_notes"); },
+  async addNote(n){ const all = this.read("ci_notes"); all.push(n); this.write("ci_notes", all); }
 };
 
 function loadScript(src){ return new Promise((res, rej) => { const s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = () => rej(new Error("script")); document.head.appendChild(s); }); }
@@ -416,25 +607,34 @@ const remote = {
   async getSession(){ return new Promise(res => { const unsub = this.authRef.onAuthStateChanged(user => { unsub(); res(user); }); }); },
   async signIn(email, password){ const cred = await this.authRef.signInWithEmailAndPassword(email, password); return cred.user; },
   async signOut(){ await this.authRef.signOut(); },
-  async entries(){ const s = await this.db.collection("entries").get(); return s.docs.map(d => d.data()); }, async saveEntry(e){ await this.db.collection("entries").doc(e.id).set(e, { merge: true }); },
-  async comments(){ const s = await this.db.collection("comments").get(); return s.docs.map(d => d.data()); }, async addComment(c){ await this.db.collection("comments").doc(c.id).set(c); },
-  async notes(){ const s = await this.db.collection("notes").get(); return s.docs.map(d => d.data()); }, async addNote(n){ await this.db.collection("notes").doc(n.id).set(n); }
+  async entries(){ const s = await this.db.collection("entries").get(); return s.docs.map(d => d.data()); },
+  async saveEntry(e){ await this.db.collection("entries").doc(e.id).set(e, { merge: true }); },
+  async weekly(){ const s = await this.db.collection("weekly").get(); return s.docs.map(d => d.data()); },
+  async saveWeekly(weekId, who, data){ await this.db.collection("weekly").doc(weekId).set({ id: weekId, [who]: data }, { merge: true }); },
+  async comments(){ const s = await this.db.collection("comments").get(); return s.docs.map(d => d.data()); },
+  async addComment(c){ await this.db.collection("comments").doc(c.id).set(c); },
+  async notes(){ const s = await this.db.collection("notes").get(); return s.docs.map(d => d.data()); },
+  async addNote(n){ await this.db.collection("notes").doc(n.id).set(n); }
 };
 
-async function refresh(){ const [e, c, n] = await Promise.all([state.store.entries(), state.store.comments(), state.store.notes()]); state.entries = e; state.comments = c; state.notes = n; }
+async function refresh(){
+  const [e, w, c, n] = await Promise.all([state.store.entries(), state.store.weekly(), state.store.comments(), state.store.notes()]);
+  state.entries = e; state.weekly = w; state.comments = c; state.notes = n;
+}
 const entryOf = (date, who) => state.entries.find(x => x.date === date && x.author === who);
+const weeklyOf = (weekId) => state.weekly.find(x => x.id === weekId);
 const withAuthor = obj => state.userId ? { ...obj, author_id: state.userId } : obj;
 
 function langHTML(){
   const themeText = document.documentElement.getAttribute("data-theme") === "dark" ? t("lightMode") : t("darkMode");
   return `
     <div class="lang">
-      <button class="theme-btn" id="themeBtn" title="Tema" style="font-weight: 500; padding: 5px 14px;">${esc(themeText)}</button>
+      <button class="theme-btn" id="themeBtn" style="font-weight: 500; padding: 5px 14px;">${esc(themeText)}</button>
       <button class="lang-btn" id="langBtn" aria-expanded="${state.langOpen}">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg>
         ${esc(LANGS[state.lang])}
       </button>
-      ${state.langOpen ? `<div class="lang-menu">${Object.keys(LANGS).map(l => `<button data-lang="${l}">${esc(LANGS[l])}</button>`).join("")}</div>` : ""}
+      ${state.langOpen ? `<div class="lang-menu">${Object.keys(LANGS).map(l => `<button data-lang="${l}" aria-current="${state.lang===l}">${esc(LANGS[l])}</button>`).join("")}</div>` : ""}
     </div>`;
 }
 
@@ -450,7 +650,7 @@ function renderLogin(){
         <p class="sub" style="margin: 0 auto;">${esc(t("tagline"))}</p>
       </div>
 
-      <div class="who" style="display: flex; flex-direction: row; gap: 8px; justify-content: center;">
+      <div class="who">
         ${Object.keys(CONFIG.people).map(k => `
           <button class="who-btn" data-who="${k}" style="flex: 1; padding: 18px 10px;">
             <strong>${esc(CONFIG.people[k].name)}</strong>
@@ -459,7 +659,7 @@ function renderLogin(){
       </div>
 
       <form class="pin-row hidden" id="pinForm">
-        <input type="password" id="pin" autocomplete="${authMode ? "current-password" : "off"}" placeholder="${esc(authMode ? t("yourPassword") : t("yourKey"))}">
+        <input type="password" id="pin" aria-label="${esc(authMode ? t("yourPassword") : t("yourKey"))}" autocomplete="${authMode ? "current-password" : "off"}" placeholder="${esc(authMode ? t("yourPassword") : t("yourKey"))}">
         <button class="btn" type="submit">${esc(authMode ? t("signIn") : t("enter"))}</button>
       </form>
       <p class="hint" id="pinHint" style="text-align: center;"></p>
@@ -486,6 +686,7 @@ function shell(inner){
     <nav class="tabs" role="tablist">
       <button class="tab" role="tab" data-tab="hoy" aria-selected="${state.tab==="hoy"}">${esc(t("tabToday"))}</button>
       <button class="tab" role="tab" data-tab="diario" aria-selected="${state.tab==="diario"}">${esc(t("tabJournal"))}</button>
+      <button class="tab" role="tab" data-tab="semanal" aria-selected="${state.tab==="semanal"}">${esc(t("tabWeekly"))}</button>
       <button class="tab" role="tab" data-tab="nosotras" aria-selected="${state.tab==="nosotras"}">${esc(t("tabUs"))}</button>
       <button class="tab" role="tab" data-tab="pensando" aria-selected="${state.tab==="pensando"}">${esc(t("tabPensando"))}</button>
     </nav>
@@ -505,8 +706,8 @@ function formHTML(prefill){
           <div class="moods">${moods().map((m,i) => `<button type="button" class="mood" data-m="${i}" aria-pressed="${prefill && prefill.mood===i}">${esc(m)}</button>`).join("")}</div>
         </div>
         ${questions().map((q,i) => `
-          <div class="field"><p class="q">${esc(q)}</p><textarea name="q${i}" placeholder="${esc(t("writeHere"))}">${esc(prefill?.answers?.[i] || "")}</textarea></div>`).join("")}
-        <div class="field bonus"><p class="q">${esc(bonusFor(key))}</p><textarea name="bonus" placeholder="${esc(t("bonusHere"))}">${esc(prefill?.bonus || "")}</textarea></div>
+          <div class="field"><label class="q" style="display:block" for="q${i}">${esc(q)}</label><textarea id="q${i}" name="q${i}" placeholder="${esc(t("writeHere"))}">${esc(prefill?.answers?.[i] || "")}</textarea></div>`).join("")}
+        <div class="field bonus"><label class="q" style="display:block" for="qbonus">${esc(bonusFor(key))}</label><textarea id="qbonus" name="bonus" placeholder="${esc(t("bonusHere"))}">${esc(prefill?.bonus || "")}</textarea></div>
         <button class="btn" type="submit">${esc(prefill ? t("saveChanges") : t("save"))}</button>
         <p class="hint">${esc(t("editHint"))}</p>
       </form>
@@ -525,7 +726,7 @@ function entryHTML(e, opts = {}){
       ${canTranslate ? `<div class="trbar"><button class="tr" data-tr="${e.id}">${esc(showTx ? t("original") : t("translate"))}</button>${showTx ? `<div class="trnote">${esc(t("trNote"))}</div>` : ""}</div>` : ""}
       ${opts.reactable ? `<div class="reacts">${CONFIG.reactions.map(r => `<button class="react" data-entry="${e.id}" data-r="${r}" aria-pressed="${(e.reactions||{})[state.me]===r}">${r}</button>`).join("")}</div>` : (e.reactions && Object.keys(e.reactions).length ? `<div class="reacts">${Object.values(e.reactions).map(r => `<span class="react">${r}</span>`).join("")}</div>` : "")}
       ${opts.thread === false ? "" : threadHTML(e.id, showTx ? state.tx[e.id].comments : null)}
-      <div class="decor"><svg viewBox="0 0 24 24" fill="var(--line)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+      <div class="decor"><svg viewBox="0 0 24 24" fill="var(--line)" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
     </div>`;
   if (!opts.veiled) return body;
   return `<div class="veil">${body}<div class="veil-msg">${esc(opts.veilMsg)}</div></div>`;
@@ -536,7 +737,7 @@ function threadHTML(entryId, txMap){
   return `
     <div class="thread">
       ${list.map(c => `<div class="msg ${c.author}"><b>${esc(nameOf(c.author))}</b>${esc(txMap && txMap[c.id] ? txMap[c.id] : c.text)}<span class="t">${timeOf(c.created_at)}</span></div>`).join("")}
-      <form class="thread-form" data-entry="${entryId}"><input type="text" placeholder="${esc(t("commentHere"))}" maxlength="400"><button class="btn btn-sm" type="submit">${esc(t("send"))}</button></form>
+      <form class="thread-form" data-entry="${entryId}"><input type="text" aria-label="${esc(t("commentHere"))}" placeholder="${esc(t("commentHere"))}" maxlength="400"><button class="btn btn-sm" type="submit">${esc(t("send"))}</button></form>
     </div>`;
 }
 
@@ -552,12 +753,34 @@ function viewHoy(){
     </div>`;
 }
 
+// JOURNAL WITH HORIZONTAL MONTH FILTER PILLS (OPTION B)
 function viewDiario(){
   const key = todayKey(); 
-  const dates = [...new Set(state.entries.map(e => e.date))].sort().reverse();
-  if (!dates.length) return `<div class="card"><p class="empty">${esc(t("emptyJournal"))}</p></div>`;
-  
-  let html = `<div class="timeline">`;
+  const allDates = [...new Set(state.entries.map(e => e.date))].sort().reverse();
+  if (!allDates.length) return `<div class="card"><p class="empty">${esc(t("emptyJournal"))}</p></div>`;
+
+  const months = [...new Set(allDates.map(d => d.slice(0, 7)))];
+  if (!state.selectedMonth || !months.includes(state.selectedMonth)) {
+    state.selectedMonth = months[0];
+  }
+
+  const formatMonthPill = (ym) => {
+    const [y, m] = ym.split("-").map(Number);
+    const label = new Date(Date.UTC(y, m - 1, 1)).toLocaleDateString(LOCALE[state.lang], { month: "short", year: "numeric", timeZone: "UTC" });
+    return label.charAt(0).toUpperCase() + label.slice(1);
+  };
+
+  const monthBar = `
+    <div class="month-bar" role="group" aria-label="Filter by month">
+      ${months.map(ym => `
+        <button class="month-pill" data-month="${ym}" aria-pressed="${state.selectedMonth === ym}">
+          ${esc(formatMonthPill(ym))}
+        </button>`).join("")}
+    </div>`;
+
+  const dates = allDates.filter(d => d.startsWith(state.selectedMonth));
+
+  let html = `${monthBar}<div class="timeline">`;
   
   dates.forEach(d => {
     const mine = entryOf(d, state.me), hers = entryOf(d, other(state.me));
@@ -578,9 +801,9 @@ function viewDiario(){
     const makeItem = (e, who, isLocked) => {
       const body = entryHTML(e, { reactable: !isLocked, thread: !isLocked, veiled: isLocked, veilMsg: t("veil", { name: nameOf(other(state.me)) }) });
       return `
-      <details class="tl-details">
-          <summary class="tl-summary ${who}">
-            <span>${esc(nameOf(who))}</span>
+        <details class="tl-details">
+          <summary class="tl-summary">
+            <span class="who-lbl ${who}">${esc(nameOf(who))}</span>
             <span class="icon">+</span>
           </summary>
           <div class="journal-content">${body}</div>
@@ -595,6 +818,111 @@ function viewDiario(){
   
   html += `</div>`;
   return html;
+}
+
+// WEEKLY REPORT TAB (48H LOCAL WEEKEND + COMBINED UNBLURRED CARD)
+function viewSemanal(){
+  const wk = getWeekendStatus();
+  const currentDoc = weeklyOf(wk.weekId);
+  const myData = currentDoc?.[state.me];
+  const herKey = other(state.me);
+  const wqs = weeklyQuestions();
+  const meta = formatWeekMeta(wk.weekId);
+
+  let topHTML = "";
+  if (wk.isWeekend && (!myData || state.editingWeekly)) {
+    topHTML = `
+      <div class="card" style="margin-bottom: 26px;">
+        <div class="wk-header">
+          <span class="wk-title">${esc(meta.title)}</span>
+          <span class="wk-range">${esc(meta.range)}</span>
+        </div>
+        <p class="hint" style="margin-bottom: 16px;">${esc(t("weeklyClosesIn", { t: wk.timeStr }))}</p>
+        <form id="weeklyForm">
+          ${wqs.map((q, i) => `
+            <div class="field">
+              <label class="q" style="display:block" for="wq${i}">${esc(q)}</label>
+              <textarea id="wq${i}" name="wq${i}" placeholder="${esc(t("writeHere"))}">${esc(myData?.answers?.[i] || "")}</textarea>
+            </div>`).join("")}
+          <button class="btn" type="submit">${esc(myData ? t("saveChanges") : t("save"))}</button>
+        </form>
+      </div>`;
+  } else if (!wk.isWeekend) {
+    topHTML = `
+      <div class="card" style="margin-bottom: 26px;">
+        <h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("weeklyTitle"))}</h3>
+        <p class="hint">${esc(t("weeklyLocked"))}</p>
+        <p class="hint" style="font-weight:600;color:var(--ink);margin-top:8px">${esc(t("weeklyOpensIn", { t: wk.timeStr }))}</p>
+      </div>`;
+  } else {
+    topHTML = `
+      <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <span class="hint" style="margin:0">${esc(t("weeklyClosesIn", { t: wk.timeStr }))}</span>
+        <button class="btn btn-ghost btn-sm" id="editWeeklyBtn">${esc(t("editToday"))}</button>
+      </div>`;
+  }
+
+  const allWeeks = [...state.weekly].sort((a, b) => b.id.localeCompare(a.id));
+  if (!allWeeks.length) {
+    return `${topHTML}<div class="card"><p class="empty">${esc(t("weeklyEmpty"))}</p></div>`;
+  }
+
+  const listHTML = allWeeks.map(doc => {
+    const wMeta = formatWeekMeta(doc.id);
+    const mine = doc[state.me];
+    const hers = doc[herKey];
+
+    const getAns = (who, idx) => {
+      const part = doc[who];
+      if (!part) return null;
+      const txKey = `wk:${doc.id}:${who}`;
+      if (state.txOn[txKey] && state.tx[txKey]?.lang === state.lang) {
+        return state.tx[txKey].answers?.[idx] || "";
+      }
+      return part.answers?.[idx] || "";
+    };
+
+    const canTxHer = hers && CONFIG.translateApi && (hers.lang || "es") !== state.lang;
+    const herTxKey = `wk:${doc.id}:${herKey}`;
+    const showingHerTx = state.txOn[herTxKey] && state.tx[herTxKey]?.lang === state.lang;
+
+    return `
+      <div class="card" style="margin-bottom: 20px;">
+        <div class="wk-header">
+          <span class="wk-title">${esc(wMeta.title)}</span>
+          <span class="wk-range">${esc(wMeta.range)}</span>
+        </div>
+
+        ${wqs.map((q, i) => {
+          const herAns = getAns(herKey, i);
+          const myAns = getAns(state.me, i);
+          return `
+            <div class="wk-block">
+              <div class="wk-q">${esc(q)}</div>
+              <div class="wk-pair">
+                <div class="wk-ans">
+                  <span class="wk-who ${herKey}">${esc(nameOf(herKey))}</span>
+                  ${hers ? esc(herAns || "—") : `<span class="wk-empty">${esc(t("weeklyWaiting", { name: nameOf(herKey) }))}</span>`}
+                </div>
+                <div class="wk-ans">
+                  <span class="wk-who ${state.me}">${esc(nameOf(state.me))}</span>
+                  ${mine ? esc(myAns || "—") : `<span class="wk-empty">${esc(t("weeklyWaiting", { name: nameOf(state.me) }))}</span>`}
+                </div>
+              </div>
+            </div>`;
+        }).join("")}
+
+        ${canTxHer ? `
+          <div class="trbar">
+            <button class="tr" data-trwk="${doc.id}" data-who="${herKey}">${esc(showingHerTx ? t("original") : t("translate"))}</button>
+            ${showingHerTx ? `<div class="trnote">${esc(t("trNote"))}</div>` : ""}
+          </div>` : ""}
+
+        ${threadHTML(`wk_${doc.id}`, null)}
+      </div>`;
+  }).join("");
+
+  return `${topHTML}${listHTML}`;
 }
 
 function viewNosotras(){
@@ -631,11 +959,11 @@ function viewNosotras(){
       const dots = dates.map(k => {
         const a = entryOf(k, "mica"), b = entryOf(k, "tati");
         const shortDate = new Date(k + "T00:00:00Z").toLocaleDateString(LOCALE[state.lang], { day:"numeric", month:"short", timeZone:"UTC" });
-        const aMood = a && typeof a.mood === "number" ? moods()[a.mood] : "Sin registro";
-        const bMood = b && typeof b.mood === "number" ? moods()[b.mood] : "Sin registro";
+        const aMood = a && typeof a.mood === "number" ? moods()[a.mood] : "—";
+        const bMood = b && typeof b.mood === "number" ? moods()[b.mood] : "—";
         const aSnip = getSnippet(a); const bSnip = getSnippet(b);
-        const titleA = a ? `Mica | ${shortDate} | ${aMood}&#10;&#10;"${aSnip}"` : `Mica | ${shortDate} | Sin registro`;
-        const titleB = b ? `Tati | ${shortDate} | ${bMood}&#10;&#10;"${bSnip}"` : `Tati | ${shortDate} | Sin registro`;
+        const titleA = a ? `${nameOf("mica")} | ${shortDate} | ${aMood}\n\n"${aSnip}"` : `${nameOf("mica")} | ${shortDate}`;
+        const titleB = b ? `${nameOf("tati")} | ${shortDate} | ${bMood}\n\n"${bSnip}"` : `${nameOf("tati")} | ${shortDate}`;
         return `<div class="mood-dot-col">
                   <div class="mood-dot mica ${!a?'empty':''}" title="${titleA}"></div>
                   <div class="mood-dot tati ${!b?'empty':''}" title="${titleB}"></div>
@@ -653,7 +981,7 @@ function viewNosotras(){
       <div class="stat-img">
         <picture>
           <source media="(min-width: 680px)" srcset="https://i.ibb.co/Z6c0Gjt8/foto-pc.png">
-          <img src="https://i.ibb.co/2YPhW6Wy/foto-celular.png" alt="Nosotras">
+          <img src="https://i.ibb.co/2YPhW6Wy/foto-celular.png" alt="Aile and Tati">
         </picture>
       </div>
     </div>
@@ -668,16 +996,16 @@ function viewPensando() {
   const notes = [...state.notes].sort((a,b) => b.created_at.localeCompare(a.created_at));
   
   const renderRichNote = (n) => {
-    if (n.image) return `<img src="${n.image}" class="note-img-embed"> <div style="margin-top:4px;">${esc(n.text)}</div>`;
+    if (n.image) return `<img src="${n.image}" alt="${esc(n.text || "Shared memory")}" class="note-img-embed"> <div style="margin-top:4px;">${esc(n.text)}</div>`;
     
     let text = n.text;
     const yt = text.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
     if (yt) {
-      return `<div class="note-yt"><iframe src="https://www.youtube.com/embed/${yt[1]}" frameborder="0" allowfullscreen></iframe></div><div style="margin-top:8px">${esc(text.replace(yt[0], ''))}</div>`;
+      return `<div class="note-yt"><iframe src="https://www.youtube.com/embed/${yt[1]}" title="YouTube video" frameborder="0" allowfullscreen></iframe></div><div style="margin-top:8px">${esc(text.replace(yt[0], ''))}</div>`;
     }
     
     const urlRegex = /(https?:\/\/[^\s]+)/g;
-    return esc(text).replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
+    return esc(text).replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
   }
 
   return `
@@ -686,17 +1014,17 @@ function viewPensando() {
       <p class="hint" style="margin:0 0 12px">${esc(t("notesSub"))}</p>
       
       <form id="noteForm" class="thread-form" style="align-items: center; margin-bottom: 20px;">
-       <button type="button" id="imgBtn" class="btn btn-ghost" style="padding: 8px; display: flex; align-items: center; justify-content: center;" title="Subir foto">
-  <img src="https://i.ibb.co/BKBm119h/camara.png" style="width: 24px; height: 24px; object-fit: contain;">
-</button>
+       <button type="button" id="imgBtn" class="btn btn-ghost" style="padding: 8px; display: flex; align-items: center; justify-content: center;" aria-label="Upload photo">
+         <img src="https://i.ibb.co/BKBm119h/camara.png" alt="" style="width: 24px; height: 24px; object-fit: contain;">
+       </button>
         <input type="file" id="noteImg" accept="image/*" class="hidden">
-        <input type="text" id="noteText" maxlength="240" placeholder="${esc(t("noteHere"))}">
+        <input type="text" id="noteText" aria-label="${esc(t("noteHere"))}" maxlength="240" placeholder="${esc(t("noteHere"))}">
         <button class="btn btn-sm" type="submit">${esc(t("leave"))}</button>
       </form>
       
       <div id="imgPreview" style="display:none; margin-top:10px; margin-bottom: 10px; position:relative; width: max-content;">
-        <img id="previewEl" style="max-height:100px; border-radius:8px; border: 1px solid var(--line);"> 
-        <button type="button" id="clearImg" style="position:absolute; top:-10px; right:-10px; background:var(--ink); color:var(--paper); border:none; border-radius:50%; width:24px; height:24px; cursor:pointer;">x</button>
+        <img id="previewEl" alt="Preview" style="max-height:100px; border-radius:var(--radius); border: 1px solid var(--line);"> 
+        <button type="button" id="clearImg" aria-label="Remove photo" style="position:absolute; top:-10px; right:-10px; background:var(--ink); color:var(--paper); border:none; border-radius:var(--radius); width:24px; height:24px; cursor:pointer;">x</button>
       </div>
 
       <div class="notes-grid">
@@ -710,11 +1038,11 @@ function viewPensando() {
 
           return `<div class="note ${n.author}">
             ${shown}
-            <span class="t">${esc(nameOf(n.author))} ·${new Date(n.created_at).toLocaleString(LOCALE[state.lang], {day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</span>
+            <span class="t">${esc(nameOf(n.author))} · ${new Date(n.created_at).toLocaleString(LOCALE[state.lang], {day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</span>
             ${can ? `<button class="tr" data-trnote="${n.id}" style="margin-top:6px">${esc(state.txOn["note:" + n.id] ? t("original") : t("translate"))}</button>` : ""}
             
-           <button class="note-comment-btn" data-toggle="${n.id}" title="Comentarios" style="display: flex; align-items: center; justify-content: center; position: absolute; bottom: 8px; right: 12px; background: none; border: none; cursor: pointer; padding: 4px;">
-              <img src="https://i.ibb.co/GQPTFW0G/comment.png" style="width: 20px; height: 20px; object-fit: contain;">
+           <button class="note-comment-btn" data-toggle="${n.id}" aria-label="Toggle comments" style="display: flex; align-items: center; justify-content: center; position: absolute; bottom: 8px; right: 12px; background: none; border: none; cursor: pointer; padding: 4px;">
+              <img src="https://i.ibb.co/GQPTFW0G/comment.png" alt="" style="width: 20px; height: 20px; object-fit: contain;">
               ${commentCount > 0 ? `<span class="note-badge" style="top: -2px; right: -6px;">${commentCount}</span>` : ""}
             </button>
 
@@ -742,12 +1070,22 @@ function wireUI(rerender){
 }
 
 function render(){
-  const inner = state.tab === "hoy" ? viewHoy() : state.tab === "diario" ? viewDiario() : state.tab === "nosotras" ? viewNosotras() : viewPensando();
+  const inner = state.tab === "hoy" ? viewHoy()
+              : state.tab === "diario" ? viewDiario()
+              : state.tab === "semanal" ? viewSemanal()
+              : state.tab === "nosotras" ? viewNosotras()
+              : viewPensando();
   root.innerHTML = shell(inner);
   wireUI(render);
-  $("#logout")?.addEventListener("click", async () => { state.me = null; state.userId = null; state.editing = false; ls.del("ci_me"); if (CONFIG.useAuth && state.store.mode === "remote"){ try { await state.store.signOut(); } catch {} } renderLogin(); });
-  root.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { state.tab = b.dataset.tab; state.editing = false; pendingImage = null; render(); }));
+  $("#logout")?.addEventListener("click", async () => { state.me = null; state.userId = null; state.editing = false; state.editingWeekly = false; ls.del("ci_me"); if (CONFIG.useAuth && state.store.mode === "remote"){ try { await state.store.signOut(); } catch {} } renderLogin(); });
+  root.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { state.tab = b.dataset.tab; state.editing = false; state.editingWeekly = false; pendingImage = null; render(); }));
   $("#editBtn")?.addEventListener("click", () => { state.editing = true; render(); });
+  $("#editWeeklyBtn")?.addEventListener("click", () => { state.editingWeekly = true; render(); });
+
+  root.querySelectorAll(".month-pill").forEach(b => b.addEventListener("click", () => {
+    state.selectedMonth = b.dataset.month;
+    render();
+  }));
   
   const form = $("#checkin");
   if (form){
@@ -760,6 +1098,30 @@ function render(){
       const entry = { id: `${key}__${state.me}`, date: key, author: state.me, mood, answers, bonus, lang: state.lang, reactions: prev?.reactions || {}, created_at: prev?.created_at || new Date().toISOString(), edited: !!prev };
       try { await state.store.saveEntry(withAuthor(entry)); } catch { toast(t("saveFailed")); return; }
       state.editing = false; delete state.tx[entry.id]; await refresh(); render(); toast(prev ? t("changed") : t("saved"));
+    });
+  }
+
+  const wForm = $("#weeklyForm");
+  if (wForm) {
+    wForm.addEventListener("submit", async ev => {
+      ev.preventDefault();
+      const wk = getWeekendStatus();
+      if (!wk.isWeekend) return;
+      const answers = weeklyQuestions().map((_, i) => wForm[`wq${i}`].value.trim());
+      if (!answers.some(Boolean)) { toast(t("writeSomething")); return; }
+      const prev = weeklyOf(wk.weekId)?.[state.me];
+      const payload = withAuthor({
+        answers,
+        lang: state.lang,
+        created_at: prev?.created_at || new Date().toISOString(),
+        edited: !!prev
+      });
+      try { await state.store.saveWeekly(wk.weekId, state.me, payload); } catch { toast(t("saveFailed")); return; }
+      state.editingWeekly = false;
+      delete state.tx[`wk:${wk.weekId}:${state.me}`];
+      await refresh();
+      render();
+      toast(prev ? t("changed") : t("saved"));
     });
   }
   
@@ -805,6 +1167,15 @@ function render(){
   root.querySelectorAll(".react[data-entry]").forEach(b => b.addEventListener("click", async () => { const e = state.entries.find(x => x.id === b.dataset.entry); if (!e) return; const r = { ...(e.reactions || {}) }; if (r[state.me] === b.dataset.r) delete r[state.me]; else r[state.me] = b.dataset.r; try { await state.store.saveEntry({ ...e, reactions: r }); } catch { toast(t("saveFailed")); return; } await refresh(); render(); }));
   root.querySelectorAll(".thread-form[data-entry]").forEach(f => f.addEventListener("submit", async ev => { ev.preventDefault(); const input = f.querySelector("input"), text = input.value.trim(); if (!text) return; try { await state.store.addComment(withAuthor({ id: uid(), entry_id: f.dataset.entry, author: state.me, text, lang: state.lang, created_at: new Date().toISOString() })); } catch { toast(t("saveFailed")); return; } delete state.tx[f.dataset.entry]; await refresh(); render(); }));
   root.querySelectorAll("[data-tr]").forEach(b => b.addEventListener("click", async () => { const id = b.dataset.tr; if (state.txOn[id]){ state.txOn[id] = false; render(); return; } const e = state.entries.find(x => x.id === id); if (!e) return; b.textContent = t("translating"); try { await translateEntry(e); state.txOn[id] = true; render(); } catch { b.textContent = t("trFailed"); } }));
+  root.querySelectorAll("[data-trwk]").forEach(b => b.addEventListener("click", async () => {
+    const weekId = b.dataset.trwk, who = b.dataset.who;
+    const k = `wk:${weekId}:${who}`;
+    if (state.txOn[k]) { state.txOn[k] = false; render(); return; }
+    const wDoc = weeklyOf(weekId);
+    if (!wDoc) return;
+    b.textContent = t("translating");
+    try { await translateWeekly(wDoc, who); state.txOn[k] = true; render(); } catch { b.textContent = t("trFailed"); }
+  }));
   root.querySelectorAll("[data-trnote]").forEach(b => b.addEventListener("click", async () => { const n = state.notes.find(x => x.id === b.dataset.trnote); if (!n) return; const k = "note:" + n.id; if (state.txOn[k]){ state.txOn[k] = false; render(); return; } b.textContent = t("translating"); try { state.tx[k] = { lang: state.lang, text: await translate(n.text, n.lang || "es", state.lang) }; state.txOn[k] = true; render(); } catch { b.textContent = t("trFailed"); } }));
 }
 
@@ -814,7 +1185,7 @@ async function start(){ await refresh(); render(); }
   state.store = local;
   if (CONFIG.firebase && CONFIG.firebase.apiKey && !/PEGAR_ACA/.test(CONFIG.firebase.apiKey)){ try { await remote.init(); state.store = remote; } catch { state.store = local; state.degraded = true; } }
   if (CONFIG.useAuth && state.store.mode === "remote"){ try { const user = await remote.getSession(); if (user){ const who = Object.keys(CONFIG.people).find(k => CONFIG.people[k].email === user.email); if (who){ state.me = who; state.userId = user.uid; await start(); return; } } } catch {} renderLogin(); } else { const saved = ls.get("ci_me"); if (saved && CONFIG.people[saved]){ state.me = saved; await start(); } else { renderLogin(); } }
-  setInterval(async () => { if (state.store.mode !== "remote" || !state.me || state.editing) return; const before = state.entries.length + state.comments.length + state.notes.length; await refresh(); if (state.entries.length + state.comments.length + state.notes.length !== before) render(); }, 45000);
+  setInterval(async () => { if (state.store.mode !== "remote" || !state.me || state.editing || state.editingWeekly) return; const before = state.entries.length + state.weekly.length + state.comments.length + state.notes.length; await refresh(); if (state.entries.length + state.weekly.length + state.comments.length + state.notes.length !== before) render(); }, 45000);
 })();
 </script>
 </body>
