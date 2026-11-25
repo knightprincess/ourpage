@@ -268,7 +268,8 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 
 
 .page-footer{margin-top:28px;margin-bottom:6px;padding-top:8px;display:flex;justify-content:center;align-items:center;}
-.page-footer img{width:136px;max-width:40vw;height:auto;object-fit:contain;display:block;pointer-events:none;user-select:none;}
+.page-footer img{width:110px;max-width:34vw;height:auto;object-fit:contain;display:block;pointer-events:none;user-select:none;}
+.page-footer.weekly-footer img{width:136px;max-width:40vw;}
 
 /* JOURNAL TIMELINE */
 .timeline { position: relative; padding-left: 26px; margin: 10px 0 30px; min-width:0;max-width:100% }
@@ -903,7 +904,7 @@ function viewSemanal(){
 
   const allWeeks = [...state.weekly].sort((a, b) => b.id.localeCompare(a.id));
   if (!allWeeks.length) {
-    return `${topHTML}<div class="card"><p class="empty">${esc(t("weeklyEmpty"))}</p></div>`;
+    return `${topHTML}<div class="card"><p class="empty">${esc(t("weeklyEmpty"))}</p></div><div class="page-footer weekly-footer"><img src="IMAGES/duduandbubuweekly.png" alt="Dudu and Bubu Weekly" data-srcs="images/duduandbubuweekly.png,duduandbubuweekly.png,IMAGES/duduandbubuweekly.jpg,images/duduandbubuweekly.jpg,IMAGES/duduandbubuweekly.jpeg,IMAGES/duduandbubuweekly.webp" onerror="const list=(this.dataset.srcs||'').split(',').filter(Boolean);if(list.length){this.src=list.shift();this.dataset.srcs=list.join(',');}else{this.style.display='none';}"></div>`;
   }
 
   const listHTML = allWeeks.map(doc => {
@@ -961,7 +962,7 @@ function viewSemanal(){
       </div>`;
   }).join("");
 
-  return `${topHTML}${listHTML}<div class="page-footer"><img src="IMAGES/duduandbubuweekly.png" alt="Dudu and Bubu Weekly" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='duduandbubuweekly.png';}else{this.style.display='none';}"></div>`;
+  return `${topHTML}${listHTML}<div class="page-footer weekly-footer"><img src="IMAGES/duduandbubuweekly.png" alt="Dudu and Bubu Weekly" data-srcs="images/duduandbubuweekly.png,duduandbubuweekly.png,IMAGES/duduandbubuweekly.jpg,images/duduandbubuweekly.jpg,IMAGES/duduandbubuweekly.jpeg,IMAGES/duduandbubuweekly.webp" onerror="const list=(this.dataset.srcs||'').split(',').filter(Boolean);if(list.length){this.src=list.shift();this.dataset.srcs=list.join(',');}else{this.style.display='none';}"></div>`;
 }
 
 function viewNosotras(){
