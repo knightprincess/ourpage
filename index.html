@@ -692,7 +692,6 @@ function renderLogin(){
         ${Object.keys(CONFIG.people).map(k => `
           <button class="who-btn" data-who="${k}" style="flex: 1; padding: 18px 10px;">
             <strong>${esc(CONFIG.people[k].name)}</strong>
-            <span class="dot ${k}"></span>
           </button>`).join("")}
       </div>
 
@@ -701,7 +700,7 @@ function renderLogin(){
         <button class="btn" type="submit">${esc(authMode ? t("signIn") : t("enter"))}</button>
       </form>
       <p class="hint" id="pinHint" style="text-align: center;"></p>
-      <div class="page-footer"><img src="duduandbubu.png" alt="" onerror="this.style.display='none'"></div>
+      <div class="page-footer"><img src="IMAGES/duduandbubu.png" alt="Dudu and Bubu" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='duduandbubu.png';}else{this.style.display='none';}"></div>
     </section>`;
     
   wireUI(renderLogin);
@@ -732,7 +731,7 @@ function shell(inner){
     ${state.store.mode === "local" ? `<div class="banner">${esc(t("localBanner"))}</div>` : ""}
     ${state.degraded ? `<div class="banner">${esc(t("degradedBanner"))}</div>` : ""}
     ${inner}
-    <div class="page-footer"><img src="duduandbubu.png" alt="" onerror="this.style.display='none'"></div>`;
+    <div class="page-footer"><img src="IMAGES/duduandbubu.png" alt="Dudu and Bubu" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='duduandbubu.png';}else{this.style.display='none';}"></div>`;
 }
 
 function formHTML(prefill){
