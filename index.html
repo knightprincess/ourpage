@@ -85,9 +85,7 @@ button{font:inherit;cursor:pointer}
   color:var(--ink);box-shadow:var(--shadow);transition:border-color .18s ease, transform .18s ease}
 .who-btn:hover{border-color:var(--accent)}
 .who-btn:active{transform:scale(.99)}
-.who-btn strong{font-family:Newsreader,serif;font-size:1.35rem;font-weight:400;display:inline-block}
-.who-person{display:inline-flex;align-items:center;justify-content:center;gap:8px;}
-.who-avatar{width:32px;height:32px;object-fit:contain;border-radius:8px;flex:none;display:block;}
+.who-btn strong{font-family:Newsreader,serif;font-size:1.35rem;font-weight:400;display:block}
 .dot{width:11px;height:11px;border-radius:999px;flex:none;}
 .dot.mica{background:var(--mica)} 
 .dot.tati{background:var(--tati)}
@@ -268,6 +266,10 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
   background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-size:.88rem;z-index:50;box-shadow:var(--shadow)}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
 
+
+.page-footer{margin-top:38px;padding-top:10px;display:flex;justify-content:center;align-items:center;}
+.page-footer img{width:110px;max-width:34vw;height:auto;object-fit:contain;display:block;pointer-events:none;user-select:none;}
+
 /* JOURNAL TIMELINE */
 .timeline { position: relative; padding-left: 26px; margin: 10px 0 30px; min-width:0;max-width:100% }
 .timeline::before { 
@@ -317,8 +319,8 @@ const CONFIG = {
   translateApi: true,
   translateEmail: "",
   people: {
-    mica: { name: "Aile", avatar: "dudu.png", email: "azorzoni@gmail.com", pin: "1111", tz: -3 }, // Buenos Aires (-3)
-    tati: { name: "Tati", avatar: "bubu.png", email: "boldohonova01@mail.ru", pin: "2222", tz: 8 }  // Ulan-Ude, Siberia (+8)
+    mica: { name: "Aile", email: "azorzoni@gmail.com", pin: "1111", tz: -3 }, // Buenos Aires (-3)
+    tati: { name: "Tati", email: "boldohonova01@mail.ru", pin: "2222", tz: 8 }  // Ulan-Ude, Siberia (+8)
   },
   reactions: ["❤️", "🥹", "🫂", "😭", "😂", "🌙"]
 };
@@ -689,10 +691,7 @@ function renderLogin(){
       <div class="who">
         ${Object.keys(CONFIG.people).map(k => `
           <button class="who-btn" data-who="${k}" style="flex: 1; padding: 18px 10px;">
-            <div class="who-person">
-              <img class="who-avatar" src="${esc(CONFIG.people[k].avatar)}" alt="" onerror="this.style.display='none'">
-              <strong>${esc(CONFIG.people[k].name)}</strong>
-            </div>
+            <strong>${esc(CONFIG.people[k].name)}</strong>
             <span class="dot ${k}"></span>
           </button>`).join("")}
       </div>
@@ -702,6 +701,7 @@ function renderLogin(){
         <button class="btn" type="submit">${esc(authMode ? t("signIn") : t("enter"))}</button>
       </form>
       <p class="hint" id="pinHint" style="text-align: center;"></p>
+      <div class="page-footer"><img src="duduandbubu.png" alt="" onerror="this.style.display='none'"></div>
     </section>`;
     
   wireUI(renderLogin);
@@ -731,7 +731,8 @@ function shell(inner){
     </nav>
     ${state.store.mode === "local" ? `<div class="banner">${esc(t("localBanner"))}</div>` : ""}
     ${state.degraded ? `<div class="banner">${esc(t("degradedBanner"))}</div>` : ""}
-    ${inner}`;
+    ${inner}
+    <div class="page-footer"><img src="duduandbubu.png" alt="" onerror="this.style.display='none'"></div>`;
 }
 
 function formHTML(prefill){
