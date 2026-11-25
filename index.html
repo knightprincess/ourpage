@@ -20,8 +20,8 @@
   --line:#e8b8c9;        
   --mica:#D9EFBD; 
   --tati:#F5AFAF; 
-  --mica-name:#241f36;
-  --tati-name:#241f36;
+  --mica-name:#b4d48c;
+  --tati-name:#de8484;
   --mica-wash:rgba(217, 239, 189, 0.4); 
   --tati-wash:rgba(245, 175, 175, 0.3); 
   --accent:#b7a6ef;
@@ -40,8 +40,8 @@
   --line:#453d66;
   --mica:#D9EFBD; 
   --tati:#F5AFAF; 
-  --mica-name:#f2eef9;
-  --tati-name:#f2eef9;
+  --mica-name:#b2d28a;
+  --tati-name:#e08282;
   --mica-wash:rgba(217, 239, 189, 0.12); 
   --tati-wash:rgba(245, 175, 175, 0.12);
   --accent:#b7a6ef; 
@@ -50,20 +50,20 @@
 }
   
 *,*::before,*::after{box-sizing:inherit}
-html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);overflow-x:clip;max-width:100%}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);overflow-x:clip}
 body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);
-  font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased; transition: background 0.3s, color 0.3s;overflow-x:clip;max-width:100%}
+  font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased; transition: background 0.3s, color 0.3s;overflow-x:clip}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
   background:radial-gradient(70% 45% at 12% 0%, var(--mica-wash), transparent 70%),
              radial-gradient(60% 40% at 92% 8%, var(--tati-wash), transparent 70%)}
-.wrap{position:relative;z-index:1;width:100%;max-width:720px;margin:0 auto;padding:22px 18px 80px;overflow-x:clip;min-width:0}
+.wrap{position:relative;z-index:1;width:100%;max-width:720px;min-width:0;margin:0 auto;padding:22px 18px 80px;overflow-x:clip}
 h1,h2,h3{font-family:Newsreader,Georgia,serif;font-weight:400;margin:0;letter-spacing:-.01em}
 p{margin:0 0 .8em}
 button{font:inherit;cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:12px}
 .hidden{display:none !important}
 
-.lang{position:relative; display:inline-flex; align-items:center; gap:8px;}
+.lang{position:relative; display:inline-flex; align-items:center; gap:8px; flex-wrap:wrap;}
 .lang-btn, .theme-btn{background:transparent;border:1px solid var(--line);border-radius:999px;color:var(--ink-soft);
   padding:5px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:.82rem; height: 32px;}
 .lang-btn svg, .theme-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.6}
@@ -80,12 +80,14 @@ button{font:inherit;cursor:pointer}
 .login .sub{color:var(--ink-soft);font-size:.95rem;max-width:46ch}
 
 .who{display:flex;flex-direction:row;gap:14px;justify-content:center;}
-.who-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;flex:1;text-align:center;
-  padding:24px 10px;border-radius:var(--radius);background:var(--paper-2);border:1px solid var(--line);
+.who-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;flex:1;min-width:0;text-align:center;
+  padding:20px 12px;border-radius:var(--radius);background:var(--paper-2);border:1px solid var(--line);
   color:var(--ink);box-shadow:var(--shadow);transition:border-color .18s ease, transform .18s ease}
 .who-btn:hover{border-color:var(--accent)}
 .who-btn:active{transform:scale(.99)}
-.who-btn strong{font-family:Newsreader,serif;font-size:1.35rem;font-weight:400;display:block}
+.who-person{display:inline-flex;align-items:center;justify-content:center;gap:8px;}
+.who-avatar{width:34px;height:34px;object-fit:contain;border-radius:10px;flex:none;}
+.who-btn strong{font-family:Newsreader,serif;font-size:1.35rem;font-weight:400;display:inline-block}
 .who-btn span{font-size:.85rem;color:var(--ink-soft);display:none;}
 .dot{width:11px;height:11px;border-radius:999px;flex:none;}
 .dot.mica{background:var(--mica)} 
@@ -94,27 +96,27 @@ button{font:inherit;cursor:pointer}
 .pin-row{display:flex;gap:8px;margin-top:10px}
 .pin-row input{flex:1;min-width:0}
 
-input[type="password"],input[type="text"],textarea{width:100%;background:var(--paper);color:var(--ink);
+input[type="password"],input[type="text"],textarea{width:100%;max-width:100%;min-width:0;background:var(--paper);color:var(--ink);
   border:1px solid var(--line);border-radius:12px;padding:11px 13px;font:inherit;resize:vertical;transition:border-color .15s ease}
 textarea{font-family:Newsreader,Georgia,serif;font-size:1.05rem;line-height:1.55;min-height:88px}
 input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .btn{border:none;border-radius:999px;padding:12px 18px;font-weight:500;background:var(--ink);color:var(--paper);
-  transition:opacity .15s ease, transform .15s ease}
+  transition:opacity .15s ease, transform .15s ease;white-space:nowrap}
 .btn:hover{opacity:.88}
 .btn:active{transform:scale(.985)}
 .btn-ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
 .btn-sm{padding:7px 12px;font-size:.86rem}
 
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:16px;flex-wrap:wrap}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:16px;flex-wrap:wrap;min-width:0}
 .brand{font-family:Newsreader,serif;font-style:italic;font-size:1.15rem}
-.me{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--ink-soft)}
-.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:24px; overflow-x: auto; white-space: nowrap;}
+.me{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--ink-soft);flex-wrap:wrap}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:24px; overflow-x: auto; white-space: nowrap; max-width: 100%;}
 .tabs::-webkit-scrollbar { display: none; }
-.tab{background:none;border:none;padding:10px 4px;margin-right:16px;color:var(--ink-soft);position:relative; font-size: 0.92rem;}
+.tab{background:none;border:none;padding:10px 4px;margin-right:16px;color:var(--ink-soft);position:relative; font-size: 0.92rem; flex: 0 0 auto;}
 .tab[aria-selected="true"]{color:var(--ink); font-weight: 600;}
 .tab[aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent)}
 
-.card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);width:100%;max-width:100%;min-width:0;overflow-x:clip}
+.card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);min-width:0;max-width:100%}
 .q{font-family:Newsreader,serif;font-style:italic;font-size:1.22rem;line-height:1.35;margin:0 0 10px;font-weight:400;color:var(--ink)}
 .field{margin-bottom:22px}
 .bonus{border-left:2px solid var(--accent);padding-left:14px}
@@ -123,15 +125,14 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .mood[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink);font-weight:700}
 .hint{font-size:.85rem;color:var(--ink-soft);margin:6px 0 0}
 
-.entry{border-radius:var(--radius);border:1px solid var(--line);padding:18px 20px;background:var(--paper-2); position:relative;}
+.entry{border-radius:var(--radius);border:1px solid var(--line);padding:18px 20px;background:var(--paper-2); position:relative;min-width:0;max-width:100%}
 .entry-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:12px}
 .author{font-family:Newsreader,serif;font-size:1.12rem;font-weight:500;color:var(--ink)}
-.author.mica,.author.tati{color:var(--ink)}
 .stamp{font-size:.78rem;color:var(--ink-soft)}
 .qa{margin-bottom:14px}
 .qa:last-child{margin-bottom:0}
 .qa .lbl{font-family:Newsreader,serif;font-style:italic;color:var(--ink-soft);font-size:.98rem;margin-bottom:4px}
-.qa .ans{font-family:Newsreader,serif;font-size:1.06rem;line-height:1.6;white-space:pre-wrap;color:var(--ink)}
+.qa .ans{font-family:Newsreader,serif;font-size:1.06rem;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink)}
 
 .decor{text-align:center; margin-top:20px; opacity:0.35;}
 .decor svg {width:20px; height:20px;}
@@ -150,24 +151,20 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .react{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 10px;font-size:.95rem;line-height:1.3}
 .react[aria-pressed="true"]{border-color:var(--accent);background:var(--accent)}
 .thread{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
-.msg{font-size:.92rem;margin-bottom:8px;color:var(--ink)}
+.msg{font-size:.92rem;margin-bottom:8px;color:var(--ink);overflow-wrap:anywhere}
 .msg b{font-weight:600;margin-right:6px;color:var(--ink)}
-.msg.mica b,.msg.tati b{color:var(--ink)}
 .msg .t{color:var(--ink-soft);font-size:.76rem;margin-left:6px}
-.thread-form{display:flex;gap:8px;margin-top:10px;width:100%;max-width:100%;min-width:0}
+.thread-form{display:flex;gap:8px;margin-top:10px;min-width:0;max-width:100%}
 .thread-form input{flex:1;min-width:0}
-.note-composer{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px;margin-bottom:20px;width:100%;max-width:100%;min-width:0}
-.note-composer input[type="text"]{flex:1 1 160px;min-width:0}
-.note-composer .btn-sm{flex:0 0 auto;white-space:nowrap}
 
 .day{margin-bottom:34px}
 .day-label{font-family:Newsreader,serif;font-size:1.05rem;color:var(--ink-soft);margin-bottom:10px;display:flex;align-items:center;gap:10px}
 .day-label::after{content:"";flex:1;height:1px;background:var(--line)}
 
 /* MONTH FILTER PILLS (OPTION B) */
-.month-bar{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:18px;border-bottom:1px dashed var(--line)}
+.month-bar{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:18px;border-bottom:1px dashed var(--line);max-width:100%}
 .month-bar::-webkit-scrollbar{display:none}
-.month-pill{background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.84rem;color:var(--ink-soft);white-space:nowrap;transition:all .15s ease}
+.month-pill{background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.84rem;color:var(--ink-soft);white-space:nowrap;transition:all .15s ease;flex:0 0 auto}
 .month-pill[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
 
 /* WEEKLY REPORT SHARED CARD */
@@ -178,14 +175,13 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .wk-block:last-child{margin-bottom:0}
 .wk-q{font-family:Newsreader,serif;font-style:italic;font-size:1.06rem;color:var(--ink-soft);margin-bottom:8px}
 .wk-pair{display:flex;flex-direction:column;gap:8px}
-.wk-ans{padding:12px 14px;background:var(--paper);border:1px solid var(--line);border-radius:12px;font-family:Newsreader,serif;font-size:1.02rem;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.wk-ans{padding:12px 14px;background:var(--paper);border:1px solid var(--line);border-radius:12px;font-family:Newsreader,serif;font-size:1.02rem;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
 .wk-who{font-family:Newsreader,serif;font-size:1.02rem;font-weight:500;display:block;margin-bottom:4px;color:var(--ink)}
-.wk-who.mica,.wk-who.tati{color:var(--ink)}
 .wk-empty{font-style:italic;color:var(--ink-soft);font-size:.94rem}
 
 /* STATS & RESPONSIVE PHOTO */
 .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 26px; }
-.stat { padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--paper-2); display: flex; flex-direction: column; justify-content: center; }
+.stat { padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--paper-2); display: flex; flex-direction: column; justify-content: center; min-width:0; }
 .stat .n{font-family:Newsreader,serif;font-size:2rem;line-height:1;display:block;color:var(--ink)}
 .stat .l{font-size:.8rem;color:var(--ink-soft);margin-top:6px;display:block}
 .stat-img { padding: 0; border: none; background: transparent; overflow: hidden; display: block; width: 100%; height: 100%; min-height: 110px; }
@@ -198,8 +194,8 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 }
 
 /* MOOD HISTORY */
-.mood-history-list { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-top: 12px; }
-.mood-day { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 76px; padding: 10px 8px; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); }
+.mood-history-list { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-top: 12px; max-width:100%; }
+.mood-day { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 76px; padding: 10px 8px; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); flex: 0 0 auto; }
 .mood-date { font-size: 0.72rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
 .mood-texts { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .mood-txt { font-size: 0.75rem; font-weight: 500; font-family: "DM Sans", sans-serif; text-align: center; padding: 3px 8px; border-radius: 12px; color: #241f36; letter-spacing: 0.3px; }
@@ -214,112 +210,91 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .mood-dot.tati { background: var(--tati); }
 .mood-dot.empty { background: transparent; border: 1px solid var(--ink-soft); opacity: 0.35; box-shadow: none; }
 
-.legend{font-size:.82rem;color:var(--ink-soft);display:flex;gap:14px;margin-top:10px}
+.legend{font-size:.82rem;color:var(--ink-soft);display:flex;gap:14px;margin-top:10px;flex-wrap:wrap}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:999px;margin-right:5px}
 
-/* RICH NOTES GRID & GENTLE TAP WIGGLE */
+/* THINKING OF YOU: COMPOSER + CARDS + GENTLE WIGGLE */
+.note-composer { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; margin-bottom: 18px; width: 100%; min-width: 0; }
+.note-composer input[type="text"] { flex: 1 1 170px; min-width: 0; }
+
 @keyframes gentleWiggle {
-  0% { transform: translateX(0) rotate(0deg); }
-  25% { transform: translateX(-2px) rotate(-1.5deg); }
-  55% { transform: translateX(2px) rotate(1.5deg); }
-  80% { transform: translateX(-1px) rotate(-0.6deg); }
-  100% { transform: translateX(0) rotate(0deg); }
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-1.3deg) scale(0.992); }
+  60% { transform: rotate(1.1deg) scale(1.004); }
+  100% { transform: rotate(0deg) scale(1); }
 }
+.wiggle { animation: gentleWiggle 280ms ease; }
 
-.notes-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 16px; align-items: start; width: 100%; max-width: 100%; min-width: 0; }
+/* Mobile: 2 columns showing only tag + who uploaded until tapped to expand */
+.notes-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; align-items: start; width: 100%; }
 @media(min-width: 680px) {
-  .notes-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  .notes-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
 }
-.note {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 16px 16px 42px 16px;
-  background: var(--paper);
-  font-family: Newsreader, serif;
-  font-size: 1.05rem;
-  color: var(--ink);
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-  transition: border-color .2s ease, background .2s ease, transform .2s ease;
-}
-.note.mica { border-left: 3px solid var(--mica); } 
-.note.tati { border-left: 3px solid var(--tati); }
-.note.wiggling { animation: gentleWiggle 280ms ease; }
-.note-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
-.note-tag {
-  display: inline-flex;
-  align-items: center;
-  font-family: "DM Sans", sans-serif;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  padding: 3px 9px;
-  border-radius: 999px;
-  background: var(--paper-2);
-  color: var(--ink-soft);
-  border: 1px solid var(--line);
-}
-.note-who-tag { font-family: "DM Sans", sans-serif; font-size: 0.76rem; color: var(--ink-soft); }
-.note-preview { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.note.expanded .note-preview { display: block; -webkit-line-clamp: unset; overflow: visible; }
-.note .t { display: block; font-family: "DM Sans", sans-serif; font-size: 0.78rem; color: var(--ink-soft); margin-top: 12px; }
-.note a { color: var(--ink); text-decoration: underline; font-weight: 500; }
 
-.note-yt { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin-bottom: 10px; border: 1px solid var(--line); max-height: 150px; transition: max-height .25s ease; }
-.note.expanded .note-yt { max-height: none; }
+.note { position: relative; border: 1px solid var(--line); border-radius: 14px; padding: 12px 12px 34px 12px; background: var(--paper); font-family: Newsreader, serif; font-size: 1rem; overflow-wrap: anywhere; min-width: 0; max-width: 100%; cursor: pointer; transition: border-color .15s ease, box-shadow .15s ease; }
+.note:hover { border-color: var(--accent); }
+.note-top { display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; }
+.note-tag { display: inline-block; font-family: "DM Sans", sans-serif; font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--paper-2); border: 1px solid var(--line); color: var(--ink); }
+.note-who { font-family: "DM Sans", sans-serif; font-size: 0.76rem; font-weight: 500; color: var(--ink-soft); }
+
+.note-body { display: none; margin-top: 10px; }
+.note.expanded .note-body { display: block; }
+.note.expanded { grid-column: 1 / -1; padding: 14px 16px 40px 16px; background: var(--paper-2); }
+
+@media(min-width: 680px) {
+  .note { padding: 14px 16px 38px 16px; background: var(--paper-2); font-size: 1.05rem; cursor: default; }
+  .note-body { display: block; }
+  .note.expanded { grid-column: auto; }
+}
+
+.note .t { display: block; font-family: "DM Sans", sans-serif; font-size: 0.76rem; color: var(--ink-soft); margin-top: 10px; }
+.note a { color: var(--ink); text-decoration: underline; font-weight: 500; overflow-wrap: anywhere; }
+
+.note-yt { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin-bottom: 10px; border: 1px solid var(--line); max-width: 100%; }
 .note-yt iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-.note-img-embed { width: 100%; max-height: 165px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; border: 1px solid var(--line); transition: max-height .25s ease; }
-.note.expanded .note-img-embed { max-height: 360px; object-fit: contain; background: var(--paper-2); }
+.note-img-embed { width: 100%; max-width: 100%; max-height: 220px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; border: 1px solid var(--line); display: block; }
 
 @media(min-width: 680px) {
-  .note-yt { max-height: none; }
-  .note-img-embed { max-height: 220px; }
+  .note-img-embed { max-height: 250px; }
 }
 
-.note-comment-btn { position: absolute; bottom: 8px; right: 12px; background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--ink-soft); transition: transform 0.2s; opacity: 0.85; }
+.note-comment-btn { position: absolute; bottom: 8px; right: 10px; background: none; border: none; font-size: 1.25rem; cursor: pointer; color: var(--ink-soft); transition: transform 0.2s; opacity: 0.85; }
 .note-comment-btn:hover { transform: scale(1.1); opacity: 1; }
-.note-comments { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line); }
-.note-badge { font-family: sans-serif; font-size: 0.75rem; background: var(--accent); color: var(--accent-ink); border-radius: 999px; padding: 1px 6px; position: absolute; top: -4px; right: -6px; font-weight: 700; }
+.note-comments { margin-top: 12px; padding-top: 12px; }
+.note-badge { font-family: sans-serif; font-size: 0.72rem; background: var(--accent); color: var(--accent-ink); border-radius: 999px; padding: 1px 6px; position: absolute; top: -4px; right: -6px; font-weight: 700; }
 
 .empty{color:var(--ink-soft);font-family:Newsreader,serif;font-style:italic}
-.banner{border:1px dashed var(--line);border-radius:14px;padding:12px 14px;font-size:.85rem;color:var(--ink-soft);margin-bottom:20px}
+.banner{border:1px dashed var(--line);border-radius:14px;padding:12px 14px;font-size:.85rem;color:var(--ink-soft);margin-bottom:20px;min-width:0;max-width:100%}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));
   background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-size:.88rem;z-index:50;box-shadow:var(--shadow)}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
 
 /* JOURNAL TIMELINE */
-.timeline { position: relative; padding-left: 26px; margin: 10px 0 30px; }
+.timeline { position: relative; padding-left: 26px; margin: 10px 0 30px; min-width:0;max-width:100% }
 .timeline::before { 
   content: ""; position: absolute; top: 8px; bottom: 0; left: 6px; width: 2px; 
   background-image: linear-gradient(to bottom, var(--ink-soft) 50%, rgba(255,255,255,0) 0%); 
   background-position: left; background-size: 2px 10px; background-repeat: repeat-y; opacity: 0.3; 
 }
-.tl-day { position: relative; margin-bottom: 26px; }
+.tl-day { position: relative; margin-bottom: 26px; min-width:0; }
 .tl-dot { position: absolute; left: -27px; top: 3px; width: 18px; height: 18px; border-radius: 999px; z-index: 2; box-shadow: 0 0 0 4px var(--paper); background-color: var(--paper); background-size: contain; background-position: center; background-repeat: no-repeat; }
 .tl-dot.mica { background-image: url('https://i.ibb.co/Y4mh9656/estrella-mica.png'); }
 .tl-dot.tati { background-image: url('https://i.ibb.co/QFCcMK90/estrella-tati.png'); }
 .tl-dot.both { background-image: url('https://i.ibb.co/HRYWBqf/estrella-ambas.png'); }
 
 .tl-date { font-family: Newsreader, serif; font-size: 1.22rem; font-style: italic; color: var(--ink); margin-bottom: 10px; line-height: 1; display: inline-block; }
-.tl-entries { display: flex; flex-direction: column; gap: 10px; }
+.tl-entries { display: flex; flex-direction: column; gap: 10px; min-width:0; }
 
-.tl-details { background: var(--paper-2); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); transition: all 0.2s ease; overflow: hidden; }
+.tl-details { background: var(--paper-2); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); transition: all 0.2s ease; overflow: hidden; min-width:0; max-width:100%; }
 .tl-summary { padding: 13px 16px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-family: Newsreader, serif; font-size: 1.05rem; color: var(--ink); }
 .tl-summary::-webkit-details-marker { display: none; } 
 .tl-summary .who-lbl { font-weight: 500; color: var(--ink); }
-.tl-summary .who-lbl.mica,.tl-summary .who-lbl.tati { color: var(--ink); }
 
 .tl-details[open] .tl-summary { border-bottom: 1px dashed var(--line); background: rgba(0,0,0,0.02); }
 .tl-details[open] .icon { transform: rotate(45deg); color: var(--ink); }
 
 .icon { font-size: 1.5rem; font-family: sans-serif; transition: transform 0.2s; color: var(--ink-soft); line-height: 0.8; font-weight: 300; }
-.journal-content { padding: 16px 18px; }
+.journal-content { padding: 16px 18px; min-width:0; }
 .journal-content .entry { border: none; box-shadow: none; padding: 0; background: transparent; }
 .journal-content .entry-head { display: none; }
 </style>
@@ -343,8 +318,8 @@ const CONFIG = {
   translateApi: true,
   translateEmail: "",
   people: {
-    mica: { name: "Aile", email: "azorzoni@gmail.com", pin: "1111", tz: -3 }, // Buenos Aires (-3)
-    tati: { name: "Tati", email: "boldohonova01@mail.ru", pin: "2222", tz: 8 }  // Ulan-Ude, Siberia (+8)
+    mica: { name: "Aile", avatar: "./dudu.png", email: "azorzoni@gmail.com", pin: "1111", tz: -3 }, // Buenos Aires (-3)
+    tati: { name: "Tati", avatar: "./bubu.png", email: "boldohonova01@mail.ru", pin: "2222", tz: 8 }  // Ulan-Ude, Siberia (+8)
   },
   reactions: ["❤️", "🥹", "🫂", "😭", "😂", "🌙"]
 };
@@ -451,24 +426,27 @@ const MOODS = {
 const UI = {
   en: {
     brand: "Our check-in", tagline: "One check-in a day, both of us.", yourKey: "Your key", enter: "Enter", wrongKey: "Wrong key.", enteringAs: "Entering as {name}.", signOut: "Sign out", yourPassword: "Your password", signIn: "Sign in", wrongPassword: "Wrong email or password.", authError: "Couldn't reach server.", signingIn: "Signing in…",
+    me: "Me",
     tabToday: "Today", tabJournal: "Journal", tabWeekly: "Weekly", tabUs: "Us", tabPensando: "Thinking of you",
-    localBanner: "Test mode.", degradedBanner: "Offline.", todayTitle: "Your check-in today", howFeel: "How are you feeling?", writeHere: "...", bonusHere: "Today's extra question.", save: "Save", saveChanges: "Save changes", editHint: "Edit until your midnight.", yours: "Yours", hersLabel: "{name}'s", editToday: "Edit today", nextIn: "Next opens in {t}.", notYet: "{name} hasn't checked in.", veil: "Write your check-in to read {name}'s.", emptyJournal: "Nothing written yet.",
+    localBanner: "Test mode.", degradedBanner: "Offline.", todayTitle: "Your check-in today", howFeel: "How are you feeling?", writeHere: "...", bonusHere: "Today's extra question.", save: "Save", saveChanges: "Save changes", editHint: "Edit until your midnight.", yours: "Me", hersLabel: "{name}", editToday: "Edit today", nextIn: "Next opens in {t}.", notYet: "{name} hasn't checked in.", veil: "Write your check-in to read {name}'s.", emptyJournal: "Nothing written yet.",
     weeklyTitle: "Weekend Reflection", weeklySub: "Open for 48 hours on your local Saturday & Sunday.", weeklyLocked: "Weekly check-in opens on your weekend (Saturday 00:00).", weeklyOpensIn: "Your weekend window opens in {t}.", weeklyClosesIn: "Closes at your Sunday midnight ({t} left).", weeklyEmpty: "No weekly reports yet.", weeklyWaiting: "Waiting for {name}...",
-    commentHere: "Say something…", send: "Send", daysTogether: "days together", streak: "days in sync", savedAnswers: "letters exchanged", howWeAre: "How we're doing", moodSub: "Mood history.", moodEmpty: "No data.", thinking: "This made me think of you", notesSub: "Upload an image, paste a YouTube link, or write a thought. Tap a card to expand.", noteHere: "A song, a verse, a thought...", leave: "Save memory", noNotes: "No notes yet.", tagPhoto: "Photo", tagYouTube: "YouTube", tagNote: "Note", today: "Today", yesterday: "Yesterday", edited: "edited", saved: "Saved", changed: "Changes saved", noteSent: "Sent", writeSomething: "Write something.", saveFailed: "Failed.", translate: "Translate", original: "Show original", translating: "Translating…", trFailed: "Error", trNote: "Machine translation", language: "Language", lightMode: "Light Mode", darkMode: "Dark Mode"
+    commentHere: "Say something…", send: "Send", daysTogether: "days together", streak: "days in sync", savedAnswers: "letters exchanged", howWeAre: "How we're doing", moodSub: "Mood history.", moodEmpty: "No data.", thinking: "This made me think of you", notesSub: "Upload an image, paste a YouTube link, or write a thought. Tap a card to expand.", noteHere: "A song, a verse, a thought...", leave: "Save memory", noNotes: "No notes yet.", tagPhoto: "Photo", tagYoutube: "YouTube", tagLink: "Link", tagNote: "Note", today: "Today", yesterday: "Yesterday", edited: "edited", saved: "Saved", changed: "Changes saved", noteSent: "Sent", writeSomething: "Write something.", saveFailed: "Failed.", translate: "Translate", original: "Show original", translating: "Translating…", trFailed: "Error", trNote: "Machine translation", language: "Language", lightMode: "Light Mode", darkMode: "Dark Mode"
   },
   es: {
     brand: "Nuestro check-in", tagline: "Un check-in por día, las dos.", yourKey: "Tu clave", enter: "Entrar", wrongKey: "Clave incorrecta.", enteringAs: "Entrando como {name}.", signOut: "Salir", yourPassword: "Tu contraseña", signIn: "Entrar", wrongPassword: "Email o contraseña incorrectos.", authError: "Error de conexión.", signingIn: "Entrando…",
+    me: "Yo",
     tabToday: "Hoy", tabJournal: "Diario", tabWeekly: "Semanal", tabUs: "Nosotras", tabPensando: "Pensando en vos",
-    localBanner: "Modo prueba.", degradedBanner: "Sin conexión.", todayTitle: "Tu check-in de hoy", howFeel: "¿Cómo te sentís?", writeHere: "...", bonusHere: "Pregunta extra de hoy.", save: "Guardar", saveChanges: "Guardar cambios", editHint: "Se puede editar hasta tu medianoche.", yours: "Lo tuyo", hersLabel: "Lo de {name}", editToday: "Editar", nextIn: "Mañana se abre en {t}.", notYet: "{name} todavía no hizo el check-in.", veil: "Respondé para leer a {name}.", emptyJournal: "Sin registros.",
+    localBanner: "Modo prueba.", degradedBanner: "Sin conexión.", todayTitle: "Tu check-in de hoy", howFeel: "¿Cómo te sentís?", writeHere: "...", bonusHere: "Pregunta extra de hoy.", save: "Guardar", saveChanges: "Guardar cambios", editHint: "Se puede editar hasta tu medianoche.", yours: "Yo", hersLabel: "{name}", editToday: "Editar", nextIn: "Mañana se abre en {t}.", notYet: "{name} todavía no hizo el check-in.", veil: "Respondé para leer a {name}.", emptyJournal: "Sin registros.",
     weeklyTitle: "Reporte Semanal", weeklySub: "Disponible durante 48 horas tu sábado y domingo locales.", weeklyLocked: "El reporte semanal se abre tu fin de semana (sábado 00:00).", weeklyOpensIn: "Tu ventana de fin de semana abre en {t}.", weeklyClosesIn: "Cierra el domingo a tu medianoche (quedan {t}).", weeklyEmpty: "Todavía no hay reportes semanales.", weeklyWaiting: "Esperando a {name}...",
-    commentHere: "Comentar algo…", send: "Enviar", daysTogether: "días juntas", streak: "días en sintonía", savedAnswers: "cartas intercambiadas", howWeAre: "Cómo venimos", moodSub: "Ánimo histórico.", moodEmpty: "Sin datos.", thinking: "Esto me hizo acordar a vos", notesSub: "Subí una foto, pegá un link de YouTube o dejá un pensamiento. Tocá una tarjeta para expandir.", noteHere: "Una canción, un verso, un pensamiento...", leave: "Guardar", noNotes: "Todavía no hay nada.", tagPhoto: "Foto", tagYouTube: "YouTube", tagNote: "Nota", today: "Hoy", yesterday: "Ayer", edited: "editado", saved: "Guardado", changed: "Cambios guardados", noteSent: "Enviado", writeSomething: "Escribí algo.", saveFailed: "Error al guardar.", translate: "Traducir", original: "Original", translating: "Traduciendo…", trFailed: "Error", trNote: "Traducción automática", language: "Idioma", lightMode: "Modo claro", darkMode: "Modo oscuro"
+    commentHere: "Comentar algo…", send: "Enviar", daysTogether: "días juntas", streak: "días en sintonía", savedAnswers: "cartas intercambiadas", howWeAre: "Cómo venimos", moodSub: "Ánimo histórico.", moodEmpty: "Sin datos.", thinking: "Esto me hizo acordar a vos", notesSub: "Subí una foto, pegá un link de YouTube, o dejá un pensamiento. Tocá una tarjeta para expandir.", noteHere: "Una canción, un verso, un pensamiento...", leave: "Guardar", noNotes: "Todavía no hay nada.", tagPhoto: "Foto", tagYoutube: "YouTube", tagLink: "Link", tagNote: "Nota", today: "Hoy", yesterday: "Ayer", edited: "editado", saved: "Guardado", changed: "Cambios guardados", noteSent: "Enviado", writeSomething: "Escribí algo.", saveFailed: "Error al guardar.", translate: "Traducir", original: "Original", translating: "Traduciendo…", trFailed: "Error", trNote: "Traducción automática", language: "Idioma", lightMode: "Modo claro", darkMode: "Modo oscuro"
   },
   ru: {
     brand: "Наш чек-ин", tagline: "Один чек-ин в день, обе.", yourKey: "Твой код", enter: "Войти", wrongKey: "Неверный код.", enteringAs: "Вход как {name}.", signOut: "Выйти", yourPassword: "Твой пароль", signIn: "Войти", wrongPassword: "Неверный email/пароль.", authError: "Ошибка подключения.", signingIn: "Входим…",
+    me: "Я",
     tabToday: "Сегодня", tabJournal: "Дневник", tabWeekly: "Неделя", tabUs: "Мы", tabPensando: "Думаю о тебе",
-    localBanner: "Тестовый режим.", degradedBanner: "Офлайн.", todayTitle: "Твой чек-ин", howFeel: "Как ты себя чувствуешь?", writeHere: "...", bonusHere: "Дополнительный вопрос.", save: "Сохранить", saveChanges: "Изменить", editHint: "Можно редактировать до твоей полуночи.", yours: "Твоё", hersLabel: "Её: {name}", editToday: "Изменить", nextIn: "Завтра откроется через {t}.", notYet: "{name} ещё не сделала чек-ин.", veil: "Напиши чтобы прочитать.", emptyJournal: "Пусто.",
+    localBanner: "Тестовый режим.", degradedBanner: "Офлайн.", todayTitle: "Твой чек-ин", howFeel: "Как ты себя чувствуешь?", writeHere: "...", bonusHere: "Дополнительный вопрос.", save: "Сохранить", saveChanges: "Изменить", editHint: "Можно редактировать до твоей полуночи.", yours: "Я", hersLabel: "{name}", editToday: "Изменить", nextIn: "Завтра откроется через {t}.", notYet: "{name} ещё не сделала чек-ин.", veil: "Напиши чтобы прочитать.", emptyJournal: "Пусто.",
     weeklyTitle: "Итоги недели", weeklySub: "Доступно 48 часов в твои субботу и воскресенье.", weeklyLocked: "Еженедельный отчёт откроется в твои выходные (суббота 00:00).", weeklyOpensIn: "Откроется через {t}.", weeklyClosesIn: "Закроется в полночь воскресенья (осталось {t}).", weeklyEmpty: "Пока нет недельных отчётов.", weeklyWaiting: "Ждём {name}...",
-    commentHere: "Написать…", send: "Отправить", daysTogether: "дней вместе", streak: "дней в унисон", savedAnswers: "писем друг другу", howWeAre: "Как у нас дела", moodSub: "История настроения.", moodEmpty: "Нет данных.", thinking: "Это напомнило мне о тебе", notesSub: "Загрузи фото, вставь ссылку на YouTube или напиши мысль. Нажми на карточку, чтобы раскрыть.", noteHere: "Песня, стих, мысль...", leave: "Сохранить", noNotes: "Пока нет.", tagPhoto: "Фото", tagYouTube: "YouTube", tagNote: "Заметка", today: "Сегодня", yesterday: "Вчера", edited: "изменено", saved: "Сохранено", changed: "Изменено", noteSent: "Отправлено", writeSomething: "Напиши что-то.", saveFailed: "Ошибка.", translate: "Перевести", original: "Оригинал", translating: "Перевожу…", trFailed: "Ошибка", trNote: "Машинный перевод", language: "Язык", lightMode: "Светлая тема", darkMode: "Тёмная тема"
+    commentHere: "Написать…", send: "Отправить", daysTogether: "дней вместе", streak: "дней в унисон", savedAnswers: "писем друг другу", howWeAre: "Как у нас дела", moodSub: "История настроения.", moodEmpty: "Нет данных.", thinking: "Это напомнило мне о тебе", notesSub: "Загрузи фото, вставь ссылку на YouTube или напиши мысль. Нажми на карточку, чтобы развернуть.", noteHere: "Песня, стих, мысль...", leave: "Сохранить", noNotes: "Пока нет.", tagPhoto: "Фото", tagYoutube: "YouTube", tagLink: "Ссылка", tagNote: "Заметка", today: "Сегодня", yesterday: "Вчера", edited: "изменено", saved: "Сохранено", changed: "Изменено", noteSent: "Отправлено", writeSomething: "Напиши что-то.", saveFailed: "Ошибка.", translate: "Перевести", original: "Оригинал", translating: "Перевожу…", trFailed: "Ошибка", trNote: "Машинный перевод", language: "Язык", lightMode: "Светлая тема", darkMode: "Тёмная тема"
   }
 };
 
@@ -486,7 +464,20 @@ const todayKey = () => {
 
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const other = who => who === "mica" ? "tati" : "mica";
-const nameOf = who => CONFIG.people[who]?.name ?? who;
+const realNameOf = who => CONFIG.people[who]?.name ?? who;
+
+// Nicknames across the app (kept identical across languages for partner):
+// - Tati ("tati") is called "Мой малыш" by Aile
+// - Aile ("mica") is called "Mi bebé" by Tati
+// - Logged-in user ("state.me") is called "Me" ("Yo" / "Я")
+function nameOf(who){
+  if (!who) return "";
+  if (state.me && who === state.me) return t("me");
+  if (who === "tati") return "Мой малыш";
+  if (who === "mica") return "Mi bebé";
+  return realNameOf(who);
+}
+
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 const ls = { get(k){ try { return localStorage.getItem(k); } catch { return null; } },
              set(k,v){ try { localStorage.setItem(k,v); } catch {} },
@@ -496,8 +487,7 @@ const state = {
   store: null, me: null, userId: null, lang: CONFIG.defaultLang, tab: "hoy",
   entries: [], weekly: [], comments: [], notes: [],
   editing: false, editingWeekly: false, selectedMonth: null,
-  degraded: false, tx: {}, txOn: {}, langOpen: false,
-  expandedNotes: new Set(), openNotes: new Set(), wigglingNoteId: null
+  degraded: false, tx: {}, txOn: {}, langOpen: false, openNotes: new Set()
 };
 let pendingImage = null; 
 
@@ -700,7 +690,10 @@ function renderLogin(){
       <div class="who">
         ${Object.keys(CONFIG.people).map(k => `
           <button class="who-btn" data-who="${k}" style="flex: 1; padding: 18px 10px;">
-            <strong>${esc(CONFIG.people[k].name)}</strong>
+            <span class="who-person">
+              <img class="who-avatar" src="${esc(CONFIG.people[k].avatar)}" alt="${esc(CONFIG.people[k].name)}">
+              <strong>${esc(CONFIG.people[k].name)}</strong>
+            </span>
             <span class="dot ${k}"></span>
           </button>`).join("")}
       </div>
@@ -714,7 +707,7 @@ function renderLogin(){
     
   wireUI(renderLogin);
   let picked = null;
-  root.querySelectorAll(".who-btn").forEach(b => b.addEventListener("click", () => { picked = b.dataset.who; $("#pinForm").classList.remove("hidden"); $("#pinHint").textContent = t("enteringAs", { name: nameOf(picked) }); $("#pin").focus(); }));
+  root.querySelectorAll(".who-btn").forEach(b => b.addEventListener("click", () => { picked = b.dataset.who; $("#pinForm").classList.remove("hidden"); $("#pinHint").textContent = t("enteringAs", { name: realNameOf(picked) }); $("#pin").focus(); }));
   $("#pinForm").addEventListener("submit", async ev => {
     ev.preventDefault(); if (!picked) return; const val = $("#pin").value;
     if (!authMode){ if (val.trim() !== CONFIG.people[picked].pin){ $("#pinHint").textContent = t("wrongKey"); return; } state.me = picked; ls.set("ci_me", picked); start(); return; }
@@ -727,7 +720,7 @@ function shell(inner){
   return `
     <header class="topbar">
       <span class="brand">${esc(t("brand"))}</span>
-      <span class="me">${langHTML()}<span class="dot ${state.me}"></span>${esc(nameOf(state.me))}
+      <span class="me">${langHTML()}<span class="dot ${state.me}"></span>${esc(t("me"))}
         <button class="btn btn-ghost btn-sm" id="logout">${esc(t("signOut"))}</button></span>
     </header>
     <nav class="tabs" role="tablist">
@@ -1009,8 +1002,12 @@ function viewNosotras(){
         const aMood = a && typeof a.mood === "number" ? moods()[a.mood] : "—";
         const bMood = b && typeof b.mood === "number" ? moods()[b.mood] : "—";
         const aSnip = getSnippet(a); const bSnip = getSnippet(b);
-        const titleA = a ? `${nameOf("mica")} | ${shortDate} | ${aMood}\n\n"${aSnip}"` : `${nameOf("mica")} | ${shortDate}`;
-        const titleB = b ? `${nameOf("tati")} | ${shortDate} | ${bMood}\n\n"${bSnip}"` : `${nameOf("tati")} | ${shortDate}`;
+        const titleA = a ? `${nameOf("mica")} | ${shortDate} | ${aMood}
+
+"${aSnip}"` : `${nameOf("mica")} | ${shortDate}`;
+        const titleB = b ? `${nameOf("tati")} | ${shortDate} | ${bMood}
+
+"${bSnip}"` : `${nameOf("tati")} | ${shortDate}`;
         return `<div class="mood-dot-col">
                   <div class="mood-dot mica ${!a?'empty':''}" title="${titleA}"></div>
                   <div class="mood-dot tati ${!b?'empty':''}" title="${titleB}"></div>
@@ -1039,38 +1036,33 @@ function viewNosotras(){
     </div>`;
 }
 
-function noteKindOf(n) {
-  if (n.image) return "photo";
-  const yt = (n.text || "").match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
-  if (yt) return "youtube";
-  return "note";
-}
-
-function noteTagLabel(kind) {
-  if (kind === "photo") return t("tagPhoto");
-  if (kind === "youtube") return t("tagYouTube");
-  return t("tagNote");
+function noteKind(n) {
+  if (n.image) return { key: "photo", label: t("tagPhoto") };
+  const txt = String(n.text || "");
+  if (/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i.test(txt)) {
+    return { key: "youtube", label: t("tagYoutube") };
+  }
+  if (/https?:\/\/[^\s]+/i.test(txt)) {
+    return { key: "link", label: t("tagLink") };
+  }
+  return { key: "note", label: t("tagNote") };
 }
 
 function viewPensando() {
   const notes = [...state.notes].sort((a,b) => b.created_at.localeCompare(a.created_at));
   
-  const renderRichNote = (n, isExpanded) => {
-    const cls = isExpanded ? "" : "note-preview";
-    if (n.image) {
-      return `<img src="${n.image}" alt="${esc(n.text || "Shared memory")}" class="note-img-embed">${n.text ? `<div class="${cls}" style="margin-top:4px;">${esc(n.text)}</div>` : ""}`;
-    }
+  const renderRichNote = (n) => {
+    const safeText = String(n.text || "");
+    if (n.image) return `<img src="${n.image}" alt="${esc(safeText || "Shared memory")}" class="note-img-embed"> ${safeText ? `<div style="margin-top:4px;">${esc(safeText)}</div>` : ""}`;
     
-    let text = n.text || "";
-    const yt = text.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+    const yt = safeText.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
     if (yt) {
-      const rest = text.replace(yt[0], "").trim();
-      return `<div class="note-yt"><iframe src="https://www.youtube.com/embed/${yt[1]}" title="YouTube video" frameborder="0" allowfullscreen></iframe></div>${rest ? `<div class="${cls}" style="margin-top:8px">${esc(rest)}</div>` : ""}`;
+      const rest = safeText.replace(yt[0], '').trim();
+      return `<div class="note-yt"><iframe src="https://www.youtube.com/embed/${yt[1]}" title="YouTube video" frameborder="0" allowfullscreen></iframe></div>${rest ? `<div style="margin-top:8px">${esc(rest)}</div>` : ""}`;
     }
     
     const urlRegex = /(https?:\/\/[^\s]+)/g;
-    const linked = esc(text).replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
-    return `<div class="${cls}">${linked}</div>`;
+    return esc(safeText).replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
   };
 
   return `
@@ -1079,7 +1071,7 @@ function viewPensando() {
       <p class="hint" style="margin:0 0 12px">${esc(t("notesSub"))}</p>
       
       <form id="noteForm" class="note-composer">
-       <button type="button" id="imgBtn" class="btn btn-ghost" style="padding: 8px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto;" aria-label="Upload photo">
+       <button type="button" id="imgBtn" class="btn btn-ghost" style="padding: 8px; display: flex; align-items: center; justify-content: center;" aria-label="Upload photo">
          <img src="https://i.ibb.co/BKBm119h/camara.png" alt="" style="width: 24px; height: 24px; object-fit: contain;">
        </button>
         <input type="file" id="noteImg" accept="image/*" class="hidden">
@@ -1088,41 +1080,37 @@ function viewPensando() {
       </form>
       
       <div id="imgPreview" style="display:none; margin-top:10px; margin-bottom: 10px; position:relative; width: max-content; max-width: 100%;">
-        <img id="previewEl" alt="Preview" style="max-height:100px; border-radius:12px; border: 1px solid var(--line);"> 
+        <img id="previewEl" alt="Preview" style="max-height:100px; max-width:100%; border-radius:12px; border: 1px solid var(--line);"> 
         <button type="button" id="clearImg" aria-label="Remove photo" style="position:absolute; top:-10px; right:-10px; background:var(--ink); color:var(--paper); border:none; border-radius:999px; width:24px; height:24px; cursor:pointer;">x</button>
       </div>
 
       <div class="notes-grid">
         ${notes.length ? notes.map(n => {
-          const isExpanded = state.expandedNotes.has(n.id);
-          const isWiggling = state.wigglingNoteId === n.id;
-          const kind = noteKindOf(n);
-          const shown = state.tx["note:" + n.id] && state.txOn["note:" + n.id] && state.tx["note:" + n.id].lang === state.lang
-            ? `<div class="${isExpanded ? "" : "note-preview"}">${esc(state.tx["note:" + n.id].text)}</div>`
-            : renderRichNote(n, isExpanded);
+          const shown = state.tx["note:" + n.id] && state.txOn["note:" + n.id] && state.tx["note:" + n.id].lang === state.lang ? state.tx["note:" + n.id].text : renderRichNote(n);
           const can = CONFIG.translateApi && (n.lang || "es") !== state.lang && !n.image;
           
           const noteComments = state.comments.filter(c => c.entry_id === n.id);
           const commentCount = noteComments.length;
-          const isOpen = state.openNotes.has(n.id) || isExpanded;
+          const isOpen = state.openNotes.has(n.id);
+          const kind = noteKind(n);
 
-          return `<div class="note ${n.author} ${isExpanded ? "expanded" : ""} ${isWiggling ? "wiggling" : ""}" data-note-card="${n.id}" aria-expanded="${isExpanded}">
+          return `<div class="note ${n.author} ${isOpen ? "expanded" : ""}" data-note-card="${n.id}">
             <div class="note-top">
-              <span class="note-tag">${esc(noteTagLabel(kind))}</span>
-              <span class="note-who-tag">${esc(nameOf(n.author))}</span>
+              <span class="note-tag">${esc(kind.label)}</span>
+              <span class="note-who">${esc(nameOf(n.author))}</span>
             </div>
-            ${shown}
-            <span class="t">${new Date(n.created_at).toLocaleString(LOCALE[state.lang], {day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</span>
-            ${can ? `<button class="tr" data-trnote="${n.id}" style="margin-top:6px">${esc(state.txOn["note:" + n.id] ? t("original") : t("translate"))}</button>` : ""}
-            
-           <button class="note-comment-btn" data-toggle="${n.id}" aria-label="Toggle comments" style="display: flex; align-items: center; justify-content: center; position: absolute; bottom: 8px; right: 12px; background: none; border: none; cursor: pointer; padding: 4px;">
+            <div class="note-body">
+              ${shown}
+              <span class="t">${esc(nameOf(n.author))} · ${new Date(n.created_at).toLocaleString(LOCALE[state.lang], {day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</span>
+              ${can ? `<button class="tr" data-trnote="${n.id}" style="margin-top:6px">${esc(state.txOn["note:" + n.id] ? t("original") : t("translate"))}</button>` : ""}
+              <div class="note-comments" id="comments-${n.id}">
+                ${threadHTML(n.id, null)}
+              </div>
+            </div>
+            <button type="button" class="note-comment-btn" data-toggle="${n.id}" aria-label="Toggle comments" style="display: flex; align-items: center; justify-content: center; position: absolute; bottom: 8px; right: 10px; background: none; border: none; cursor: pointer; padding: 4px;">
               <img src="https://i.ibb.co/GQPTFW0G/comment.png" alt="" style="width: 20px; height: 20px; object-fit: contain;">
               ${commentCount > 0 ? `<span class="note-badge" style="top: -2px; right: -6px;">${commentCount}</span>` : ""}
             </button>
-
-            <div class="note-comments ${isOpen ? '' : 'hidden'}" id="comments-${n.id}">
-              ${threadHTML(n.id, null)}
-            </div>
           </div>`;
         }).join("") : `<p class="empty">${esc(t("noNotes"))}</p>`}
       </div>
@@ -1199,47 +1187,35 @@ function render(){
     });
   }
 
-  root.querySelectorAll("[data-note-card]").forEach(card => {
-    card.addEventListener("click", ev => {
-      if (ev.target.closest("a, button, form, input, iframe")) return;
+  // Gentle tap wiggle + expand/collapse on Thinking of you cards
+  root.querySelectorAll(".note[data-note-card]").forEach(card => {
+    card.addEventListener("click", (ev) => {
+      if (ev.target.closest("a, button, input, form, iframe")) return;
       const id = card.dataset.noteCard;
-      if (state.expandedNotes.has(id)) {
-        state.expandedNotes.delete(id);
-      } else {
-        state.expandedNotes.add(id);
+      card.classList.remove("wiggle");
+      void card.offsetWidth;
+      card.classList.add("wiggle");
+      if (window.matchMedia("(max-width: 679px)").matches) {
+        if (state.openNotes.has(id)) state.openNotes.delete(id);
+        else state.openNotes.add(id);
+        setTimeout(() => render(), 140);
       }
-      state.wigglingNoteId = id;
-      render();
-      setTimeout(() => {
-        if (state.wigglingNoteId === id) {
-          state.wigglingNoteId = null;
-          const el = $(`[data-note-card="${id}"]`);
-          if (el) el.classList.remove("wiggling");
-        }
-      }, 300);
     });
   });
-  
+
   root.querySelectorAll(".note-comment-btn").forEach(btn => {
-    btn.addEventListener("click", ev => {
+    btn.addEventListener("click", (ev) => {
       ev.stopPropagation();
       const id = btn.dataset.toggle;
-      if (state.openNotes.has(id)) {
-        state.openNotes.delete(id);
-        state.expandedNotes.delete(id);
-      } else {
-        state.openNotes.add(id);
-        state.expandedNotes.add(id);
+      const card = btn.closest(".note[data-note-card]");
+      if (card) {
+        card.classList.remove("wiggle");
+        void card.offsetWidth;
+        card.classList.add("wiggle");
       }
-      state.wigglingNoteId = id;
+      if (state.openNotes.has(id)) state.openNotes.delete(id);
+      else state.openNotes.add(id);
       render();
-      setTimeout(() => {
-        if (state.wigglingNoteId === id) {
-          state.wigglingNoteId = null;
-          const el = $(`[data-note-card="${id}"]`);
-          if (el) el.classList.remove("wiggling");
-        }
-      }, 300);
     });
   });
 
@@ -1285,7 +1261,7 @@ function render(){
     b.textContent = t("translating");
     try { await translateWeekly(wDoc, who); state.txOn[k] = true; render(); } catch { b.textContent = t("trFailed"); }
   }));
-  root.querySelectorAll("[data-trnote]").forEach(b => b.addEventListener("click", async ev => { ev.stopPropagation(); const n = state.notes.find(x => x.id === b.dataset.trnote); if (!n) return; const k = "note:" + n.id; if (state.txOn[k]){ state.txOn[k] = false; render(); return; } b.textContent = t("translating"); try { state.tx[k] = { lang: state.lang, text: await translate(n.text, n.lang || "es", state.lang) }; state.txOn[k] = true; render(); } catch { b.textContent = t("trFailed"); } }));
+  root.querySelectorAll("[data-trnote]").forEach(b => b.addEventListener("click", async (ev) => { ev.stopPropagation(); const n = state.notes.find(x => x.id === b.dataset.trnote); if (!n) return; const k = "note:" + n.id; if (state.txOn[k]){ state.txOn[k] = false; render(); return; } b.textContent = t("translating"); try { state.tx[k] = { lang: state.lang, text: await translate(n.text, n.lang || "es", state.lang) }; state.txOn[k] = true; render(); } catch { b.textContent = t("trFailed"); } }));
 }
 
 async function start(){ await refresh(); render(); }
