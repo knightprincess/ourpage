@@ -50,13 +50,13 @@
 }
   
 *,*::before,*::after{box-sizing:inherit}
-html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);overflow-x:clip;max-width:100%}
 body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);
-  font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased; transition: background 0.3s, color 0.3s;}
+  font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased; transition: background 0.3s, color 0.3s;overflow-x:clip;max-width:100%}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
   background:radial-gradient(70% 45% at 12% 0%, var(--mica-wash), transparent 70%),
              radial-gradient(60% 40% at 92% 8%, var(--tati-wash), transparent 70%)}
-.wrap{position:relative;z-index:1;width:100%;max-width:720px;margin:0 auto;padding:22px 18px 80px}
+.wrap{position:relative;z-index:1;width:100%;max-width:720px;margin:0 auto;padding:22px 18px 80px;overflow-x:clip;min-width:0}
 h1,h2,h3{font-family:Newsreader,Georgia,serif;font-weight:400;margin:0;letter-spacing:-.01em}
 p{margin:0 0 .8em}
 button{font:inherit;cursor:pointer}
@@ -114,7 +114,7 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .tab[aria-selected="true"]{color:var(--ink); font-weight: 600;}
 .tab[aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--accent)}
 
-.card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);width:100%;max-width:100%;min-width:0;overflow-x:clip}
 .q{font-family:Newsreader,serif;font-style:italic;font-size:1.22rem;line-height:1.35;margin:0 0 10px;font-weight:400;color:var(--ink)}
 .field{margin-bottom:22px}
 .bonus{border-left:2px solid var(--accent);padding-left:14px}
@@ -154,8 +154,11 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .msg b{font-weight:600;margin-right:6px;color:var(--ink)}
 .msg.mica b,.msg.tati b{color:var(--ink)}
 .msg .t{color:var(--ink-soft);font-size:.76rem;margin-left:6px}
-.thread-form{display:flex;gap:8px;margin-top:10px}
+.thread-form{display:flex;gap:8px;margin-top:10px;width:100%;max-width:100%;min-width:0}
 .thread-form input{flex:1;min-width:0}
+.note-composer{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px;margin-bottom:20px;width:100%;max-width:100%;min-width:0}
+.note-composer input[type="text"]{flex:1 1 160px;min-width:0}
+.note-composer .btn-sm{flex:0 0 auto;white-space:nowrap}
 
 .day{margin-bottom:34px}
 .day-label{font-family:Newsreader,serif;font-size:1.05rem;color:var(--ink-soft);margin-bottom:10px;display:flex;align-items:center;gap:10px}
@@ -223,12 +226,15 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
   100% { transform: translateX(0) rotate(0deg); }
 }
 
-.notes-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 16px; align-items: start; }
+.notes-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 16px; align-items: start; width: 100%; max-width: 100%; min-width: 0; }
 @media(min-width: 680px) {
-  .notes-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .notes-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
 }
 .note {
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 16px 16px 42px 16px;
@@ -236,7 +242,8 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
   font-family: Newsreader, serif;
   font-size: 1.05rem;
   color: var(--ink);
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
+  word-break: break-word;
   cursor: pointer;
   box-shadow: var(--shadow);
   transition: border-color .2s ease, background .2s ease, transform .2s ease;
@@ -1071,8 +1078,8 @@ function viewPensando() {
       <h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("thinking"))}</h3>
       <p class="hint" style="margin:0 0 12px">${esc(t("notesSub"))}</p>
       
-      <form id="noteForm" class="thread-form" style="align-items: center; margin-bottom: 20px;">
-       <button type="button" id="imgBtn" class="btn btn-ghost" style="padding: 8px; display: flex; align-items: center; justify-content: center;" aria-label="Upload photo">
+      <form id="noteForm" class="note-composer">
+       <button type="button" id="imgBtn" class="btn btn-ghost" style="padding: 8px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto;" aria-label="Upload photo">
          <img src="https://i.ibb.co/BKBm119h/camara.png" alt="" style="width: 24px; height: 24px; object-fit: contain;">
        </button>
         <input type="file" id="noteImg" accept="image/*" class="hidden">
@@ -1080,7 +1087,7 @@ function viewPensando() {
         <button class="btn btn-sm" type="submit">${esc(t("leave"))}</button>
       </form>
       
-      <div id="imgPreview" style="display:none; margin-top:10px; margin-bottom: 10px; position:relative; width: max-content;">
+      <div id="imgPreview" style="display:none; margin-top:10px; margin-bottom: 10px; position:relative; width: max-content; max-width: 100%;">
         <img id="previewEl" alt="Preview" style="max-height:100px; border-radius:12px; border: 1px solid var(--line);"> 
         <button type="button" id="clearImg" aria-label="Remove photo" style="position:absolute; top:-10px; right:-10px; background:var(--ink); color:var(--paper); border:none; border-radius:999px; width:24px; height:24px; cursor:pointer;">x</button>
       </div>
