@@ -85,10 +85,9 @@ button{font:inherit;cursor:pointer}
   color:var(--ink);box-shadow:var(--shadow);transition:border-color .18s ease, transform .18s ease}
 .who-btn:hover{border-color:var(--accent)}
 .who-btn:active{transform:scale(.99)}
-.who-person{display:inline-flex;align-items:center;justify-content:center;gap:8px;}
-.who-avatar{width:34px;height:34px;object-fit:contain;border-radius:10px;flex:none;}
 .who-btn strong{font-family:Newsreader,serif;font-size:1.35rem;font-weight:400;display:inline-block}
-.who-btn span{font-size:.85rem;color:var(--ink-soft);display:none;}
+.who-person{display:inline-flex;align-items:center;justify-content:center;gap:8px;}
+.who-avatar{width:32px;height:32px;object-fit:contain;border-radius:8px;flex:none;display:block;}
 .dot{width:11px;height:11px;border-radius:999px;flex:none;}
 .dot.mica{background:var(--mica)} 
 .dot.tati{background:var(--tati)}
@@ -318,8 +317,8 @@ const CONFIG = {
   translateApi: true,
   translateEmail: "",
   people: {
-    mica: { name: "Aile", avatar: "./dudu.png", email: "azorzoni@gmail.com", pin: "1111", tz: -3 }, // Buenos Aires (-3)
-    tati: { name: "Tati", avatar: "./bubu.png", email: "boldohonova01@mail.ru", pin: "2222", tz: 8 }  // Ulan-Ude, Siberia (+8)
+    mica: { name: "Aile", avatar: "dudu.png", email: "azorzoni@gmail.com", pin: "1111", tz: -3 }, // Buenos Aires (-3)
+    tati: { name: "Tati", avatar: "bubu.png", email: "boldohonova01@mail.ru", pin: "2222", tz: 8 }  // Ulan-Ude, Siberia (+8)
   },
   reactions: ["❤️", "🥹", "🫂", "😭", "😂", "🌙"]
 };
@@ -690,10 +689,10 @@ function renderLogin(){
       <div class="who">
         ${Object.keys(CONFIG.people).map(k => `
           <button class="who-btn" data-who="${k}" style="flex: 1; padding: 18px 10px;">
-            <span class="who-person">
-              <img class="who-avatar" src="${esc(CONFIG.people[k].avatar)}" alt="${esc(CONFIG.people[k].name)}">
+            <div class="who-person">
+              <img class="who-avatar" src="${esc(CONFIG.people[k].avatar)}" alt="" onerror="this.style.display='none'">
               <strong>${esc(CONFIG.people[k].name)}</strong>
-            </span>
+            </div>
             <span class="dot ${k}"></span>
           </button>`).join("")}
       </div>
