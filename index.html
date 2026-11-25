@@ -73,7 +73,7 @@ button{font:inherit;cursor:pointer}
 .lang-menu button:hover{background:var(--paper)}
 .lang-menu button[aria-current="true"]{color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 
-.login{min-height:calc(100vh - 44px);display:flex;flex-direction:column;gap:24px}
+.login{min-height:70vh;display:flex;flex-direction:column;justify-content:center;gap:24px}
 .login-top{display:flex;justify-content:flex-end}
 .eyebrow{font-size:.82rem;color:var(--ink-soft);margin:0}
 .login h1{font-size:clamp(1.9rem,6.6vw,2.9rem);font-style:italic;line-height:1.14;font-weight:300}
@@ -268,6 +268,7 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 
 
 .page-footer{margin-top:28px;margin-bottom:6px;padding-top:8px;display:flex;justify-content:center;align-items:center;}
+.page-footer.login-footer{margin-top:8px;}
 .page-footer img{width:110px;max-width:34vw;height:auto;object-fit:contain;display:block;pointer-events:none;user-select:none;}
 .page-footer.weekly-footer img{width:136px;max-width:40vw;}
 
@@ -701,8 +702,7 @@ function renderLogin(){
         <button class="btn" type="submit">${esc(authMode ? t("signIn") : t("enter"))}</button>
       </form>
       <p class="hint" id="pinHint" style="text-align: center;"></p>
-      <div style="flex:1;min-height:12px;"></div>
-      <div class="page-footer"><img src="IMAGES/duduandbubu.png" alt="Dudu and Bubu" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='duduandbubu.png';}else{this.style.display='none';}"></div>
+      <div class="page-footer login-footer"><img src="IMAGES/duduandbubu.png" alt="Dudu and Bubu" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='duduandbubu.png';}else{this.style.display='none';}"></div>
     </section>`;
     
   wireUI(renderLogin);
