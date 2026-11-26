@@ -349,7 +349,7 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .cal-strip-wrap { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; max-width: 100%; }
 .cal-scroll-btn { flex: 0 0 auto; width: 32px; height: 56px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); color: var(--ink-soft); display: inline-flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all .15s ease; }
 .cal-scroll-btn:hover { border-color: var(--accent); color: var(--ink); }
-.cal-strip { flex: 1 1 auto; display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; max-width: 100%; scrollbar-width: thin; scrollbar-color: var(--line) transparent; scroll-behavior: smooth; }
+.cal-strip { flex: 1 1 auto; display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; max-width: 100%; scrollbar-width: thin; scrollbar-color: var(--line) transparent; -webkit-overflow-scrolling: touch; }
 .cal-strip::-webkit-scrollbar { height: 5px; }
 .cal-strip::-webkit-scrollbar-track { background: transparent; }
 .cal-strip::-webkit-scrollbar-thumb { background: var(--line); border-radius: 999px; }
@@ -389,10 +389,15 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 
 /* QUICK EVENT COMPOSER */
 .cal-form-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.cal-form-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 @media(min-width: 560px) {
-  .cal-form-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .cal-form-2 { gap: 10px; }
 }
-.cal-input { width: 100%; background: var(--paper); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 9px 12px; font: inherit; font-size: 0.9rem; }
+.cal-field-box { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.cal-field-lbl { font-size: 0.72rem; font-weight: 600; color: var(--ink-soft); padding-left: 4px; }
+.cal-input { width: 100%; min-width: 0; max-width: 100%; background: var(--paper); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 9px 12px; font: inherit; font-size: 0.9rem; -webkit-appearance: none; appearance: none; min-height: 40px; }
+.cal-input[type="date"], .cal-input[type="time"] { display: flex; align-items: center; justify-content: center; text-align: center; padding: 8px 10px; }
+.cal-input[type="time"].is-empty:not(:focus)::before { content: attr(data-placeholder); color: var(--ink-soft); opacity: 0.85; font-size: 0.86rem; }
 .cal-input:focus { border-color: var(--accent); outline: none; }
 .cal-seg-row { display: flex; gap: 6px; flex-wrap: wrap; }
 .cal-seg { background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; font-size: 0.78rem; color: var(--ink-soft); transition: all .15s ease; }
@@ -550,8 +555,9 @@ const UI = {
     calTitlePh: "Movie call, doctor, trip, reminder...", calNotePh: "Optional note, link, or tiny prep...",
     calWhoBoth: "Both", calWhoMe: "Me", calWhoHer: "Her",
     calTagDate: "Date", calTagMovie: "Movie time", calTagPlay: "Play time", calTagCall: "Call", calTagMilestone: "Milestone", calTagPersonal: "Personal",
+    calDateLbl: "Date", calTimeLbl: "Time", calTimePh: "Pick time",
     calSaveEvent: "Add to calendar", calDelete: "Remove", calAdded: "Added to calendar", calRemoved: "Removed",
-    calTzNote: "Times show in your local clock; check partner's time zone when calling.",
+    calTzNote: "Saved with your time zone & shown in both clocks automatically.",
 
     tabToday: "Today", tabJournal: "Journal", tabWeekly: "Weekly", tabUs: "Us", tabPensando: "Thinking of you",
     localBanner: "Test mode.", degradedBanner: "Offline.", todayTitle: "Your check-in today", howFeel: "How are you feeling?", writeHere: "...", bonusHere: "Today's extra question.", save: "Save", saveChanges: "Save changes", editHint: "Edit until your midnight.", yours: "Me", hersLabel: "{name}", editToday: "Edit today", nextIn: "Next opens in {t}.", notYet: "{name} hasn't checked in.", veil: "Write your check-in to read {name}'s.", emptyJournal: "Nothing written yet.",
@@ -570,8 +576,9 @@ const UI = {
     calTitlePh: "Llamada de peli, turno, viaje, recordatorio...", calNotePh: "Nota opcional, link o un pasito previo...",
     calWhoBoth: "Ambas", calWhoMe: "Yo", calWhoHer: "Ella",
     calTagDate: "Cita", calTagMovie: "Tiempo de peli", calTagPlay: "Tiempo de juego", calTagCall: "Llamada", calTagMilestone: "Hito", calTagPersonal: "Personal",
+    calDateLbl: "Fecha", calTimeLbl: "Hora", calTimePh: "Elegir hora",
     calSaveEvent: "Sumar al calendario", calDelete: "Borrar", calAdded: "Sumado al calendario", calRemoved: "Borrado",
-    calTzNote: "La hora se ve en tu reloj local; tené en cuenta el huso horario al llamar.",
+    calTzNote: "Se guarda con tu horario y se muestra en ambos relojes automáticamente.",
 
     tabToday: "Hoy", tabJournal: "Diario", tabWeekly: "Semanal", tabUs: "Nosotras", tabPensando: "Pensando en vos",
     localBanner: "Modo prueba.", degradedBanner: "Sin conexión.", todayTitle: "Tu check-in de hoy", howFeel: "¿Cómo te sentís?", writeHere: "...", bonusHere: "Pregunta extra de hoy.", save: "Guardar", saveChanges: "Guardar cambios", editHint: "Se puede editar hasta tu medianoche.", yours: "Yo", hersLabel: "{name}", editToday: "Editar", nextIn: "Mañana se abre en {t}.", notYet: "{name} todavía no hizo el check-in.", veil: "Respondé para leer a {name}.", emptyJournal: "Sin registros.",
@@ -590,8 +597,9 @@ const UI = {
     calTitlePh: "Созвон с фильмом, врач, поездка, напоминание...", calNotePh: "Заметка, ссылка или маленький шаг...",
     calWhoBoth: "Обе", calWhoMe: "Я", calWhoHer: "Она",
     calTagDate: "Свидание", calTagMovie: "Время кино", calTagPlay: "Время игр", calTagCall: "Созвон", calTagMilestone: "Важное", calTagPersonal: "Личное",
+    calDateLbl: "Дата", calTimeLbl: "Время", calTimePh: "Выбрать время",
     calSaveEvent: "В календарь", calDelete: "Удалить", calAdded: "Добавлено в календарь", calRemoved: "Удалено",
-    calTzNote: "Время показано по твоему часовому поясу; сверяйте разницу при созвонах.",
+    calTzNote: "Сохраняется с твоим часовым поясом и сразу показывает время для обеих.",
 
     tabToday: "Сегодня", tabJournal: "Дневник", tabWeekly: "Неделя", tabUs: "Мы", tabPensando: "Думаю о тебе",
     localBanner: "Тестовый режим.", degradedBanner: "Офлайн.", todayTitle: "Твой чек-ин", howFeel: "Как ты себя чувствуешь?", writeHere: "...", bonusHere: "Дополнительный вопрос.", save: "Сохранить", saveChanges: "Изменить", editHint: "Можно редактировать до твоей полуночи.", yours: "Я", hersLabel: "{name}", editToday: "Изменить", nextIn: "Завтра откроется через {t}.", notYet: "{name} ещё не сделала чек-ин.", veil: "Напиши чтобы прочитать.", emptyJournal: "Пусто.",
@@ -1387,6 +1395,35 @@ function whoLabelFor(who) {
   return t("calWhoBoth");
 }
 
+function formatDualEventTime(ev) {
+  if (!ev || !ev.time) return t("calAllDay");
+  const [hh, mm] = String(ev.time).split(":").map(Number);
+  if (Number.isNaN(hh) || Number.isNaN(mm)) return ev.time;
+  const authorKey = (ev.author && CONFIG.people[ev.author]) ? ev.author : "mica";
+  const authorTz = CONFIG.people[authorKey]?.tz ?? -3;
+  const myKey = state.me || "mica";
+  const herKey = other(myKey);
+  const myTz = CONFIG.people[myKey]?.tz ?? -3;
+  const herTz = CONFIG.people[herKey]?.tz ?? 8;
+
+  const [y, m, d] = String(ev.date || todayKey()).split("-").map(Number);
+  const utcMs = Date.UTC(y, m - 1, d, hh - authorTz, mm);
+
+  const fmtInTz = (tz) => {
+    const dt = new Date(utcMs + tz * 3600000);
+    const tStr = `${pad(dt.getUTCHours())}:${pad(dt.getUTCMinutes())}`;
+    const kStr = `${dt.getUTCFullYear()}-${pad(dt.getUTCMonth() + 1)}-${pad(dt.getUTCDate())}`;
+    let dayShift = "";
+    if (kStr > ev.date) dayShift = " (+1d)";
+    else if (kStr < ev.date) dayShift = " (-1d)";
+    return `${tStr}${dayShift}`;
+  };
+
+  const myTime = fmtInTz(myTz);
+  const herTime = fmtInTz(herTz);
+  return `${t("me")} ${myTime} · ${nameOf(herKey)} ${herTime}`;
+}
+
 function daysBetweenKeys(fromKey, toKey) {
   const [fy, fm, fd] = fromKey.split("-").map(Number);
   const [ty, tm, td] = toKey.split("-").map(Number);
@@ -1433,7 +1470,7 @@ function viewCalendario() {
       bodyHTML = `
         <div class="cal-cd-num">${esc(countText)}</div>
         <div class="cal-cd-title">${esc(ev.title)}</div>
-        <div class="cal-cd-date">${esc(prettyDate(ev.date))}${ev.time ? " · " + esc(ev.time) : ""}</div>`;
+        <div class="cal-cd-date">${esc(prettyDate(ev.date))}${ev.time ? " · " + esc(formatDualEventTime(ev)) : ""}</div>`;
     }
 
     const pickerHTML = isEditingSlot ? `
@@ -1500,7 +1537,7 @@ function viewCalendario() {
             <div class="cal-ev-meta">
               <span>${esc(prettyDate(ev.date))}</span>
               ${relBadge ? `<span class="cal-chip">${esc(relBadge)}</span>` : ""}
-              <span>· ${esc(ev.time ? ev.time : t("calAllDay"))}</span>
+              <span>· ${esc(formatDualEventTime(ev))}</span>
               <span class="cal-chip who-${esc(ev.who || "both")}">${esc(whoLabelFor(ev.who || "both"))}</span>
               <span class="cal-chip soft-tag">${esc(tagLabelFor(ev.tag || "date"))}</span>
             </div>
@@ -1564,8 +1601,14 @@ function viewCalendario() {
       <form id="calEventForm" class="cal-form-grid">
         <input type="text" id="calEvTitle" class="cal-input" placeholder="${esc(t("calTitlePh"))}" value="${esc(state.calDraftTitle)}" maxlength="120">
         <div class="cal-form-2">
-          <input type="date" id="calEvDate" class="cal-input" value="${esc(state.calSelectedDate)}">
-          <input type="time" id="calEvTime" class="cal-input" value="${esc(state.calDraftTime)}">
+          <div class="cal-field-box">
+            <label class="cal-field-lbl" for="calEvDate">${esc(t("calDateLbl"))}</label>
+            <input type="date" id="calEvDate" class="cal-input" value="${esc(state.calSelectedDate)}">
+          </div>
+          <div class="cal-field-box">
+            <label class="cal-field-lbl" for="calEvTime">${esc(t("calTimeLbl"))}</label>
+            <input type="time" id="calEvTime" class="cal-input ${state.calDraftTime ? "" : "is-empty"}" data-placeholder="${esc(t("calTimePh"))}" value="${esc(state.calDraftTime)}">
+          </div>
         </div>
         <div class="cal-seg-row" role="group" aria-label="Who">
           ${["both", "mica", "tati"].map(w => `
@@ -1637,11 +1680,11 @@ function viewCalendario() {
 
   $("#calStripLeft")?.addEventListener("click", () => {
     if (!calStrip) return;
-    calStrip.scrollBy({ left: -240, behavior: "smooth" });
+    calStrip.scrollBy({ left: -220, behavior: "smooth" });
   });
   $("#calStripRight")?.addEventListener("click", () => {
     if (!calStrip) return;
-    calStrip.scrollBy({ left: 240, behavior: "smooth" });
+    calStrip.scrollBy({ left: 220, behavior: "smooth" });
   });
 
   $("#calPrevMonth")?.addEventListener("click", () => {
@@ -1675,12 +1718,37 @@ function viewCalendario() {
     });
   });
 
+  const syncCalDrafts = () => {
+    const tEl = $("#calEvTitle");
+    const nEl = $("#calEvNote");
+    const tmEl = $("#calEvTime");
+    if (tEl) state.calDraftTitle = tEl.value;
+    if (nEl) state.calDraftNote = nEl.value;
+    if (tmEl) state.calDraftTime = tmEl.value;
+  };
+
+  $("#calEvTime")?.addEventListener("input", (ev) => {
+    state.calDraftTime = ev.target.value;
+    ev.target.classList.toggle("is-empty", !ev.target.value);
+  });
+  $("#calEvTime")?.addEventListener("change", (ev) => {
+    state.calDraftTime = ev.target.value;
+    ev.target.classList.toggle("is-empty", !ev.target.value);
+  });
+
   root.querySelectorAll("[data-cal-day]").forEach(btn => {
     btn.addEventListener("click", () => {
-      if (calStrip) state.calStripScrollLeft = calStrip.scrollLeft;
+      syncCalDrafts();
+      const liveStrip = $("#calStrip");
+      const savedScroll = liveStrip ? liveStrip.scrollLeft : state.calStripScrollLeft;
+      state.calStripScrollLeft = savedScroll;
       state.calSelectedDate = btn.dataset.calDay;
       state.calDayTapped = true;
       render();
+      const nextStrip = $("#calStrip");
+      if (nextStrip && savedScroll !== null) {
+        nextStrip.scrollLeft = savedScroll;
+      }
     });
   });
 
@@ -1748,11 +1816,11 @@ function viewCalendario() {
   });
 
   root.querySelectorAll("[data-cal-who]").forEach(btn => {
-    btn.addEventListener("click", () => { state.calWho = btn.dataset.calWho; render(); });
+    btn.addEventListener("click", () => { syncCalDrafts(); state.calWho = btn.dataset.calWho; render(); });
   });
 
   root.querySelectorAll("[data-cal-tag]").forEach(btn => {
-    btn.addEventListener("click", () => { state.calTag = btn.dataset.calTag; render(); });
+    btn.addEventListener("click", () => { syncCalDrafts(); state.calTag = btn.dataset.calTag; render(); });
   });
 
   const calForm = $("#calEventForm");
