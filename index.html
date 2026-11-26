@@ -321,7 +321,7 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .journal-content .entry { border: none; box-shadow: none; padding: 0; background: transparent; }
 .journal-content .entry-head { display: none; }
 
-/* CALENDAR TAB (ADHD-FRIENDLY NOW & NEXT + MONTH JUMP + COUNTDOWNS + IDEAS) */
+/* CALENDAR TAB (ADHD-FRIENDLY NOW & NEXT + MONTH JUMP + COUNTDOWNS) */
 .cal-section { margin-bottom: 20px; }
 .cal-section:last-child { margin-bottom: 0; }
 .cal-sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
@@ -343,22 +343,31 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .cal-cd-title { font-family: Newsreader, serif; font-size: 1.04rem; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .cal-cd-date { font-size: 0.76rem; color: var(--ink-soft); }
 
-/* MONTH & DAY STRIP */
+/* MONTH & DAY STRIP WITH DESKTOP ARROWS + TOUCH SCROLL */
 .cal-month-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
 .cal-month-label { font-family: Newsreader, serif; font-size: 1.15rem; font-style: italic; color: var(--ink); }
-.cal-strip { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 14px; max-width: 100%; }
-.cal-strip::-webkit-scrollbar { display: none; }
-.cal-day-pill { flex: 0 0 auto; min-width: 48px; padding: 8px 6px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); display: flex; flex-direction: column; align-items: center; gap: 3px; transition: all .15s ease; }
+.cal-strip-wrap { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; max-width: 100%; }
+.cal-scroll-btn { flex: 0 0 auto; width: 32px; height: 56px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); color: var(--ink-soft); display: inline-flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all .15s ease; }
+.cal-scroll-btn:hover { border-color: var(--accent); color: var(--ink); }
+.cal-strip { flex: 1 1 auto; display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; max-width: 100%; scrollbar-width: thin; scrollbar-color: var(--line) transparent; scroll-behavior: smooth; }
+.cal-strip::-webkit-scrollbar { height: 5px; }
+.cal-strip::-webkit-scrollbar-track { background: transparent; }
+.cal-strip::-webkit-scrollbar-thumb { background: var(--line); border-radius: 999px; }
+.cal-day-pill { flex: 0 0 auto; min-width: 52px; padding: 8px 6px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); display: flex; flex-direction: column; align-items: center; gap: 3px; transition: all .15s ease; }
+.cal-day-pill:hover { border-color: var(--accent); }
 .cal-day-pill .wkd { font-size: 0.68rem; color: var(--ink-soft); text-transform: uppercase; }
 .cal-day-pill .num { font-family: Newsreader, serif; font-size: 1.02rem; line-height: 1.1; }
 .cal-day-pill .dots { display: flex; gap: 3px; min-height: 6px; align-items: center; }
 .cal-day-pill .dot-mini { width: 5px; height: 5px; border-radius: 999px; background: var(--accent); }
 .cal-day-pill .dot-mini.mica { background: var(--mica-name); }
 .cal-day-pill .dot-mini.tati { background: var(--tati-name); }
-.cal-day-pill.is-today { border-style: dashed; }
+.cal-day-pill.is-my-today { border-style: dashed; border-color: var(--accent); }
+.cal-day-pill.is-her-today { box-shadow: inset 0 -2px 0 var(--tati-name); }
 .cal-day-pill[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); border-style: solid; color: var(--accent-ink); }
 .cal-day-pill[aria-pressed="true"] .wkd,
 .cal-day-pill[aria-pressed="true"] .num { color: var(--accent-ink); font-weight: 600; }
+.cal-today-legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 0.74rem; color: var(--ink-soft); margin-bottom: 12px; }
+.cal-today-pill-btn { background: none; border: none; padding: 0; color: var(--ink); font-size: 0.74rem; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
 
 /* NOW & NEXT EXPANDABLE STREAM */
 .cal-stream { display: flex; flex-direction: column; gap: 8px; }
@@ -388,17 +397,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .cal-seg-row { display: flex; gap: 6px; flex-wrap: wrap; }
 .cal-seg { background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; font-size: 0.78rem; color: var(--ink-soft); transition: all .15s ease; }
 .cal-seg[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
-
-/* SHARED DATE & ACTIVITY IDEAS BANK */
-.cal-ideas-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 8px; }
-@media(min-width: 560px) {
-  .cal-ideas-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-}
-.cal-idea { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 11px 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-width: 0; }
-.cal-idea-text { min-width: 0; }
-.cal-idea-title { font-family: Newsreader, serif; font-size: 1rem; color: var(--ink); line-height: 1.25; }
-.cal-idea-sub { font-size: 0.74rem; color: var(--ink-soft); margin-top: 2px; }
-
 </style>
 </head>
 <body>
@@ -544,24 +542,16 @@ const UI = {
     brand: "Our check-in", tagline: "One check-in a day, both of us.", yourKey: "Your key", enter: "Enter", wrongKey: "Wrong key.", enteringAs: "Entering as {name}.", signOut: "Sign out", yourPassword: "Your password", signIn: "Sign in", wrongPassword: "Wrong email or password.", authError: "Couldn't reach server.", signingIn: "Signing in…",
     me: "Me",
     tabCalendar: "Calendar",
-    calTitle: "Now & Next", calSub: "Tap any item to expand. Calm plans first.",
+    calTitle: "Now & Next", calSub: "Tap any item to expand.",
     calCountSlot1: "Coming up #1", calCountSlot2: "Coming up #2",
     calNoComing: "No coming event yet :(", calPickCount: "Pin date",
     calTodayBadge: "Today", calSoonBadge: "Next up", calAllDay: "Flexible / Any time",
-    calNoEvents: "Nothing planned for this day yet.", calAddTitle: "Add a date or plan",
+    calNoEvents: "Nothing planned for this day yet.", calMyToday: "My today", calHerToday: "{name}'s today", calAddTitle: "Add a date or plan",
     calTitlePh: "Movie call, doctor, trip, reminder...", calNotePh: "Optional note, link, or tiny prep...",
     calWhoBoth: "Both", calWhoMe: "Me", calWhoHer: "Her",
-    calTagDate: "Date", calTagCall: "Call", calTagMilestone: "Milestone", calTagLowSpoon: "Low-spoon", calTagPersonal: "Personal",
+    calTagDate: "Date", calTagMovie: "Movie time", calTagPlay: "Play time", calTagCall: "Call", calTagMilestone: "Milestone", calTagPersonal: "Personal",
     calSaveEvent: "Add to calendar", calDelete: "Remove", calAdded: "Added to calendar", calRemoved: "Removed",
-    calIdeasTitle: "Date & activity ideas", calIdeasSub: "Tap to put on your selected day and tweak before saving.",
-    calPutOnCal: "Put on calendar", calNewIdeaPh: "Add a shared idea...", calAddIdea: "Save idea",
     calTzNote: "Times show in your local clock; check partner's time zone when calling.",
-    calIdea1: "Cozy movie & snack night", calIdea1Sub: "Pick a film together & press play on cue",
-    calIdea2: "Low-energy silent hang", calIdea2Sub: "Cameras on while resting or doing small tasks",
-    calIdea3: "Cook or drink the same thing", calIdea3Sub: "Tea, coffee, or a simple comfort meal together",
-    calIdea4: "Stargaze & music share", calIdea4Sub: "Trade 3 songs and talk about the week",
-    calIdea5: "Co-op game or quiz round", calIdea5Sub: "Something lighthearted with zero pressure",
-    calIdea6: "Dream trip planning", calIdea6Sub: "Drop pins, places, or wish-list stops",
 
     tabToday: "Today", tabJournal: "Journal", tabWeekly: "Weekly", tabUs: "Us", tabPensando: "Thinking of you",
     localBanner: "Test mode.", degradedBanner: "Offline.", todayTitle: "Your check-in today", howFeel: "How are you feeling?", writeHere: "...", bonusHere: "Today's extra question.", save: "Save", saveChanges: "Save changes", editHint: "Edit until your midnight.", yours: "Me", hersLabel: "{name}", editToday: "Edit today", nextIn: "Next opens in {t}.", notYet: "{name} hasn't checked in.", veil: "Write your check-in to read {name}'s.", emptyJournal: "Nothing written yet.",
@@ -572,24 +562,16 @@ const UI = {
     brand: "Nuestro check-in", tagline: "Un check-in por día, las dos.", yourKey: "Tu clave", enter: "Entrar", wrongKey: "Clave incorrecta.", enteringAs: "Entrando como {name}.", signOut: "Salir", yourPassword: "Tu contraseña", signIn: "Entrar", wrongPassword: "Email o contraseña incorrectos.", authError: "Error de conexión.", signingIn: "Entrando…",
     me: "Yo",
     tabCalendar: "Calendario",
-    calTitle: "Ahora y lo que sigue", calSub: "Tocá cualquier plan para agrandarlo. Primero lo cercano.",
+    calTitle: "Ahora y lo que sigue", calSub: "Tocá cualquier plan para agrandarlo.",
     calCountSlot1: "Próximo #1", calCountSlot2: "Próximo #2",
     calNoComing: "Sin próximo evento aún :(", calPickCount: "Fijar fecha",
     calTodayBadge: "Hoy", calSoonBadge: "Lo que sigue", calAllDay: "Flexible / Sin hora",
-    calNoEvents: "Todavía no hay nada anotado para este día.", calAddTitle: "Anotar cita o plan",
+    calNoEvents: "Todavía no hay nada anotado para este día.", calMyToday: "Mi hoy", calHerToday: "Hoy de {name}", calAddTitle: "Anotar cita o plan",
     calTitlePh: "Llamada de peli, turno, viaje, recordatorio...", calNotePh: "Nota opcional, link o un pasito previo...",
     calWhoBoth: "Ambas", calWhoMe: "Yo", calWhoHer: "Ella",
-    calTagDate: "Cita", calTagCall: "Llamada", calTagMilestone: "Hito", calTagLowSpoon: "Poca energía", calTagPersonal: "Personal",
+    calTagDate: "Cita", calTagMovie: "Tiempo de peli", calTagPlay: "Tiempo de juego", calTagCall: "Llamada", calTagMilestone: "Hito", calTagPersonal: "Personal",
     calSaveEvent: "Sumar al calendario", calDelete: "Borrar", calAdded: "Sumado al calendario", calRemoved: "Borrado",
-    calIdeasTitle: "Ideas de citas y planes", calIdeasSub: "Tocá para llevarlo al día elegido y ajustarlo antes de guardar.",
-    calPutOnCal: "Llevar al calendario", calNewIdeaPh: "Sumar una idea compartida...", calAddIdea: "Guardar idea",
     calTzNote: "La hora se ve en tu reloj local; tené en cuenta el huso horario al llamar.",
-    calIdea1: "Noche de peli y algo rico", calIdea1Sub: "Elegir una peli juntas y darle play a la vez",
-    calIdea2: "Compañía tranquila / baja batería", calIdea2Sub: "Estar juntas sin exigencia mientras descansamos",
-    calIdea3: "Tomar o comer lo mismo", calIdea3Sub: "Un mate, té, café o comida simple a la par",
-    calIdea4: "Intercambio de canciones", calIdea4Sub: "Compartir 3 temas y charlar de la semana",
-    calIdea5: "Juego o trivia sin presión", calIdea5Sub: "Algo liviano y divertido para reírnos",
-    calIdea6: "Planear futuro viaje", calIdea6Sub: "Anotar lugares, ideas o paradas soñadas",
 
     tabToday: "Hoy", tabJournal: "Diario", tabWeekly: "Semanal", tabUs: "Nosotras", tabPensando: "Pensando en vos",
     localBanner: "Modo prueba.", degradedBanner: "Sin conexión.", todayTitle: "Tu check-in de hoy", howFeel: "¿Cómo te sentís?", writeHere: "...", bonusHere: "Pregunta extra de hoy.", save: "Guardar", saveChanges: "Guardar cambios", editHint: "Se puede editar hasta tu medianoche.", yours: "Yo", hersLabel: "{name}", editToday: "Editar", nextIn: "Mañana se abre en {t}.", notYet: "{name} todavía no hizo el check-in.", veil: "Respondé para leer a {name}.", emptyJournal: "Sin registros.",
@@ -600,24 +582,16 @@ const UI = {
     brand: "Наш чек-ин", tagline: "Один чек-ин в день, обе.", yourKey: "Твой код", enter: "Войти", wrongKey: "Неверный код.", enteringAs: "Вход как {name}.", signOut: "Выйти", yourPassword: "Твой пароль", signIn: "Войти", wrongPassword: "Неверный email/пароль.", authError: "Ошибка подключения.", signingIn: "Входим…",
     me: "Я",
     tabCalendar: "Календарь",
-    calTitle: "Сейчас и дальше", calSub: "Нажми на план, чтобы раскрыть. Сначала ближайшее.",
+    calTitle: "Сейчас и дальше", calSub: "Нажми на план, чтобы раскрыть.",
     calCountSlot1: "Событие #1", calCountSlot2: "Событие #2",
     calNoComing: "Пока нет предстоящего события :(", calPickCount: "Выбрать дату",
     calTodayBadge: "Сегодня", calSoonBadge: "Далее", calAllDay: "Гибко / Без времени",
-    calNoEvents: "На этот день пока ничего не запланировано.", calAddTitle: "Добавить встречу или план",
+    calNoEvents: "На этот день пока ничего не запланировано.", calMyToday: "Моё сегодня", calHerToday: "Сегодня ({name})", calAddTitle: "Добавить встречу или план",
     calTitlePh: "Созвон с фильмом, врач, поездка, напоминание...", calNotePh: "Заметка, ссылка или маленький шаг...",
     calWhoBoth: "Обе", calWhoMe: "Я", calWhoHer: "Она",
-    calTagDate: "Свидание", calTagCall: "Созвон", calTagMilestone: "Важное", calTagLowSpoon: "Мало сил", calTagPersonal: "Личное",
+    calTagDate: "Свидание", calTagMovie: "Время кино", calTagPlay: "Время игр", calTagCall: "Созвон", calTagMilestone: "Важное", calTagPersonal: "Личное",
     calSaveEvent: "В календарь", calDelete: "Удалить", calAdded: "Добавлено в календарь", calRemoved: "Удалено",
-    calIdeasTitle: "Идеи свиданий и занятий", calIdeasSub: "Нажми, чтобы подставить в выбранный день перед сохранением.",
-    calPutOnCal: "В календарь", calNewIdeaPh: "Добавить общую идею...", calAddIdea: "Сохранить идею",
     calTzNote: "Время показано по твоему часовому поясу; сверяйте разницу при созвонах.",
-    calIdea1: "Уютный вечер за фильмом", calIdea1Sub: "Выбрать фильм вместе и включить одновременно",
-    calIdea2: "Тихий вечер без напряга", calIdea2Sub: "Просто побыть рядом, когда мало сил",
-    calIdea3: "Одинаковый чай, кофе или ужин", calIdea3Sub: "Приготовить или выпить что-то тёплое вместе",
-    calIdea4: "Обмен любимыми песнями", calIdea4Sub: "Поделиться 3 треками и поговорить о неделе",
-    calIdea5: "Игра или квиз для двоих", calIdea5Sub: "Что-то лёгкое и весёлое без спешки",
-    calIdea6: "Мечты о поездке", calIdea6Sub: "Записать места, идеи и точки на карте",
 
     tabToday: "Сегодня", tabJournal: "Дневник", tabWeekly: "Неделя", tabUs: "Мы", tabPensando: "Думаю о тебе",
     localBanner: "Тестовый режим.", degradedBanner: "Офлайн.", todayTitle: "Твой чек-ин", howFeel: "Как ты себя чувствуешь?", writeHere: "...", bonusHere: "Дополнительный вопрос.", save: "Сохранить", saveChanges: "Изменить", editHint: "Можно редактировать до твоей полуночи.", yours: "Я", hersLabel: "{name}", editToday: "Изменить", nextIn: "Завтра откроется через {t}.", notYet: "{name} ещё не сделала чек-ин.", veil: "Напиши чтобы прочитать.", emptyJournal: "Пусто.",
@@ -664,7 +638,7 @@ const state = {
   entries: [], weekly: [], comments: [], notes: [],
   editing: false, editingWeekly: false, selectedMonth: undefined,
   usPhotoDesktopIdx: null, usPhotoMobileIdx: null,
-  degraded: false, tx: {}, txOn: {}, langOpen: false, openNotes: new Set(), calEvents: [], calIdeas: [], calSelectedDate: null, calMonthOffset: 0, calExpandedIds: new Set(), calWho: "both", calTag: "date", calDraftTitle: "", calDraftNote: "", calDraftTime: "", calCountSlotEditing: null
+  degraded: false, tx: {}, txOn: {}, langOpen: false, openNotes: new Set(), calEvents: [], calSelectedDate: null, calDayTapped: false, calMonthOffset: 0, calStripScrollLeft: null, calExpandedIds: new Set(), calWho: "both", calTag: "date", calDraftTitle: "", calDraftNote: "", calDraftTime: "", calCountSlotEditing: null
 };
 let pendingImage = null; 
 
@@ -845,8 +819,8 @@ const remote = {
 };
 
 async function refresh(){
-  const [e, w, c, n, ce, ci] = await Promise.all([state.store.entries(), state.store.weekly(), state.store.comments(), state.store.notes(), state.store.calEvents ? state.store.calEvents() : [], state.store.calIdeas ? state.store.calIdeas() : []]);
-  state.entries = e; state.weekly = w; state.comments = c; state.notes = n; state.calEvents = ce || []; state.calIdeas = ci || [];
+  const [e, w, c, n, ce] = await Promise.all([state.store.entries(), state.store.weekly(), state.store.comments(), state.store.notes(), state.store.calEvents ? state.store.calEvents() : []]);
+  state.entries = e; state.weekly = w; state.comments = c; state.notes = n; state.calEvents = ce || [];
 }
 const entryOf = (date, who) => state.entries.find(x => x.date === date && x.author === who);
 const weeklyOf = (weekId) => state.weekly.find(x => x.id === weekId);
@@ -1389,23 +1363,19 @@ function wireUI(rerender){
 
 function render(){
 
-function defaultCalIdeas() {
-  return [
-    { id: "def-1", title: t("calIdea1"), sub: t("calIdea1Sub"), tag: "date", who: "both", builtIn: true },
-    { id: "def-2", title: t("calIdea2"), sub: t("calIdea2Sub"), tag: "low-spoon", who: "both", builtIn: true },
-    { id: "def-3", title: t("calIdea3"), sub: t("calIdea3Sub"), tag: "date", who: "both", builtIn: true },
-    { id: "def-4", title: t("calIdea4"), sub: t("calIdea4Sub"), tag: "call", who: "both", builtIn: true },
-    { id: "def-5", title: t("calIdea5"), sub: t("calIdea5Sub"), tag: "date", who: "both", builtIn: true },
-    { id: "def-6", title: t("calIdea6"), sub: t("calIdea6Sub"), tag: "milestone", who: "both", builtIn: true }
-  ];
+function dateKeyForWho(who) {
+  const tz = (who && CONFIG.people[who]?.tz !== undefined) ? CONFIG.people[who].tz : getOffset();
+  const d = new Date(Date.now() + tz * 3600000);
+  return `${d.getUTCFullYear()}-${pad(d.getUTCMonth()+1)}-${pad(d.getUTCDate())}`;
 }
 
 function tagLabelFor(tag) {
   const map = {
     "date": t("calTagDate"),
+    "movie": t("calTagMovie"),
+    "play": t("calTagPlay"),
     "call": t("calTagCall"),
     "milestone": t("calTagMilestone"),
-    "low-spoon": t("calTagLowSpoon"),
     "personal": t("calTagPersonal")
   };
   return map[tag] || t("calTagDate");
@@ -1424,8 +1394,13 @@ function daysBetweenKeys(fromKey, toKey) {
 }
 
 function viewCalendario() {
-  const tKey = todayKey();
-  if (!state.calSelectedDate) state.calSelectedDate = tKey;
+  const myTodayKey = todayKey();
+  const herKey = other(state.me);
+  const herTodayKey = dateKeyForWho(herKey);
+
+  if (!state.calSelectedDate) {
+    state.calSelectedDate = myTodayKey;
+  }
 
   const now = localNow();
   const viewMonthDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + (state.calMonthOffset || 0), 1));
@@ -1435,8 +1410,9 @@ function viewCalendario() {
   const monthHeading = viewMonthDate.toLocaleDateString(LOCALE[state.lang], { month: "long", year: "numeric", timeZone: "UTC" });
   const capMonthHeading = monthHeading.charAt(0).toUpperCase() + monthHeading.slice(1);
 
+  const countdownEligibleTags = new Set(["date", "movie", "play", "milestone", "call"]);
   const upcomingEvents = [...state.calEvents]
-    .filter(ev => ev.date >= tKey)
+    .filter(ev => ev.date >= myTodayKey && ev.tag !== "personal" && countdownEligibleTags.has(ev.tag || "date"))
     .sort((a, b) => a.date.localeCompare(b.date) || String(a.time || "99:99").localeCompare(String(b.time || "99:99")));
 
   const renderCountdownSlot = (slotNum, slotLabel) => {
@@ -1448,7 +1424,7 @@ function viewCalendario() {
         <div class="cal-cd-num sad">${esc(t("calNoComing"))}</div>
         <div class="cal-cd-date">${esc(slotLabel)}</div>`;
     } else {
-      const diff = daysBetweenKeys(tKey, ev.date);
+      const diff = daysBetweenKeys(myTodayKey, ev.date);
       const countText = diff === 0
         ? t("calTodayBadge")
         : diff === 1
@@ -1462,7 +1438,7 @@ function viewCalendario() {
 
     const pickerHTML = isEditingSlot ? `
       <div style="margin-top:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap">
-        <input type="date" id="cdDateInput_${slotNum}" class="cal-input" style="flex:1;min-width:130px;padding:6px 10px;font-size:0.82rem" value="${ev ? esc(ev.date) : esc(tKey)}" min="${esc(tKey)}">
+        <input type="date" id="cdDateInput_${slotNum}" class="cal-input" style="flex:1;min-width:130px;padding:6px 10px;font-size:0.82rem" value="${ev ? esc(ev.date) : esc(myTodayKey)}" min="${esc(myTodayKey)}">
         <input type="text" id="cdTitleInput_${slotNum}" class="cal-input" style="flex:1.4;min-width:140px;padding:6px 10px;font-size:0.82rem" placeholder="${esc(t("calTitlePh"))}" value="${ev ? esc(ev.title) : ""}">
         <button type="button" class="btn btn-sm" data-save-cd="${slotNum}">${esc(t("save"))}</button>
       </div>` : "";
@@ -1478,7 +1454,7 @@ function viewCalendario() {
       </div>`;
   };
 
-  // Compact month strip (all days of the displayed month, scrollable on mobile)
+  // Compact month strip (auto-centers on today when opened, scrollable with touch, trackpad, wheel, or arrows)
   const dayPills = [];
   for (let d = 1; d <= daysInMonth; d++) {
     const k = `${vy}-${pad(vm + 1)}-${pad(d)}`;
@@ -1487,27 +1463,34 @@ function viewCalendario() {
     const dayEvs = state.calEvents.filter(e => e.date === k);
     const dots = dayEvs.slice(0, 3).map(e => `<span class="dot-mini ${e.who === "mica" ? "mica" : e.who === "tati" ? "tati" : ""}"></span>`).join("");
     const pressed = state.calSelectedDate === k;
+    const isMyToday = k === myTodayKey;
+    const isHerToday = k === herTodayKey;
     dayPills.push(`
-      <button type="button" class="cal-day-pill ${k === tKey ? "is-today" : ""}" data-cal-day="${k}" aria-pressed="${pressed}">
+      <button type="button" class="cal-day-pill ${isMyToday ? "is-my-today" : ""} ${isHerToday ? "is-her-today" : ""}" data-cal-day="${k}" aria-pressed="${pressed}">
         <span class="wkd">${esc(wkd)}</span>
         <span class="num">${d}</span>
         <span class="dots">${dots}</span>
       </button>`);
   }
 
-  // Now & Next stream: selected day's events first, plus any upcoming events if selected day is empty
   const selectedDayEvents = state.calEvents
     .filter(e => e.date === state.calSelectedDate)
     .sort((a, b) => String(a.time || "99:99").localeCompare(String(b.time || "99:99")));
 
-  const streamSource = selectedDayEvents.length ? selectedDayEvents : upcomingEvents.slice(0, 4);
-  const streamTitle = state.calSelectedDate === tKey
-    ? `${t("calTitle")} · ${t("today")}`
-    : `${prettyDate(state.calSelectedDate)}`;
+  // Show selected day's events if it has any; if not tapped yet on initial load, show upcoming plans;
+  // only show "Nothing planned for this day yet." if user explicitly tapped/clicked a day with 0 events.
+  const showEmptyDayMsg = state.calDayTapped && selectedDayEvents.length === 0;
+  const streamSource = selectedDayEvents.length
+    ? selectedDayEvents
+    : (state.calDayTapped ? [] : upcomingEvents.slice(0, 4));
+
+  const streamTitle = state.calDayTapped
+    ? (state.calSelectedDate === myTodayKey ? `${t("calTitle")} · ${t("today")}` : prettyDate(state.calSelectedDate))
+    : `${t("calTitle")} · ${t("today")}`;
 
   const renderEventCard = (ev) => {
     const expanded = state.calExpandedIds.has(ev.id);
-    const diff = daysBetweenKeys(tKey, ev.date);
+    const diff = daysBetweenKeys(myTodayKey, ev.date);
     const relBadge = diff === 0 ? t("calTodayBadge") : diff > 0 ? `+${diff}d` : "";
     return `
       <div class="cal-ev ${expanded ? "expanded" : ""}" data-cal-ev="${esc(ev.id)}">
@@ -1534,8 +1517,6 @@ function viewCalendario() {
       </div>`;
   };
 
-  const allIdeas = [...defaultCalIdeas(), ...state.calIdeas.map(i => ({ ...i, sub: i.sub || tagLabelFor(i.tag || "date") }))];
-
   return `
     <div class="cal-countdowns">
       ${renderCountdownSlot(1, t("calCountSlot1"))}
@@ -1551,8 +1532,18 @@ function viewCalendario() {
           <button type="button" class="btn btn-ghost btn-sm" id="calNextMonth" aria-label="Next month">›</button>
         </div>
       </div>
-      <div class="cal-strip" role="group" aria-label="Month days">
-        ${dayPills.join("")}
+
+      <div class="cal-today-legend">
+        <span><button type="button" class="cal-today-pill-btn" data-jump-date="${myTodayKey}">${esc(t("calMyToday"))} (${Number(myTodayKey.slice(8, 10))})</button></span>
+        ${herTodayKey !== myTodayKey ? `<span>· <button type="button" class="cal-today-pill-btn" data-jump-date="${herTodayKey}">${esc(t("calHerToday", { name: nameOf(herKey) }))} (${Number(herTodayKey.slice(8, 10))})</button></span>` : ""}
+      </div>
+
+      <div class="cal-strip-wrap">
+        <button type="button" class="cal-scroll-btn" id="calStripLeft" aria-label="Scroll days left">‹</button>
+        <div class="cal-strip" id="calStrip" role="group" aria-label="Month days">
+          ${dayPills.join("")}
+        </div>
+        <button type="button" class="cal-scroll-btn" id="calStripRight" aria-label="Scroll days right">›</button>
       </div>
 
       <div class="cal-sec-head">
@@ -1560,11 +1551,12 @@ function viewCalendario() {
         <span class="cal-sec-sub">${esc(t("calSub"))}</span>
       </div>
 
-      <div class="cal-stream">
-        ${streamSource.length
-          ? streamSource.map(renderEventCard).join("")
-          : `<p class="empty">${esc(t("calNoEvents"))}</p>`}
-      </div>
+      ${(streamSource.length || showEmptyDayMsg) ? `
+        <div class="cal-stream">
+          ${streamSource.length
+            ? streamSource.map(renderEventCard).join("")
+            : `<p class="empty">${esc(t("calNoEvents"))}</p>`}
+        </div>` : ""}
     </div>
 
     <div class="card cal-section">
@@ -1581,7 +1573,7 @@ function viewCalendario() {
           `).join("")}
         </div>
         <div class="cal-seg-row" role="group" aria-label="Category">
-          ${["date", "call", "milestone", "low-spoon", "personal"].map(tg => `
+          ${["date", "movie", "play", "call", "milestone", "personal"].map(tg => `
             <button type="button" class="cal-seg" data-cal-tag="${tg}" aria-pressed="${state.calTag === tg}">${esc(tagLabelFor(tg))}</button>
           `).join("")}
         </div>
@@ -1590,27 +1582,6 @@ function viewCalendario() {
           <span class="hint" style="margin:0">${esc(t("calTzNote"))}</span>
           <button type="submit" class="btn btn-sm">${esc(t("calSaveEvent"))}</button>
         </div>
-      </form>
-    </div>
-
-    <div class="card cal-section">
-      <div class="cal-sec-head">
-        <span class="cal-sec-title">${esc(t("calIdeasTitle"))}</span>
-        <span class="cal-sec-sub">${esc(t("calIdeasSub"))}</span>
-      </div>
-      <div class="cal-ideas-grid">
-        ${allIdeas.map(idea => `
-          <div class="cal-idea">
-            <div class="cal-idea-text">
-              <div class="cal-idea-title">${esc(idea.title)}</div>
-              <div class="cal-idea-sub">${esc(idea.sub || "")}</div>
-            </div>
-            <button type="button" class="btn btn-ghost btn-sm" data-use-idea="${esc(idea.id)}">${esc(t("calPutOnCal"))}</button>
-          </div>`).join("")}
-      </div>
-      <form id="calIdeaForm" style="display:flex;gap:8px;margin-top:12px">
-        <input type="text" id="calNewIdeaInput" class="cal-input" style="flex:1;min-width:0" placeholder="${esc(t("calNewIdeaPh"))}" maxlength="120">
-        <button type="submit" class="btn btn-ghost btn-sm">${esc(t("calAddIdea"))}</button>
       </form>
     </div>`;
 }
@@ -1624,16 +1595,93 @@ function viewCalendario() {
   root.innerHTML = shell(inner);
   wireUI(render);
   $("#logout")?.addEventListener("click", async () => { state.me = null; state.userId = null; state.editing = false; state.editingWeekly = false; ls.del("ci_me"); if (CONFIG.useAuth && state.store.mode === "remote"){ try { await state.store.signOut(); } catch {} } renderLogin(); });
-  root.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { state.tab = b.dataset.tab; state.editing = false; state.editingWeekly = false; pendingImage = null; render(); }));
+  root.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => {
+    state.tab = b.dataset.tab;
+    state.editing = false;
+    state.editingWeekly = false;
+    pendingImage = null;
+    if (state.tab === "calendario") {
+      state.calMonthOffset = 0;
+      state.calSelectedDate = todayKey();
+      state.calDayTapped = false;
+      state.calStripScrollLeft = null;
+    }
+    render();
+  }));
   $("#editBtn")?.addEventListener("click", () => { state.editing = true; render(); });
   $("#editWeeklyBtn")?.addEventListener("click", () => { state.editingWeekly = true; render(); });
 
-  $("#calPrevMonth")?.addEventListener("click", () => { state.calMonthOffset = (state.calMonthOffset || 0) - 1; render(); });
-  $("#calNextMonth")?.addEventListener("click", () => { state.calMonthOffset = (state.calMonthOffset || 0) + 1; render(); });
-  $("#calJumpToday")?.addEventListener("click", () => { state.calMonthOffset = 0; state.calSelectedDate = todayKey(); render(); });
+  const calStrip = $("#calStrip");
+  if (calStrip) {
+    if (state.calStripScrollLeft !== null) {
+      calStrip.scrollLeft = state.calStripScrollLeft;
+    } else {
+      const targetPill = calStrip.querySelector(`[data-cal-day="${state.calSelectedDate}"]`) || calStrip.querySelector(".is-my-today");
+      if (targetPill) {
+        const centerPos = targetPill.offsetLeft - (calStrip.clientWidth / 2) + (targetPill.offsetWidth / 2);
+        calStrip.scrollLeft = Math.max(0, centerPos);
+        state.calStripScrollLeft = calStrip.scrollLeft;
+      }
+    }
+    calStrip.addEventListener("scroll", () => {
+      state.calStripScrollLeft = calStrip.scrollLeft;
+    }, { passive: true });
+    calStrip.addEventListener("wheel", (ev) => {
+      if (Math.abs(ev.deltaY) > Math.abs(ev.deltaX)) {
+        ev.preventDefault();
+        calStrip.scrollLeft += ev.deltaY;
+        state.calStripScrollLeft = calStrip.scrollLeft;
+      }
+    }, { passive: false });
+  }
+
+  $("#calStripLeft")?.addEventListener("click", () => {
+    if (!calStrip) return;
+    calStrip.scrollBy({ left: -240, behavior: "smooth" });
+  });
+  $("#calStripRight")?.addEventListener("click", () => {
+    if (!calStrip) return;
+    calStrip.scrollBy({ left: 240, behavior: "smooth" });
+  });
+
+  $("#calPrevMonth")?.addEventListener("click", () => {
+    state.calMonthOffset = (state.calMonthOffset || 0) - 1;
+    state.calStripScrollLeft = 0;
+    render();
+  });
+  $("#calNextMonth")?.addEventListener("click", () => {
+    state.calMonthOffset = (state.calMonthOffset || 0) + 1;
+    state.calStripScrollLeft = 0;
+    render();
+  });
+  $("#calJumpToday")?.addEventListener("click", () => {
+    state.calMonthOffset = 0;
+    state.calSelectedDate = todayKey();
+    state.calDayTapped = false;
+    state.calStripScrollLeft = null;
+    render();
+  });
+
+  root.querySelectorAll("[data-jump-date]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const targetKey = btn.dataset.jumpDate;
+      const now = localNow();
+      const [ty, tm] = targetKey.split("-").map(Number);
+      state.calMonthOffset = (ty - now.getUTCFullYear()) * 12 + ((tm - 1) - now.getUTCMonth());
+      state.calSelectedDate = targetKey;
+      state.calDayTapped = true;
+      state.calStripScrollLeft = null;
+      render();
+    });
+  });
 
   root.querySelectorAll("[data-cal-day]").forEach(btn => {
-    btn.addEventListener("click", () => { state.calSelectedDate = btn.dataset.calDay; render(); });
+    btn.addEventListener("click", () => {
+      if (calStrip) state.calStripScrollLeft = calStrip.scrollLeft;
+      state.calSelectedDate = btn.dataset.calDay;
+      state.calDayTapped = true;
+      render();
+    });
   });
 
   root.querySelectorAll("[data-cal-ev]").forEach(card => {
@@ -1690,6 +1738,8 @@ function viewCalendario() {
         if (state.store.saveCalEvent) await state.store.saveCalEvent(evObj);
         state.calCountSlotEditing = null;
         state.calSelectedDate = dtVal;
+        state.calDayTapped = true;
+        state.calStripScrollLeft = null;
         await refresh();
         render();
         toast(t("calAdded"));
@@ -1731,49 +1781,14 @@ function viewCalendario() {
         state.calDraftNote = "";
         state.calDraftTime = "";
         state.calSelectedDate = dateVal;
+        state.calDayTapped = true;
+        state.calStripScrollLeft = null;
         await refresh();
         render();
         toast(t("calAdded"));
       } catch { toast(t("saveFailed")); }
     });
   }
-
-  root.querySelectorAll("[data-use-idea]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const id = btn.dataset.useIdea;
-      const pool = [...defaultCalIdeas(), ...state.calIdeas];
-      const found = pool.find(x => x.id === id);
-      if (!found) return;
-      state.calDraftTitle = found.title;
-      state.calDraftNote = found.sub || "";
-      state.calTag = found.tag || "date";
-      state.calWho = found.who || "both";
-      render();
-      $("#calEvTitle")?.focus();
-    });
-  });
-
-  $("#calIdeaForm")?.addEventListener("submit", async (ev) => {
-    ev.preventDefault();
-    const title = ($("#calNewIdeaInput")?.value || "").trim();
-    if (!title) return;
-    try {
-      if (state.store.addCalIdea) {
-        await state.store.addCalIdea(withAuthor({
-          id: uid(),
-          title,
-          sub: tagLabelFor(state.calTag || "date"),
-          tag: state.calTag || "date",
-          who: state.calWho || "both",
-          author: state.me,
-          created_at: new Date().toISOString()
-        }));
-      }
-      await refresh();
-      render();
-      toast(t("saved"));
-    } catch { toast(t("saveFailed")); }
-  });
 
   root.querySelectorAll(".month-pill").forEach(b => b.addEventListener("click", () => {
     state.selectedMonth = (state.selectedMonth === b.dataset.month) ? null : b.dataset.month;
