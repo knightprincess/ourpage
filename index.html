@@ -328,11 +328,15 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .cal-sec-title { font-family: Newsreader, serif; font-size: 1.24rem; font-style: italic; color: var(--ink); font-weight: 400; }
 .cal-sec-sub { font-size: 0.78rem; color: var(--ink-soft); }
 
-/* TWO LIVE COUNTDOWN CARDS */
+/* LIVE COUNTDOWN CARDS (1 BY DEFAULT + OPTIONAL 2ND SLOT) */
 .cal-countdowns { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 18px; }
+.cal-countdowns.has-two { grid-template-columns: 1fr; }
 @media(min-width: 560px) {
-  .cal-countdowns { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .cal-countdowns.has-two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 }
+.cal-cd-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.cal-cd-add-pill { background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; font-size: 0.72rem; font-weight: 500; color: var(--ink-soft); transition: all .15s ease; }
+.cal-cd-add-pill:hover { border-color: var(--accent); color: var(--ink); }
 .cal-cd-card { background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: space-between; gap: 6px; min-width: 0; position: relative; }
 .cal-cd-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .cal-cd-slot { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); }
@@ -362,7 +366,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .cal-day-pill .dot-mini.mica { background: var(--mica-name); }
 .cal-day-pill .dot-mini.tati { background: var(--tati-name); }
 .cal-day-pill.is-my-today { border-style: dashed; border-color: var(--accent); }
-.cal-day-pill.is-her-today { box-shadow: inset 0 -2px 0 var(--tati-name); }
 .cal-day-pill[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); border-style: solid; color: var(--accent-ink); }
 .cal-day-pill[aria-pressed="true"] .wkd,
 .cal-day-pill[aria-pressed="true"] .num { color: var(--accent-ink); font-weight: 600; }
@@ -397,7 +400,9 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .cal-field-lbl { font-size: 0.72rem; font-weight: 600; color: var(--ink-soft); padding-left: 4px; }
 .cal-input { width: 100%; min-width: 0; max-width: 100%; background: var(--paper); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 9px 12px; font: inherit; font-size: 0.9rem; -webkit-appearance: none; appearance: none; min-height: 40px; }
 .cal-input[type="date"], .cal-input[type="time"] { display: flex; align-items: center; justify-content: center; text-align: center; padding: 8px 10px; }
-.cal-input[type="time"].is-empty:not(:focus)::before { content: attr(data-placeholder); color: var(--ink-soft); opacity: 0.85; font-size: 0.86rem; }
+@media(max-width: 559px) {
+  .cal-input[type="time"].is-empty:not(:focus)::before { content: attr(data-placeholder); color: var(--ink-soft); opacity: 0.85; font-size: 0.86rem; }
+}
 .cal-input:focus { border-color: var(--accent); outline: none; }
 .cal-seg-row { display: flex; gap: 6px; flex-wrap: wrap; }
 .cal-seg { background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; font-size: 0.78rem; color: var(--ink-soft); transition: all .15s ease; }
@@ -548,14 +553,14 @@ const UI = {
     me: "Me",
     tabCalendar: "Calendar",
     calTitle: "Now & Next", calSub: "Tap any item to expand.",
-    calCountSlot1: "Coming up #1", calCountSlot2: "Coming up #2",
+    calCountSlot1: "Coming up #1", calCountSlot2: "Coming up #2", calAddSecondCd: "+ 2nd countdown",
     calNoComing: "No coming event yet :(", calPickCount: "Pin date",
     calTodayBadge: "Today", calSoonBadge: "Next up", calAllDay: "Flexible / Any time",
-    calNoEvents: "Nothing planned for this day yet.", calMyToday: "My today", calHerToday: "{name}'s today", calAddTitle: "Add a date or plan",
+    calNoEvents: "Nothing planned for this day yet.", calMyToday: "Me", calHerToday: "{name}", calAddTitle: "Add a date or plan",
     calTitlePh: "Movie call, doctor, trip, reminder...", calNotePh: "Optional note, link, or tiny prep...",
     calWhoBoth: "Both", calWhoMe: "Me", calWhoHer: "Her",
     calTagDate: "Date", calTagMovie: "Movie time", calTagPlay: "Play time", calTagCall: "Call", calTagMilestone: "Milestone", calTagPersonal: "Personal",
-    calDateLbl: "Date", calTimeLbl: "Time", calTimePh: "Pick time",
+    calDateLbl: "Date", calTimeLbl: "Time", calTimePh: "Time",
     calSaveEvent: "Add to calendar", calDelete: "Remove", calAdded: "Added to calendar", calRemoved: "Removed",
     calTzNote: "Saved with your time zone & shown in both clocks automatically.",
 
@@ -569,14 +574,14 @@ const UI = {
     me: "Yo",
     tabCalendar: "Calendario",
     calTitle: "Ahora y lo que sigue", calSub: "Tocá cualquier plan para agrandarlo.",
-    calCountSlot1: "Próximo #1", calCountSlot2: "Próximo #2",
+    calCountSlot1: "Próximo #1", calCountSlot2: "Próximo #2", calAddSecondCd: "+ 2º conteo",
     calNoComing: "Sin próximo evento aún :(", calPickCount: "Fijar fecha",
     calTodayBadge: "Hoy", calSoonBadge: "Lo que sigue", calAllDay: "Flexible / Sin hora",
-    calNoEvents: "Todavía no hay nada anotado para este día.", calMyToday: "Mi hoy", calHerToday: "Hoy de {name}", calAddTitle: "Anotar cita o plan",
+    calNoEvents: "Todavía no hay nada anotado para este día.", calMyToday: "Yo", calHerToday: "{name}", calAddTitle: "Anotar cita o plan",
     calTitlePh: "Llamada de peli, turno, viaje, recordatorio...", calNotePh: "Nota opcional, link o un pasito previo...",
     calWhoBoth: "Ambas", calWhoMe: "Yo", calWhoHer: "Ella",
     calTagDate: "Cita", calTagMovie: "Tiempo de peli", calTagPlay: "Tiempo de juego", calTagCall: "Llamada", calTagMilestone: "Hito", calTagPersonal: "Personal",
-    calDateLbl: "Fecha", calTimeLbl: "Hora", calTimePh: "Elegir hora",
+    calDateLbl: "Fecha", calTimeLbl: "Hora", calTimePh: "Hora",
     calSaveEvent: "Sumar al calendario", calDelete: "Borrar", calAdded: "Sumado al calendario", calRemoved: "Borrado",
     calTzNote: "Se guarda con tu horario y se muestra en ambos relojes automáticamente.",
 
@@ -590,14 +595,14 @@ const UI = {
     me: "Я",
     tabCalendar: "Календарь",
     calTitle: "Сейчас и дальше", calSub: "Нажми на план, чтобы раскрыть.",
-    calCountSlot1: "Событие #1", calCountSlot2: "Событие #2",
+    calCountSlot1: "Событие #1", calCountSlot2: "Событие #2", calAddSecondCd: "+ 2-й отсчёт",
     calNoComing: "Пока нет предстоящего события :(", calPickCount: "Выбрать дату",
     calTodayBadge: "Сегодня", calSoonBadge: "Далее", calAllDay: "Гибко / Без времени",
-    calNoEvents: "На этот день пока ничего не запланировано.", calMyToday: "Моё сегодня", calHerToday: "Сегодня ({name})", calAddTitle: "Добавить встречу или план",
+    calNoEvents: "На этот день пока ничего не запланировано.", calMyToday: "Я", calHerToday: "{name}", calAddTitle: "Добавить встречу или план",
     calTitlePh: "Созвон с фильмом, врач, поездка, напоминание...", calNotePh: "Заметка, ссылка или маленький шаг...",
     calWhoBoth: "Обе", calWhoMe: "Я", calWhoHer: "Она",
     calTagDate: "Свидание", calTagMovie: "Время кино", calTagPlay: "Время игр", calTagCall: "Созвон", calTagMilestone: "Важное", calTagPersonal: "Личное",
-    calDateLbl: "Дата", calTimeLbl: "Время", calTimePh: "Выбрать время",
+    calDateLbl: "Дата", calTimeLbl: "Время", calTimePh: "Время",
     calSaveEvent: "В календарь", calDelete: "Удалить", calAdded: "Добавлено в календарь", calRemoved: "Удалено",
     calTzNote: "Сохраняется с твоим часовым поясом и сразу показывает время для обеих.",
 
@@ -646,7 +651,7 @@ const state = {
   entries: [], weekly: [], comments: [], notes: [],
   editing: false, editingWeekly: false, selectedMonth: undefined,
   usPhotoDesktopIdx: null, usPhotoMobileIdx: null,
-  degraded: false, tx: {}, txOn: {}, langOpen: false, openNotes: new Set(), calEvents: [], calSelectedDate: null, calDayTapped: false, calMonthOffset: 0, calStripScrollLeft: null, calExpandedIds: new Set(), calWho: "both", calTag: "date", calDraftTitle: "", calDraftNote: "", calDraftTime: "", calCountSlotEditing: null
+  degraded: false, tx: {}, txOn: {}, langOpen: false, openNotes: new Set(), calEvents: [], calSelectedDate: null, calDayTapped: false, calMonthOffset: 0, calStripScrollLeft: null, calExpandedIds: new Set(), calWho: "both", calTag: "date", calDraftTitle: "", calDraftNote: "", calDraftTime: "", calCountSlotEditing: null, calShowSecondCd: false
 };
 let pendingImage = null; 
 
@@ -1452,6 +1457,8 @@ function viewCalendario() {
     .filter(ev => ev.date >= myTodayKey && ev.tag !== "personal" && countdownEligibleTags.has(ev.tag || "date"))
     .sort((a, b) => a.date.localeCompare(b.date) || String(a.time || "99:99").localeCompare(String(b.time || "99:99")));
 
+  const showSecondCd = Boolean(state.calShowSecondCd || upcomingEvents.length >= 2 || state.calCountSlotEditing === 2);
+
   const renderCountdownSlot = (slotNum, slotLabel) => {
     const ev = upcomingEvents[slotNum - 1] || null;
     const isEditingSlot = state.calCountSlotEditing === slotNum;
@@ -1480,11 +1487,18 @@ function viewCalendario() {
         <button type="button" class="btn btn-sm" data-save-cd="${slotNum}">${esc(t("save"))}</button>
       </div>` : "";
 
+    const addSecondBtn = (slotNum === 1 && !showSecondCd)
+      ? `<button type="button" class="cal-cd-add-pill" id="calAddSecondCdBtn">${esc(t("calAddSecondCd"))}</button>`
+      : "";
+
     return `
       <div class="cal-cd-card">
         <div class="cal-cd-top">
           <span class="cal-cd-slot">${esc(slotLabel)}</span>
-          <button type="button" class="cal-cd-edit" data-edit-cd="${slotNum}">${esc(t("calPickCount"))}</button>
+          <div class="cal-cd-actions">
+            ${addSecondBtn}
+            <button type="button" class="cal-cd-edit" data-edit-cd="${slotNum}">${esc(t("calPickCount"))}</button>
+          </div>
         </div>
         ${bodyHTML}
         ${pickerHTML}
@@ -1501,9 +1515,8 @@ function viewCalendario() {
     const dots = dayEvs.slice(0, 3).map(e => `<span class="dot-mini ${e.who === "mica" ? "mica" : e.who === "tati" ? "tati" : ""}"></span>`).join("");
     const pressed = state.calSelectedDate === k;
     const isMyToday = k === myTodayKey;
-    const isHerToday = k === herTodayKey;
     dayPills.push(`
-      <button type="button" class="cal-day-pill ${isMyToday ? "is-my-today" : ""} ${isHerToday ? "is-her-today" : ""}" data-cal-day="${k}" aria-pressed="${pressed}">
+      <button type="button" class="cal-day-pill ${isMyToday ? "is-my-today" : ""}" data-cal-day="${k}" aria-pressed="${pressed}">
         <span class="wkd">${esc(wkd)}</span>
         <span class="num">${d}</span>
         <span class="dots">${dots}</span>
@@ -1555,9 +1568,9 @@ function viewCalendario() {
   };
 
   return `
-    <div class="cal-countdowns">
+    <div class="cal-countdowns ${showSecondCd ? "has-two" : ""}">
       ${renderCountdownSlot(1, t("calCountSlot1"))}
-      ${renderCountdownSlot(2, t("calCountSlot2"))}
+      ${showSecondCd ? renderCountdownSlot(2, t("calCountSlot2")) : ""}
     </div>
 
     <div class="card cal-section">
@@ -1776,6 +1789,12 @@ function viewCalendario() {
     });
   });
 
+  $("#calAddSecondCdBtn")?.addEventListener("click", () => {
+    state.calShowSecondCd = true;
+    state.calCountSlotEditing = 2;
+    render();
+  });
+
   root.querySelectorAll("[data-edit-cd]").forEach(btn => {
     btn.addEventListener("click", () => {
       const slot = Number(btn.dataset.editCd);
@@ -1977,13 +1996,21 @@ function viewCalendario() {
   root.querySelectorAll("[data-trnote]").forEach(b => b.addEventListener("click", async (ev) => { ev.stopPropagation(); const n = state.notes.find(x => x.id === b.dataset.trnote); if (!n) return; const k = "note:" + n.id; if (state.txOn[k]){ state.txOn[k] = false; render(); return; } b.textContent = t("translating"); try { state.tx[k] = { lang: state.lang, text: await translate(n.text, n.lang || "es", state.lang) }; state.txOn[k] = true; render(); } catch { b.textContent = t("trFailed"); } }));
 }
 
-async function start(){ pickSessionUsPhotos(); await refresh(); render(); }
+async function start(){
+  state.calMonthOffset = 0;
+  state.calSelectedDate = todayKey();
+  state.calDayTapped = false;
+  state.calStripScrollLeft = null;
+  pickSessionUsPhotos();
+  await refresh();
+  render();
+}
 (async function boot(){
   const savedLang = ls.get("ci_lang"); if (savedLang && LANGS[savedLang]) state.lang = savedLang; document.documentElement.lang = state.lang;
   state.store = local;
   if (CONFIG.firebase && CONFIG.firebase.apiKey && !/PEGAR_ACA/.test(CONFIG.firebase.apiKey)){ try { await remote.init(); state.store = remote; } catch { state.store = local; state.degraded = true; } }
   if (CONFIG.useAuth && state.store.mode === "remote"){ try { const user = await remote.getSession(); if (user){ const who = Object.keys(CONFIG.people).find(k => CONFIG.people[k].email === user.email); if (who){ state.me = who; state.userId = user.uid; await start(); return; } } } catch {} renderLogin(); } else { const saved = ls.get("ci_me"); if (saved && CONFIG.people[saved]){ state.me = saved; await start(); } else { renderLogin(); } }
-  setInterval(async () => { if (state.store.mode !== "remote" || !state.me || state.editing || state.editingWeekly) return; const before = state.entries.length + state.weekly.length + state.comments.length + state.notes.length; await refresh(); if (state.entries.length + state.weekly.length + state.comments.length + state.notes.length !== before) render(); }, 45000);
+  setInterval(async () => { if (state.store.mode !== "remote" || !state.me || state.editing || state.editingWeekly || state.calCountSlotEditing) return; const before = state.entries.length + state.weekly.length + state.comments.length + state.notes.length + state.calEvents.length; await refresh(); if (state.entries.length + state.weekly.length + state.comments.length + state.notes.length + state.calEvents.length !== before) render(); }, 45000);
 })();
 </script>
 </body>
