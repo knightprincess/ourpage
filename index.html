@@ -489,7 +489,7 @@ const ls = { get(k){ try { return localStorage.getItem(k); } catch { return null
 const state = {
   store: null, me: null, userId: null, lang: CONFIG.defaultLang, tab: "hoy",
   entries: [], weekly: [], comments: [], notes: [],
-  editing: false, editingWeekly: false, selectedMonth: null,
+  editing: false, editingWeekly: false, selectedMonth: undefined,
   degraded: false, tx: {}, txOn: {}, langOpen: false, openNotes: new Set()
 };
 let pendingImage = null; 
@@ -800,7 +800,7 @@ function viewDiario(){
   if (!allDates.length) return `<div class="card"><p class="empty">${esc(t("emptyJournal"))}</p></div>`;
 
   const months = [...new Set(allDates.map(d => d.slice(0, 7)))];
-  if (!state.selectedMonth || !months.includes(state.selectedMonth)) {
+  if (state.selectedMonth === undefined || (state.selectedMonth !== null && !months.includes(state.selectedMonth))) {
     state.selectedMonth = months[0];
   }
 
@@ -813,10 +813,14 @@ function viewDiario(){
   const monthBar = `
     <div class="month-bar" role="group" aria-label="Filter by month">
       ${months.map(ym => `
-        <button class="month-pill" data-month="${ym}" aria-pressed="${state.selectedMonth === ym}">
+        <button class="month-pill" data-month="${ym}" aria-pressed="${state.selectedMonth === ym}" aria-expanded="${state.selectedMonth === ym}">
           ${esc(formatMonthPill(ym))}
         </button>`).join("")}
     </div>`;
+
+  if (!state.selectedMonth) {
+    return monthBar;
+  }
 
   const dates = allDates.filter(d => d.startsWith(state.selectedMonth));
 
@@ -1145,7 +1149,7 @@ function render(){
   $("#editWeeklyBtn")?.addEventListener("click", () => { state.editingWeekly = true; render(); });
 
   root.querySelectorAll(".month-pill").forEach(b => b.addEventListener("click", () => {
-    state.selectedMonth = b.dataset.month;
+    state.selectedMonth = (state.selectedMonth === b.dataset.month) ? null : b.dataset.month;
     render();
   }));
   
