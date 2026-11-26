@@ -128,7 +128,7 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .stamp{font-size:.78rem;color:var(--ink-soft)}
 .qa{margin-bottom:14px}
 .qa:last-child{margin-bottom:0}
-.qa .lbl{font-family:Newsreader,serif;font-style:italic;color:var(--ink-soft);font-size:.98rem;margin-bottom:4px}
+.qa .lbl{font-family:Newsreader,serif;font-style:italic;font-weight:700;color:var(--ink);font-size:1rem;margin-bottom:4px}
 .qa .ans{font-family:Newsreader,serif;font-size:1.06rem;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink)}
 
 .decor{text-align:center; margin-top:20px; opacity:0.35;}
@@ -550,8 +550,9 @@ function countdown(){
 // WEEKEND & WEEKLY REPORT HELPERS (48H LOCAL SATURDAY & SUNDAY)
 function getWeekendStatus() {
   const now = localNow();
+  const forceWeekly = new URLSearchParams(location.search).get("weeklyTest") === "1" || ls.get("ci_weekly_test") === "1";
   const day = now.getUTCDay(); // 0 = Sun, 1 = Mon ... 6 = Sat
-  const isWeekend = (day === 0 || day === 6);
+  const isWeekend = forceWeekly || (day === 0 || day === 6);
   
   const diffToMon = (day === 0 ? -6 : 1 - day);
   const mon = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + diffToMon));
@@ -559,10 +560,12 @@ function getWeekendStatus() {
   const weekId = `${mon.getUTCFullYear()}-${pad(mon.getUTCMonth()+1)}-${pad(mon.getUTCDate())}`;
 
   let timeStr = "";
-  if (isWeekend) {
+  if (isWeekend && (day === 0 || day === 6)) {
     const endSun = new Date(Date.UTC(sun.getUTCFullYear(), sun.getUTCMonth(), sun.getUTCDate() + 1));
     const ms = endSun.getTime() - now.getTime();
     timeStr = `${Math.floor(ms/3600000)}h ${Math.floor(ms%3600000/60000)}m`;
+  } else if (forceWeekly) {
+    timeStr = "Test mode";
   } else {
     const daysUntilSat = 6 - day;
     const nextSat = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + daysUntilSat));
@@ -798,7 +801,6 @@ function entryHTML(e, opts = {}){
       ${qs.map((q,i) => (src.answers?.[i] || "").trim() ? `<div class="qa"><div class="lbl">${esc(q)}</div><div class="ans">${esc(src.answers[i])}</div></div>` : "").join("")}
       ${(src.bonus || "").trim() ? `<div class="qa"><div class="lbl">${esc(bonusFor(e.date))}</div><div class="ans">${esc(src.bonus)}</div></div>` : ""}
       ${canTranslate ? `<div class="trbar"><button class="tr" data-tr="${e.id}">${esc(showTx ? t("original") : t("translate"))}</button>${showTx ? `<div class="trnote">${esc(t("trNote"))}</div>` : ""}</div>` : ""}
-      ${opts.reactable ? `<div class="reacts">${CONFIG.reactions.map(r => `<button class="react" data-entry="${e.id}" data-r="${r}" aria-pressed="${(e.reactions||{})[state.me]===r}">${r}</button>`).join("")}</div>` : (e.reactions && Object.keys(e.reactions).length ? `<div class="reacts">${Object.values(e.reactions).map(r => `<span class="react">${r}</span>`).join("")}</div>` : "")}
       ${opts.thread === false ? "" : threadHTML(e.id, showTx ? state.tx[e.id].comments : null)}
       <div class="decor"><svg viewBox="0 0 24 24" fill="var(--line)" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
     </div>`;
@@ -1352,7 +1354,6 @@ function render(){
     pendingImage = null; await refresh(); render(); toast(t("noteSent")); 
   });
   
-  root.querySelectorAll(".react[data-entry]").forEach(b => b.addEventListener("click", async () => { const e = state.entries.find(x => x.id === b.dataset.entry); if (!e) return; const r = { ...(e.reactions || {}) }; if (r[state.me] === b.dataset.r) delete r[state.me]; else r[state.me] = b.dataset.r; try { await state.store.saveEntry({ ...e, reactions: r }); } catch { toast(t("saveFailed")); return; } await refresh(); render(); }));
   root.querySelectorAll(".thread-form[data-entry]").forEach(f => f.addEventListener("submit", async ev => { ev.preventDefault(); const input = f.querySelector("input"), text = input.value.trim(); if (!text) return; try { await state.store.addComment(withAuthor({ id: uid(), entry_id: f.dataset.entry, author: state.me, text, lang: state.lang, created_at: new Date().toISOString() })); } catch { toast(t("saveFailed")); return; } delete state.tx[f.dataset.entry]; await refresh(); render(); }));
   root.querySelectorAll("[data-tr]").forEach(b => b.addEventListener("click", async () => { const id = b.dataset.tr; if (state.txOn[id]){ state.txOn[id] = false; render(); return; } const e = state.entries.find(x => x.id === id); if (!e) return; b.textContent = t("translating"); try { await translateEntry(e); state.txOn[id] = true; render(); } catch { b.textContent = t("trFailed"); } }));
   root.querySelectorAll("[data-trwk]").forEach(b => b.addEventListener("click", async () => {
