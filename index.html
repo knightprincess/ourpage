@@ -272,6 +272,25 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .page-footer img{width:110px;max-width:34vw;height:auto;object-fit:contain;display:block;pointer-events:none;user-select:none;}
 .page-footer.weekly-footer img{width:136px;max-width:40vw;}
 
+/* JOURNAL WEEK GROUPS */
+.wk-group{margin-bottom:14px;border:1px solid var(--line);border-radius:14px;background:var(--paper-2);box-shadow:var(--shadow);overflow:hidden}
+.wk-group-sum{padding:12px 16px;cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;user-select:none}
+.wk-group-sum::-webkit-details-marker{display:none}
+.wk-group-left{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;min-width:0}
+.wk-group-name{font-family:Newsreader,serif;font-size:1.08rem;font-style:italic;color:var(--ink);font-weight:500}
+.wk-group-dates{font-size:.8rem;color:var(--ink-soft)}
+.wk-group-right{display:flex;align-items:center;gap:8px;flex:none}
+.wk-group-dots{display:inline-flex;align-items:center;gap:4px}
+.wk-group-dot{width:7px;height:7px;border-radius:999px;display:inline-block}
+.wk-group-dot.mica{background:var(--mica);border:1px solid rgba(0,0,0,0.12)}
+.wk-group-dot.tati{background:var(--tati);border:1px solid rgba(0,0,0,0.12)}
+.wk-group-dot.both{background:var(--accent);border:1px solid rgba(0,0,0,0.12)}
+.wk-group-chev{font-size:1.35rem;font-family:sans-serif;color:var(--ink-soft);line-height:.8;font-weight:300;transition:transform .2s ease}
+.wk-group[open] > .wk-group-sum{border-bottom:1px dashed var(--line);background:rgba(0,0,0,0.02)}
+.wk-group[open] > .wk-group-sum .wk-group-chev{transform:rotate(45deg);color:var(--ink)}
+.wk-group-body{padding:14px 14px 4px 14px;background:var(--paper)}
+.wk-group-body .timeline{margin:4px 0 8px}
+
 /* JOURNAL TIMELINE */
 .timeline { position: relative; padding-left: 26px; margin: 10px 0 30px; min-width:0;max-width:100% }
 .timeline::before { 
@@ -324,7 +343,21 @@ const CONFIG = {
     mica: { name: "Aile", email: "azorzoni@gmail.com", pin: "1111", tz: -3 }, // Buenos Aires (-3)
     tati: { name: "Tati", email: "boldohonova01@mail.ru", pin: "2222", tz: 8 }  // Ulan-Ude, Siberia (+8)
   },
-  reactions: ["❤️", "🥹", "🫂", "😭", "😂", "🌙"]
+  reactions: ["❤️", "🥹", "🫂", "😭", "😂", "🌙"],
+  usPhotos: {
+    desktop: [
+      "https://i.ibb.co/Z6c0Gjt8/foto-pc.png"
+      // Add up to 15 desktop image URLs here (comma-separated), e.g.:
+      // "https://i.ibb.co/xxxxxxx/pc-2.png",
+      // "https://i.ibb.co/xxxxxxx/pc-3.png"
+    ],
+    mobile: [
+      "https://i.ibb.co/2YPhW6Wy/foto-celular.png"
+      // Add up to 15 mobile image URLs here (comma-separated), e.g.:
+      // "https://i.ibb.co/xxxxxxx/cel-2.png",
+      // "https://i.ibb.co/xxxxxxx/cel-3.png"
+    ]
+  }
 };
 
 const LANGS = { en: "English", es: "Español", ru: "Русский" };
@@ -490,6 +523,7 @@ const state = {
   store: null, me: null, userId: null, lang: CONFIG.defaultLang, tab: "hoy",
   entries: [], weekly: [], comments: [], notes: [],
   editing: false, editingWeekly: false, selectedMonth: undefined,
+  usPhotoDesktopIdx: null, usPhotoMobileIdx: null,
   degraded: false, tx: {}, txOn: {}, langOpen: false, openNotes: new Set()
 };
 let pendingImage = null; 
@@ -823,44 +857,93 @@ function viewDiario(){
   }
 
   const dates = allDates.filter(d => d.startsWith(state.selectedMonth));
+  const [selY, selM] = state.selectedMonth.split("-").map(Number);
+  const daysInMonth = new Date(Date.UTC(selY, selM, 0)).getUTCDate();
+  const shortMonth = new Date(Date.UTC(selY, selM - 1, 1)).toLocaleDateString(LOCALE[state.lang], { month: "short", timeZone: "UTC" });
+  const capShortMonth = shortMonth.charAt(0).toUpperCase() + shortMonth.slice(1).replace(/\.$/, "");
 
-  let html = `${monthBar}<div class="timeline">`;
-  
+  const weekWord = (n) => state.lang === "es" ? `Semana ${n}` : state.lang === "ru" ? `Неделя ${n}` : `Week ${n}`;
+
+  // Group dates into calendar weeks within the month: 1-7, 8-14, 15-21, 22-28, 29-end
+  const buckets = new Map();
   dates.forEach(d => {
-    const mine = entryOf(d, state.me), hers = entryOf(d, other(state.me));
-    const locked = d === key && !mine; 
-    
-    let dotClass = "";
-    if (mine && hers) dotClass = "both";
-    else if (mine) dotClass = state.me;
-    else if (hers) dotClass = other(state.me);
-
-    html += `
-      <div class="tl-day">
-        <div class="tl-dot ${dotClass}"></div>
-        <div class="tl-date">${esc(prettyDate(d))}</div>
-        <div class="tl-entries">
-    `;
-    
-    const makeItem = (e, who, isLocked) => {
-      const body = entryHTML(e, { reactable: !isLocked, thread: !isLocked, veiled: isLocked, veilMsg: t("veil", { name: nameOf(other(state.me)) }) });
-      return `
-        <details class="tl-details">
-          <summary class="tl-summary">
-            <span class="who-lbl ${who}">${esc(nameOf(who))}</span>
-            <span class="icon">+</span>
-          </summary>
-          <div class="journal-content">${body}</div>
-        </details>`;
-    };
-
-    if (mine) html += makeItem(mine, state.me, false);
-    if (hers) html += makeItem(hers, other(state.me), locked);
-    
-    html += `</div></div>`;
+    const dayNum = Number(d.slice(8, 10));
+    const wkIdx = Math.min(5, Math.ceil(dayNum / 7));
+    if (!buckets.has(wkIdx)) buckets.set(wkIdx, []);
+    buckets.get(wkIdx).push(d);
   });
-  
-  html += `</div>`;
+
+  const sortedWkIndices = [...buckets.keys()].sort((a, b) => b - a);
+  let html = `${monthBar}`;
+
+  sortedWkIndices.forEach((wkIdx, pos) => {
+    const wkDates = buckets.get(wkIdx);
+    const startDay = (wkIdx - 1) * 7 + 1;
+    const endDay = Math.min(wkIdx * 7, daysInMonth);
+    const rangeLabel = startDay === endDay
+      ? `${capShortMonth} ${startDay}`
+      : `${capShortMonth} ${startDay} – ${capShortMonth} ${endDay}`;
+
+    // Build compact status dots (oldest -> newest within the week) for quick visual scan
+    const dotsHTML = [...wkDates].reverse().map(d => {
+      const mine = entryOf(d, state.me), hers = entryOf(d, other(state.me));
+      const cls = (mine && hers) ? "both" : mine ? state.me : hers ? other(state.me) : "";
+      return cls ? `<span class="wk-group-dot ${cls}" title="${esc(prettyDate(d))}"></span>` : "";
+    }).join("");
+
+    // Auto-open the most recent week (pos === 0) so recent entries take zero extra taps
+    html += `
+      <details class="wk-group" ${pos === 0 ? "open" : ""}>
+        <summary class="wk-group-sum">
+          <span class="wk-group-left">
+            <span class="wk-group-name">${esc(weekWord(wkIdx))}</span>
+            <span class="wk-group-dates">· ${esc(rangeLabel)}</span>
+          </span>
+          <span class="wk-group-right">
+            <span class="wk-group-dots" aria-hidden="true">${dotsHTML}</span>
+            <span class="wk-group-chev">+</span>
+          </span>
+        </summary>
+        <div class="wk-group-body">
+          <div class="timeline">`;
+
+    wkDates.forEach(d => {
+      const mine = entryOf(d, state.me), hers = entryOf(d, other(state.me));
+      const locked = d === key && !mine; 
+      
+      let dotClass = "";
+      if (mine && hers) dotClass = "both";
+      else if (mine) dotClass = state.me;
+      else if (hers) dotClass = other(state.me);
+
+      html += `
+        <div class="tl-day">
+          <div class="tl-dot ${dotClass}"></div>
+          <div class="tl-date">${esc(prettyDate(d))}</div>
+          <div class="tl-entries">
+      `;
+      
+      const makeItem = (e, who, isLocked) => {
+        const body = entryHTML(e, { reactable: !isLocked, thread: !isLocked, veiled: isLocked, veilMsg: t("veil", { name: nameOf(other(state.me)) }) });
+        return `
+          <details class="tl-details">
+            <summary class="tl-summary">
+              <span class="who-lbl ${who}">${esc(nameOf(who))}</span>
+              <span class="icon">+</span>
+            </summary>
+            <div class="journal-content">${body}</div>
+          </details>`;
+      };
+
+      if (mine) html += makeItem(mine, state.me, false);
+      if (hers) html += makeItem(hers, other(state.me), locked);
+      
+      html += `</div></div>`;
+    });
+
+    html += `</div></div></details>`;
+  });
+
   return html;
 }
 
@@ -969,6 +1052,22 @@ function viewSemanal(){
   return `${topHTML}${listHTML}<div class="page-footer weekly-footer"><img src="IMAGES/duduandbubuweekly.png" alt="Dudu and Bubu Weekly" data-srcs="images/duduandbubuweekly.png,duduandbubuweekly.png,IMAGES/duduandbubuweekly.jpg,images/duduandbubuweekly.jpg,IMAGES/duduandbubuweekly.jpeg,IMAGES/duduandbubuweekly.webp" onerror="const list=(this.dataset.srcs||'').split(',').filter(Boolean);if(list.length){this.src=list.shift();this.dataset.srcs=list.join(',');}else{this.style.display='none';}"></div>`;
 }
 
+function pickSessionUsPhotos() {
+  const pick = (arr, prevKey) => {
+    if (!Array.isArray(arr) || !arr.length) return 0;
+    if (arr.length === 1) return 0;
+    const prev = Number(ls.get(prevKey));
+    let idx = Math.floor(Math.random() * arr.length);
+    if (!Number.isNaN(prev) && idx === prev) {
+      idx = (idx + 1) % arr.length;
+    }
+    ls.set(prevKey, String(idx));
+    return idx;
+  };
+  state.usPhotoDesktopIdx = pick(CONFIG.usPhotos?.desktop, "ci_last_us_pc");
+  state.usPhotoMobileIdx = pick(CONFIG.usPhotos?.mobile, "ci_last_us_mob");
+}
+
 function viewNosotras(){
   const since = new Date(CONFIG.since + "T00:00:00Z"); 
   const together = Math.max(0, Math.floor((Date.now() + getOffset() * 3600000 - since.getTime()) / 86400000));
@@ -1028,8 +1127,8 @@ function viewNosotras(){
       <div class="stat"><span class="n">${state.entries.length}</span><span class="l">${esc(t("savedAnswers"))}</span></div>
       <div class="stat-img">
         <picture>
-          <source media="(min-width: 680px)" srcset="https://i.ibb.co/Z6c0Gjt8/foto-pc.png">
-          <img src="https://i.ibb.co/2YPhW6Wy/foto-celular.png" alt="Aile and Tati">
+          <source media="(min-width: 680px)" srcset="${esc((CONFIG.usPhotos?.desktop || [])[state.usPhotoDesktopIdx ?? 0] || "https://i.ibb.co/Z6c0Gjt8/foto-pc.png")}">
+          <img src="${esc((CONFIG.usPhotos?.mobile || [])[state.usPhotoMobileIdx ?? 0] || "https://i.ibb.co/2YPhW6Wy/foto-celular.png")}" alt="Aile and Tati">
         </picture>
       </div>
     </div>
@@ -1268,7 +1367,7 @@ function render(){
   root.querySelectorAll("[data-trnote]").forEach(b => b.addEventListener("click", async (ev) => { ev.stopPropagation(); const n = state.notes.find(x => x.id === b.dataset.trnote); if (!n) return; const k = "note:" + n.id; if (state.txOn[k]){ state.txOn[k] = false; render(); return; } b.textContent = t("translating"); try { state.tx[k] = { lang: state.lang, text: await translate(n.text, n.lang || "es", state.lang) }; state.txOn[k] = true; render(); } catch { b.textContent = t("trFailed"); } }));
 }
 
-async function start(){ await refresh(); render(); }
+async function start(){ pickSessionUsPhotos(); await refresh(); render(); }
 (async function boot(){
   const savedLang = ls.get("ci_lang"); if (savedLang && LANGS[savedLang]) state.lang = savedLang; document.documentElement.lang = state.lang;
   state.store = local;
