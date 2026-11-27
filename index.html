@@ -16,8 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#241f36; 
-  --ink-soft:#3d3554; 
+  --ink:#231D33; 
+  --ink-soft:#3E3554; 
   --paper:#F9F5F6;       
   --paper-2:#F8E8EE;     
   --line:#e8b8c9;        
@@ -36,20 +36,20 @@
 }
 
 :root[data-theme="dark"]{
-  --ink:#f2eef9; 
-  --ink-soft:#c5badc; 
-  --paper:#222831;       
-  --paper-2:#31363F;     
-  --line:#453d66;
-  --mica:#D9EFBD; 
-  --tati:#F5AFAF; 
-  --mica-name:#b2d28a;
-  --tati-name:#e08282;
-  --mica-wash:rgba(217, 239, 189, 0.12); 
-  --tati-wash:rgba(245, 175, 175, 0.12);
-  --accent:#b7a6ef; 
-  --accent-ink:#1c172b;
-  --shadow:0 1px 0 rgba(0,0,0,.3), 0 18px 40px -22px rgba(0,0,0,.85);
+  --ink:#F6ECE2;
+  --ink-soft:#C9B5A8;
+  --paper:#1A1615;
+  --paper-2:#27211F;
+  --line:#473732;
+  --mica:#D9EFBD;
+  --tati:#F5AFAF;
+  --mica-name:#C6DF9E;
+  --tati-name:#EB9C9C;
+  --mica-wash:rgba(124, 186, 88, 0.14);
+  --tati-wash:rgba(243, 198, 165, 0.13);
+  --accent:#F3C6A5;
+  --accent-ink:#211814;
+  --shadow:0 1px 0 rgba(0,0,0,.25), 0 16px 36px -20px rgba(10, 7, 6, .75);
 }
   
 *,*::before,*::after{box-sizing:inherit}
@@ -199,7 +199,7 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .mood-day { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 76px; padding: 10px 8px; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); flex: 0 0 auto; }
 .mood-date { font-size: 0.72rem; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
 .mood-texts { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.mood-txt { font-size: 0.75rem; font-weight: 500; font-family: "DM Sans", sans-serif; text-align: center; padding: 3px 8px; border-radius: 12px; color: #241f36; letter-spacing: 0.3px; }
+.mood-txt { font-size: 0.75rem; font-weight: 600; font-family: "DM Sans", sans-serif; text-align: center; padding: 3px 8px; border-radius: 12px; color: #211814; letter-spacing: 0.3px; }
 .mood-txt.mica { background-color: var(--mica); }
 .mood-txt.tati { background-color: var(--tati); }
 
