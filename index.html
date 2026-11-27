@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://i.ibb.co https://*.googleusercontent.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://api.mymemory.translated.net; frame-src https://www.youtube.com https://www.youtube-nocookie.com https://*.firebaseapp.com; object-src 'none'; base-uri 'self';">
 <title>Our check-in</title>
 
 <!-- Favicon -->
@@ -428,8 +431,8 @@ const CONFIG = {
   translateApi: true,
   translateEmail: "",
   people: {
-    mica: { name: "Aile", email: "azorzoni@gmail.com", pin: "1111", tz: -3 }, // Buenos Aires (-3)
-    tati: { name: "Tati", email: "boldohonova01@mail.ru", pin: "2222", tz: 8 }  // Ulan-Ude, Siberia (+8)
+    mica: { name: "Aile", email: "azorzoni@gmail.com", tz: -3 }, // Buenos Aires (-3)
+    tati: { name: "Tati", email: "boldohonova01@mail.ru", tz: 8 }  // Ulan-Ude, Siberia (+8)
   },
   reactions: ["❤️", "🥹", "🫂", "😭", "😂", "🌙"],
   usPhotos: {
@@ -884,7 +887,7 @@ function renderLogin(){
   root.querySelectorAll(".who-btn").forEach(b => b.addEventListener("click", () => { picked = b.dataset.who; $("#pinForm").classList.remove("hidden"); $("#pinHint").textContent = t("enteringAs", { name: realNameOf(picked) }); $("#pin").focus(); }));
   $("#pinForm").addEventListener("submit", async ev => {
     ev.preventDefault(); if (!picked) return; const val = $("#pin").value;
-    if (!authMode){ if (val.trim() !== CONFIG.people[picked].pin){ $("#pinHint").textContent = t("wrongKey"); return; } state.me = picked; ls.set("ci_me", picked); start(); return; }
+    if (!authMode){ const expectedPin = CONFIG.people[picked]?.pin; if (!expectedPin || val.trim() !== expectedPin){ $("#pinHint").textContent = t("wrongKey"); return; } state.me = picked; ls.set("ci_me", picked); start(); return; }
     $("#pinHint").textContent = t("signingIn");
     try { const user = await remote.signIn(CONFIG.people[picked].email, val); state.me = picked; state.userId = user.uid; await start(); } catch { $("#pinHint").textContent = t("wrongPassword"); }
   });
@@ -1296,7 +1299,7 @@ function viewPensando() {
   
   const renderRichNote = (n) => {
     const safeText = String(n.text || "");
-    if (n.image) return `<img src="${n.image}" alt="${esc(safeText || "Shared memory")}" class="note-img-embed"> ${safeText ? `<div style="margin-top:4px;">${esc(safeText)}</div>` : ""}`;
+    if (n.image && /^data:image\/(jpeg|png|webp|gif);base64,[a-z0-9+/=]+$/i.test(String(n.image))) return `<img src="${n.image}" alt="${esc(safeText || "Shared memory")}" class="note-img-embed"> ${safeText ? `<div style="margin-top:4px;">${esc(safeText)}</div>` : ""}`;
     
     const yt = safeText.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
     if (yt) {
@@ -1956,6 +1959,11 @@ function viewCalendario() {
   $("#noteImg")?.addEventListener("change", (e) => {
     const file = e.target.files[0];
     if(!file) return;
+    if (!/^image\/(jpeg|png|webp|gif)$/i.test(file.type) || file.size > 8 * 1024 * 1024) {
+      e.target.value = "";
+      toast(t("saveFailed"));
+      return;
+    }
     const r = new FileReader();
     r.onload = ev => {
       const img = new Image();
@@ -1963,10 +1971,13 @@ function viewCalendario() {
         const c = document.createElement("canvas"); const ctx = c.getContext("2d");
         const max = 800; let w = img.width, h = img.height;
         if (w > max || h > max) { if (w > h) { h *= max / w; w = max; } else { w *= max / h; h = max; } }
-        c.width = w; c.height = h; ctx.drawImage(img, 0, 0, w, h);
-        pendingImage = c.toDataURL("image/jpeg", 0.7);
+        c.width = Math.round(w); c.height = Math.round(h); ctx.drawImage(img, 0, 0, c.width, c.height);
+        const encoded = c.toDataURL("image/jpeg", 0.7);
+        if (encoded.length > 700000) { e.target.value = ""; toast(t("saveFailed")); return; }
+        pendingImage = encoded;
         $("#previewEl").src = pendingImage; $("#imgPreview").style.display = "block";
       };
+      img.onerror = () => { e.target.value = ""; toast(t("saveFailed")); };
       img.src = ev.target.result;
     };
     r.readAsDataURL(file);
@@ -2008,7 +2019,11 @@ async function start(){
 (async function boot(){
   const savedLang = ls.get("ci_lang"); if (savedLang && LANGS[savedLang]) state.lang = savedLang; document.documentElement.lang = state.lang;
   state.store = local;
-  if (CONFIG.firebase && CONFIG.firebase.apiKey && !/PEGAR_ACA/.test(CONFIG.firebase.apiKey)){ try { await remote.init(); state.store = remote; } catch { state.store = local; state.degraded = true; } }
+  const allowLocalFallback = new URLSearchParams(location.search).get("localTest") === "1";
+  if (CONFIG.firebase && CONFIG.firebase.apiKey && !/PEGAR_ACA/.test(CONFIG.firebase.apiKey)){
+    try { await remote.init(); state.store = remote; }
+    catch { state.store = allowLocalFallback ? local : remote; state.degraded = true; }
+  }
   if (CONFIG.useAuth && state.store.mode === "remote"){ try { const user = await remote.getSession(); if (user){ const who = Object.keys(CONFIG.people).find(k => CONFIG.people[k].email === user.email); if (who){ state.me = who; state.userId = user.uid; await start(); return; } } } catch {} renderLogin(); } else { const saved = ls.get("ci_me"); if (saved && CONFIG.people[saved]){ state.me = saved; await start(); } else { renderLogin(); } }
   setInterval(async () => { if (state.store.mode !== "remote" || !state.me || state.editing || state.editingWeekly || state.calCountSlotEditing) return; const before = state.entries.length + state.weekly.length + state.comments.length + state.notes.length + state.calEvents.length; await refresh(); if (state.entries.length + state.weekly.length + state.comments.length + state.notes.length + state.calEvents.length !== before) render(); }, 45000);
 })();
