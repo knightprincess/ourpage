@@ -128,10 +128,10 @@ button{font:inherit;cursor:pointer}
 .landing-cyrillic-phrase{
   font-family:"Cormorant Garamond","Newsreader",Georgia,serif;
   font-style:italic;
-  font-weight:400;
-  font-size:clamp(2.65rem, 10.5vw, 4.35rem);
+  font-weight:450;
+  font-size:clamp(2.8rem, 11vw, 4.55rem);
   line-height:1.1;
-  letter-spacing:-0.015em;
+  letter-spacing:-0.012em;
   color:var(--ink);
   margin:0;
 }
@@ -159,28 +159,38 @@ button{font:inherit;cursor:pointer}
   width:100%;
   display:flex;
   justify-content:center;
-  padding-bottom:env(safe-area-inset-bottom, 0px);
+  padding-bottom:calc(22px + env(safe-area-inset-bottom, 0px));
 }
 .landing-begin-btn{
   width:auto;
-  min-width:152px;
-  max-width:230px;
+  min-width:146px;
+  max-width:220px;
   padding:11px 28px;
   font-size:0.96rem;
   letter-spacing:0.01em;
-}
-:root:not([data-theme="dark"]) .landing-begin-btn{
   background:var(--paper-2);
   color:var(--ink);
-  border:1px solid var(--line);
+  border:1.5px solid var(--line);
   box-shadow:var(--shadow);
 }
-:root:not([data-theme="dark"]) .landing-begin-btn:hover{
+.landing-begin-btn:hover{
+  background:var(--mica-wash);
+  border-color:var(--tati-name);
+  color:var(--ink);
+  opacity:1;
+}
+:root[data-theme="dark"] .landing-begin-btn{
   background:var(--surface-3);
-  border-color:var(--accent);
+  color:var(--ink);
+  border:1.5px solid var(--line);
+}
+:root[data-theme="dark"] .landing-begin-btn:hover{
+  background:#79513A;
+  border-color:var(--mica-name);
+  color:var(--ink);
 }
 
-/* Today / Login page: Day + "How was your day, really?" + warm pill buttons + bottom Bubu & Dudu */
+/* Today / Login page: centered question with small unbold date right above + warm fitted pills */
 .today-login-page{
   flex:1;
   min-height:calc(100dvh - 36px);
@@ -188,83 +198,97 @@ button{font:inherit;cursor:pointer}
   display:flex;
   flex-direction:column;
   justify-content:space-between;
-  gap:14px;
-  padding:6px 2px 4px;
-}
-.today-login-top{
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-  gap:10px;
+  gap:16px;
+  padding:12px 2px 10px;
 }
 .today-login-hero{
   text-align:center;
-  margin-top:auto;
+  margin-top:6dvh;
   margin-bottom:auto;
-  padding:8px 4px;
+  padding:8px 8px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+}
+.today-login-date{
+  font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:0.78rem;
+  font-weight:400;
+  color:var(--ink-soft);
+  margin:0;
+  letter-spacing:0.01em;
 }
 .eyebrow{font-size:.82rem;color:var(--ink-soft);margin:0}
 .today-login-q{
   font-family:Newsreader,Georgia,serif;
   font-style:italic;
-  font-weight:300;
-  font-size:clamp(1.75rem, 6.5vw, 2.6rem);
-  line-height:1.16;
-  margin:8px 0 0;
+  font-weight:600;
+  font-size:clamp(2.05rem, 7.6vw, 3.05rem);
+  line-height:1.14;
+  margin:0;
+  max-width:14ch;
   color:var(--ink);
 }
 
-/* Warm pill buttons in palette */
+/* Fitted pill buttons matching the landing button */
 .stoic-pills{
   display:flex;
   flex-direction:row;
+  justify-content:center;
   gap:12px;
   width:100%;
-  max-width:360px;
+  max-width:340px;
   margin:0 auto;
 }
 .stoic-pill{
-  flex:1 1 0;
-  min-width:0;
+  flex:0 1 auto;
+  min-width:112px;
+  width:auto;
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  gap:9px;
-  padding:11px 16px;
+  padding:11px 24px;
   border-radius:999px;
   background:var(--paper-2);
-  border:1px solid var(--line);
+  border:1.5px solid var(--line);
   color:var(--ink);
   box-shadow:var(--shadow);
   transition:border-color .16s ease, background .16s ease, transform .16s ease, color .16s ease;
 }
 .stoic-pill:hover{
-  border-color:var(--accent);
-  background:var(--surface-3);
+  background:var(--mica-wash);
+  border-color:var(--tati-name);
+  color:var(--ink);
 }
 .stoic-pill[aria-pressed="true"]{
-  border-color:var(--accent);
-  background:var(--accent);
-  color:var(--accent-ink);
+  background:var(--tati-wash);
+  border-color:var(--tati-name);
+  color:var(--ink);
+  font-weight:500;
 }
 :root[data-theme="dark"] .stoic-pill{
   background:var(--surface-3);
+  border:1.5px solid var(--line);
+  color:var(--ink);
 }
 :root[data-theme="dark"] .stoic-pill:hover{
   background:#79513A;
-  border-color:var(--accent);
+  border-color:var(--mica-name);
+  color:var(--ink);
 }
 :root[data-theme="dark"] .stoic-pill[aria-pressed="true"]{
-  background:var(--accent);
-  color:var(--accent-ink);
+  background:var(--tati-wash);
+  border-color:var(--tati-name);
+  color:var(--ink);
 }
 .stoic-pill:active{
   transform:scale(0.98);
 }
 .stoic-pill strong{
   font-family:Newsreader,Georgia,serif;
-  font-size:1.12rem;
-  font-weight:400;
+  font-size:1.08rem;
+  font-weight:500;
   white-space:nowrap;
 }
 
@@ -1257,11 +1281,8 @@ function renderLogin(){
   const authMode = CONFIG.useAuth && state.store.mode === "remote";
   root.innerHTML = `
     <section class="today-login-page">
-      <div class="today-login-top">
-        <span class="eyebrow">${esc(prettyDate(key))}</span>
-      </div>
-
       <div class="today-login-hero">
+        <p class="today-login-date">${esc(prettyDate(key))}</p>
         <h1 class="today-login-q">${esc(questions()[0])}</h1>
       </div>
 
@@ -1269,7 +1290,6 @@ function renderLogin(){
         <div class="stoic-pills">
           ${Object.keys(CONFIG.people).map(k => `
             <button type="button" class="stoic-pill" data-who="${k}" aria-pressed="false">
-              <span class="dot ${k}"></span>
               <strong>${esc(CONFIG.people[k].name)}</strong>
             </button>`).join("")}
         </div>
@@ -1671,12 +1691,8 @@ function viewNosotras(){
         const aMood = a && typeof a.mood === "number" ? moods()[a.mood] : "—";
         const bMood = b && typeof b.mood === "number" ? moods()[b.mood] : "—";
         const aSnip = getSnippet(a); const bSnip = getSnippet(b);
-        const titleA = a ? `${nameOf("mica")} | ${shortDate} | ${aMood}
-
-"${aSnip}"` : `${nameOf("mica")} | ${shortDate}`;
-        const titleB = b ? `${nameOf("tati")} | ${shortDate} | ${bMood}
-
-"${bSnip}"` : `${nameOf("tati")} | ${shortDate}`;
+        const titleA = a ? `${nameOf("mica")} | ${shortDate} | ${aMood}\n\n"${aSnip}"` : `${nameOf("mica")} | ${shortDate}`;
+        const titleB = b ? `${nameOf("tati")} | ${shortDate} | ${bMood}\n\n"${bSnip}"` : `${nameOf("tati")} | ${shortDate}`;
         return `<div class="mood-dot-col">
                   <div class="mood-dot mica ${!a?'empty':''}" title="${titleA}"></div>
                   <div class="mood-dot tati ${!b?'empty':''}" title="${titleB}"></div>
