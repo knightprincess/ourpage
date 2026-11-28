@@ -37,7 +37,6 @@
 }
 
 :root[data-theme="dark"]{
-  /* Full "Timber Path" palette: #251D1D, #452A1B, #694531, #897B52, #AAA890 */
   --ink:#F6ECE2;
   --ink-soft:#E6D9C8;
   --paper:#251D1D;
@@ -76,9 +75,9 @@ button{font:inherit;cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:12px}
 .hidden{display:none !important}
 
-.lang{position:relative; display:inline-flex; align-items:center; gap:8px; flex-wrap:wrap;}
+.lang{position:relative; display:inline-flex; align-items:center; gap:6px; flex-wrap:nowrap;}
 .lang-btn, .theme-btn{background:transparent;border:1px solid var(--line);border-radius:999px;color:var(--ink-soft);
-  padding:5px 11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:.82rem; height: 32px; transition: background .15s ease, border-color .15s ease, color .15s ease;}
+  padding:5px 10px;display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:.82rem; height: 32px; transition: background .15s ease, border-color .15s ease, color .15s ease;}
 :root[data-theme="dark"] .lang-btn, :root[data-theme="dark"] .theme-btn{background:var(--surface-3);color:var(--ink)}
 :root[data-theme="dark"] .lang-btn:hover, :root[data-theme="dark"] .theme-btn:hover{border-color:var(--accent);background:#79513A}
 .lang-btn svg, .theme-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.6}
@@ -115,7 +114,7 @@ input[type="password"],input[type="text"],textarea{width:100%;max-width:100%;min
 :root:not([data-theme="dark"]) input[type="text"],
 :root:not([data-theme="dark"]) textarea{background:var(--paper)}
 textarea{font-family:Newsreader,Georgia,serif;font-size:1.05rem;line-height:1.55;min-height:88px}
-input::placeholder, textarea::placeholder{color:var(--ink-soft);opacity:.72}
+input::placeholder, textarea::placeholder{color:var(--ink-soft);opacity:.78}
 input:focus,textarea:focus{border-color:var(--accent);outline:none}
 :root[data-theme="dark"] input:focus, :root[data-theme="dark"] textarea:focus{background:#754E38}
 .btn{border:none;border-radius:999px;padding:12px 18px;font-weight:500;background:var(--accent);color:var(--accent-ink);
@@ -177,9 +176,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
   font-family:Newsreader,serif;font-style:italic;font-size:1.05rem;color:var(--ink)}
 @keyframes reveal{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .revealed{animation:reveal .5s ease both}
-.reacts{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap}
-.react{border:1px solid var(--line);background:var(--surface-3);border-radius:999px;padding:4px 10px;font-size:.95rem;line-height:1.3}
-.react[aria-pressed="true"]{border-color:var(--accent);background:var(--accent)}
 .thread{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
 .msg{font-size:.92rem;margin-bottom:8px;color:var(--ink);overflow-wrap:anywhere}
 :root[data-theme="dark"] .msg{background:var(--surface-3);border:1px solid rgba(137, 123, 82, 0.45);border-radius:10px;padding:7px 11px}
@@ -280,7 +276,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 }
 .wiggle { animation: gentleWiggle 280ms ease; }
 
-/* Mobile: 2 columns showing only tag + who uploaded until tapped to expand */
 .notes-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; align-items: start; width: 100%; }
 @media(min-width: 680px) {
   .notes-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
@@ -328,7 +323,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
   background:var(--accent);color:var(--accent-ink);padding:10px 18px;border-radius:999px;font-size:.88rem;font-weight:500;z-index:50;box-shadow:var(--shadow)}
 :root:not([data-theme="dark"]) .toast{background:var(--ink);color:var(--paper)}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
-
 
 .page-footer{margin-top:28px;margin-bottom:6px;padding-top:8px;display:flex;justify-content:center;align-items:center;}
 .page-footer.login-footer{margin-top:8px;}
@@ -393,14 +387,13 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .journal-content .entry { border: none; box-shadow: none; padding: 0; background: transparent; }
 .journal-content .entry-head { display: none; }
 
-/* CALENDAR TAB (ADHD-FRIENDLY NOW & NEXT + MONTH JUMP + COUNTDOWNS) */
+/* CALENDAR TAB */
 .cal-section { margin-bottom: 20px; }
 .cal-section:last-child { margin-bottom: 0; }
 .cal-sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
 .cal-sec-title { font-family: Newsreader, serif; font-size: 1.24rem; font-style: italic; color: var(--ink); font-weight: 400; }
 .cal-sec-sub { font-size: 0.78rem; color: var(--ink-soft); }
 
-/* LIVE COUNTDOWN CARDS */
 .cal-countdowns { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 18px; }
 .cal-countdowns.has-two { grid-template-columns: 1fr; }
 @media(min-width: 560px) {
@@ -423,7 +416,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .cal-cd-title { font-family: Newsreader, serif; font-size: 1.04rem; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .cal-cd-date { font-size: 0.76rem; color: var(--ink-soft); }
 
-/* MONTH & DAY STRIP WITH DESKTOP ARROWS + TOUCH SCROLL */
 .cal-month-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
 .cal-month-label { font-family: Newsreader, serif; font-size: 1.15rem; font-style: italic; color: var(--ink); }
 .cal-strip-wrap { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; max-width: 100%; }
@@ -451,7 +443,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .cal-today-pill-btn { background: none; border: none; padding: 0; color: var(--ink); font-size: 0.74rem; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
 :root[data-theme="dark"] .cal-today-pill-btn { color: var(--accent); }
 
-/* NOW & NEXT EXPANDABLE STREAM */
 .cal-stream { display: flex; flex-direction: column; gap: 8px; }
 .cal-ev { background: var(--surface-3); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; cursor: pointer; transition: border-color .15s ease, background .15s ease; min-width: 0; }
 :root:not([data-theme="dark"]) .cal-ev { background: var(--paper); }
@@ -472,7 +463,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .cal-ev.expanded .cal-ev-detail { display: block; }
 .cal-ev-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
 
-/* QUICK EVENT COMPOSER */
 .cal-form-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
 .cal-form-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 @media(min-width: 560px) {
@@ -494,25 +484,93 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .cal-seg[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 500; }
 
 /* ==========================================================================
-   MOBILE-ONLY STOIC / READER OVERHAUL (@media (max-width: 679px))
-   Desktop (> 679px) remains untouched.
+   MOBILE STOIC DESIGN & HIERARCHY (@media (max-width: 679px))
+   High contrast, clear typographic hierarchy, compact for iPhone SE (2022) & iPhone 13.
    ========================================================================== */
 @media (max-width: 679px) {
+  :root {
+    --ink: #161224;
+    --ink-soft: #3B3254;
+    --paper: #F7F5F9;
+    --paper-2: #FFFFFF;
+    --surface-3: #EFEBF4;
+    --line: #C7BBD6;
+    --accent: #181423;
+    --accent-ink: #FFFFFF;
+  }
+  :root[data-theme="dark"] {
+    --ink: #FAF4EB;
+    --ink-soft: #E3D4C0;
+    --paper: #1B1514;
+    --paper-2: #2E211B;
+    --surface-3: #473228;
+    --line: #9E8B5B;
+    --accent: #E6D8B8;
+    --accent-ink: #181210;
+  }
+
   body.stoic-mobile-active {
-    padding-bottom: calc(82px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
   }
   .wrap {
-    padding: 16px 18px 96px;
+    padding: 8px 14px 72px;
+  }
+
+  /* Stoic-style crisp typographic hierarchy */
+  .m-stoic-kicker {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .m-stoic-h1 {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: clamp(1.5rem, 6.8vw, 1.95rem);
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .m-stoic-lead {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 400;
+    font-size: 0.9rem;
+    line-height: 1.38;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .m-stoic-subnote {
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.78rem;
+    line-height: 1.35;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .m-stoic-primary-btn {
+    width: 100%;
+    padding: 12px 18px;
+    border-radius: 999px;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border: none;
   }
 
   /* Pre-login slow landing page */
   .m-landing {
-    min-height: calc(100vh - 56px);
+    min-height: calc(100svh - 24px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 10px 4px 20px;
-    gap: 24px;
+    padding: 2px 0 6px;
+    gap: 8px;
   }
   .m-landing-top {
     display: flex;
@@ -523,46 +581,22 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 8px;
     margin: auto 0;
   }
-  .m-ru-badge {
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-  }
-  .m-ru-title {
-    font-family: Newsreader, Georgia, serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(2.35rem, 11vw, 3.1rem);
-    line-height: 1.08;
+  .m-line-art {
+    width: 112px;
+    height: 112px;
     color: var(--ink);
-    margin: 0;
-  }
-  .m-ru-sub {
-    font-family: Newsreader, Georgia, serif;
-    font-size: 1.08rem;
-    line-height: 1.5;
-    color: var(--ink-soft);
-    max-width: 28ch;
-    margin: 0;
-  }
-  .m-begin-btn {
-    width: 100%;
-    max-width: 320px;
-    padding: 15px 24px;
-    border-radius: 999px;
-    font-size: 1rem;
+    margin: 2px auto;
   }
 
   /* Mobile sign-in screen */
   .login {
-    min-height: calc(100vh - 56px);
+    min-height: calc(100svh - 24px);
     justify-content: space-between;
-    gap: 18px;
-    padding: 8px 0 14px;
+    gap: 8px;
+    padding: 2px 0 6px;
   }
   .login-head-bar {
     display: flex;
@@ -571,154 +605,191 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
     gap: 8px;
   }
   .who {
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;
+    gap: 8px;
   }
   .who-btn {
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 16px 18px;
+    flex-direction: column;
+    justify-content: center;
+    padding: 12px 8px;
+    background: var(--paper-2);
   }
 
-  /* Mobile top bar & secondary "Thinking of you" pill */
+  /* Top bar: ONLY "Our check-in" on left, "Thinking of you" pill + right-side "About me" circle */
   .topbar {
-    padding-bottom: 10px;
-    gap: 8px;
+    padding-bottom: 6px;
+    gap: 6px;
+    flex-wrap: nowrap;
+  }
+  .brand {
+    font-family: "DM Sans", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.98rem;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .m-top-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
   }
   .m-think-pill {
     background: var(--paper-2);
     border: 1px solid var(--line);
     color: var(--ink);
     border-radius: 999px;
-    padding: 5px 12px;
-    font-size: 0.78rem;
-    font-weight: 500;
+    padding: 4px 10px;
+    height: 30px;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.73rem;
+    font-weight: 600;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
+    white-space: nowrap;
   }
   .m-think-pill[aria-pressed="true"] {
     background: var(--accent);
     color: var(--accent-ink);
     border-color: var(--accent);
   }
-
-  /* Hide horizontal top tab deck on mobile; use bottom bar instead */
-  .tabs {
-    display: none;
+  .m-about-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    border: 1.5px solid var(--line);
+    background: var(--paper-2);
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    flex-shrink: 0;
+  }
+  .m-about-circle.mica { box-shadow: inset 0 0 0 2px var(--mica-name); }
+  .m-about-circle.tati { box-shadow: inset 0 0 0 2px var(--tati-name); }
+  .m-about-circle[aria-pressed="true"] {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: var(--accent);
+  }
+  .m-about-circle svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
   }
 
-  /* Bottom navigation bar */
+  /* Hide horizontal top tab deck on mobile; use compact bottom bar */
+  .tabs { display: none; }
+
   .m-bottom-nav {
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 40;
-    background: var(--paper);
+    background: var(--paper-2);
     border-top: 1px solid var(--line);
-    padding: 6px 8px calc(8px + env(safe-area-inset-bottom, 0px));
+    padding: 3px 6px calc(4px + env(safe-area-inset-bottom, 0px));
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 2px;
-    box-shadow: 0 -8px 24px -16px rgba(0,0,0,0.22);
   }
   .m-nav-item {
     background: none;
     border: none;
-    border-radius: 12px;
-    padding: 6px 2px;
-    min-height: 48px;
+    border-radius: 10px;
+    padding: 3px 2px;
+    min-height: 42px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3px;
+    gap: 2px;
     color: var(--ink-soft);
-    font-size: 0.68rem;
-    line-height: 1.1;
-    transition: color .15s ease, background .15s ease;
+    font-size: 0.63rem;
+    font-weight: 500;
+    line-height: 1.05;
   }
   .m-nav-item svg {
-    width: 19px;
-    height: 19px;
+    width: 16px;
+    height: 16px;
     stroke: currentColor;
     fill: none;
-    stroke-width: 1.7;
+    stroke-width: 1.8;
   }
   .m-nav-item[aria-selected="true"] {
-    color: var(--ink);
+    color: var(--accent-ink);
+    background: var(--accent);
     font-weight: 600;
-    background: var(--paper-2);
   }
 
-  /* Full-screen "one thing at a time" mobile views */
+  /* Compact full-height view so CTA is immediately visible on iPhone SE without scrolling */
   .m-screen {
-    min-height: calc(100vh - 165px);
+    min-height: calc(100svh - 108px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 20px;
-    padding: 6px 0 12px;
+    gap: 8px;
+    padding: 2px 0 4px;
   }
   .m-screen-center {
     margin: auto 0;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-  }
-  .m-greet-title {
-    font-family: Newsreader, Georgia, serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(2.1rem, 9.5vw, 2.75rem);
-    line-height: 1.12;
-    margin: 6px 0;
+    gap: 8px;
   }
   .m-step-meta {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.78rem;
+    font-size: 0.72rem;
+    font-weight: 500;
     color: var(--ink-soft);
   }
 
-  /* Stoic mood faces: clean faces first; label + gentle spring animation when tapped */
+  /* Stoic mood faces: clean faces first; label + spring bounce when tapped */
   @keyframes moodPop {
     0% { transform: scale(1) translateY(0); }
-    40% { transform: scale(1.16) translateY(-6px); }
+    40% { transform: scale(1.16) translateY(-4px); }
     72% { transform: scale(0.96) translateY(1px); }
-    100% { transform: scale(1.06) translateY(-2px); }
+    100% { transform: scale(1.05) translateY(-2px); }
   }
   .m-mood-grid {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 8px;
-    margin: 10px 0 6px;
+    gap: 6px;
+    margin: 4px 0 2px;
   }
   .m-mood-btn {
     background: var(--paper-2);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 14px 4px;
-    min-height: 76px;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    aspect-ratio: 1 / 1;
+    min-height: 54px;
+    padding: 4px 2px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 2px;
     color: var(--ink);
     transition: border-color .18s ease, background .18s ease;
   }
   .m-mood-face {
-    font-size: 1.65rem;
+    font-size: 1.35rem;
     line-height: 1;
     display: inline-block;
   }
   .m-mood-lbl {
-    font-size: 0.68rem;
-    font-weight: 500;
-    line-height: 1.1;
+    font-size: 0.6rem;
+    font-weight: 600;
+    line-height: 1;
     text-align: center;
     opacity: 0;
     max-height: 0;
@@ -735,116 +806,161 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
   }
   .m-mood-btn[aria-pressed="true"] .m-mood-lbl {
     opacity: 1;
-    max-height: 24px;
+    max-height: 18px;
   }
 
-  /* Single-question full-page editor */
+  /* Single-question full-page editor sized for iPhone SE */
   .m-single-q {
-    font-family: Newsreader, Georgia, serif;
-    font-style: italic;
-    font-size: 1.5rem;
-    line-height: 1.28;
-    font-weight: 400;
-    margin: 0 0 12px;
+    font-family: "DM Sans", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.24rem;
+    line-height: 1.22;
+    letter-spacing: -0.015em;
+    margin: 0 0 4px;
+    color: var(--ink);
   }
   .m-single-ta {
-    min-height: 34vh;
-    font-size: 1.12rem;
-    line-height: 1.6;
-    padding: 14px 15px;
+    min-height: 132px;
+    max-height: 190px;
+    font-family: Newsreader, Georgia, serif;
+    font-size: 1.02rem;
+    line-height: 1.48;
+    padding: 10px 12px;
+    background: var(--paper-2);
   }
   .m-step-actions {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    margin-top: 8px;
+    gap: 8px;
   }
 
-  /* Completion screen (no tags, helpfulness question + Save and finish) */
+  /* Completion screen (no tags, helpfulness question + Save & Finish) */
   .m-help-row {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
-    margin: 12px 0 18px;
+    gap: 6px;
+    margin: 8px 0 10px;
   }
   .m-help-btn {
-    padding: 12px 8px;
-    border-radius: 14px;
-    border: 1px solid var(--line);
-    background: var(--paper-2);
+    padding: 10px 6px;
+    border-radius: 12px;
+    border: 1.5px solid var(--line);
+    background: var(--surface-3);
     color: var(--ink);
-    font-size: 0.88rem;
+    font-size: 0.82rem;
+    font-weight: 500;
   }
   .m-help-btn[aria-pressed="true"] {
     background: var(--accent);
     color: var(--accent-ink);
     border-color: var(--accent);
-    font-weight: 500;
+    font-weight: 600;
   }
 
-  /* Reader-first Journal & Weekly prompt picker */
+  /* Reader-first Journal, Weekly & About Me cards */
   .m-reader-card {
     background: var(--paper-2);
     border: 1px solid var(--line);
-    border-radius: 18px;
-    padding: 20px 18px;
+    border-radius: 16px;
+    padding: 13px 13px;
     box-shadow: var(--shadow);
   }
   .m-prompt-pills {
     display: flex;
-    gap: 7px;
+    gap: 6px;
     overflow-x: auto;
     padding-bottom: 6px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
   .m-prompt-pills::-webkit-scrollbar { display: none; }
   .m-prompt-pill {
     flex: 0 0 auto;
-    background: var(--surface-3);
+    background: var(--paper-2);
     border: 1px solid var(--line);
     border-radius: 999px;
-    padding: 6px 12px;
-    font-size: 0.78rem;
+    padding: 5px 11px;
+    font-size: 0.75rem;
+    font-weight: 500;
     color: var(--ink);
   }
   .m-prompt-pill[aria-pressed="true"] {
     background: var(--accent);
     color: var(--accent-ink);
     border-color: var(--accent);
-    font-weight: 500;
+    font-weight: 600;
   }
 
   /* Weekly connection pills */
   .m-conn-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 7px;
-    margin: 10px 0 16px;
+    gap: 6px;
+    margin: 6px 0 10px;
   }
   .m-conn-pill {
     background: var(--surface-3);
     border: 1px solid var(--line);
     border-radius: 999px;
-    padding: 7px 13px;
-    font-size: 0.82rem;
+    padding: 6px 11px;
+    font-size: 0.78rem;
+    font-weight: 500;
     color: var(--ink);
   }
   .m-conn-pill[aria-pressed="true"] {
     background: var(--accent);
     color: var(--accent-ink);
     border-color: var(--accent);
-    font-weight: 500;
+    font-weight: 600;
   }
 
   /* Calendar mobile ordering: calendar + countdowns first, everything else below */
   .m-cal-layout {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
   }
   .m-cal-top-block { order: 1; }
-  .m-cal-bottom-block { order: 2; display: flex; flex-direction: column; gap: 16px; }
+  .m-cal-bottom-block { order: 2; display: flex; flex-direction: column; gap: 12px; }
+
+  /* About Me mobile profile controls */
+  .m-about-field {
+    margin-bottom: 10px;
+  }
+  .m-about-lbl {
+    display: block;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 3px;
+  }
+  .m-about-input {
+    width: 100%;
+    background: var(--surface-3);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 8px 11px;
+    font: inherit;
+    font-size: 0.9rem;
+  }
+  .m-about-ta {
+    min-height: 62px;
+    font-size: 0.96rem;
+    line-height: 1.42;
+    padding: 8px 11px;
+    background: var(--surface-3);
+  }
+  .m-about-pref-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 9px 0;
+    border-top: 1px dashed var(--line);
+    margin-top: 6px;
+  }
 }
 </style>
 </head>
@@ -867,10 +983,9 @@ const CONFIG = {
   translateApi: true,
   translateEmail: "",
   people: {
-    mica: { name: "Aile", email: "azorzoni@gmail.com", tz: -3 }, // Buenos Aires (-3)
-    tati: { name: "Tati", email: "boldohonova01@mail.ru", tz: 8 }  // Ulan-Ude, Siberia (+8)
+    mica: { name: "Aile", email: "azorzoni@gmail.com", tz: -3 },
+    tati: { name: "Tati", email: "boldohonova01@mail.ru", tz: 8 }
   },
-  reactions: ["❤️", "🥹", "🫂", "😭", "😂", "🌙"],
   usPhotos: {
     desktop: [
       "https://i.ibb.co/Z6c0Gjt8/foto-pc.png"
@@ -1011,7 +1126,7 @@ const UI = {
 
     mLandingRuBadge: "Тихое пространство для двоих",
     mLandingRuTitle: "Наша страница",
-    mLandingRuSub: "Медленный ритуал, чтобы быть ближе каждый день.",
+    mLandingRuSub: "A quiet daily companion for the two of us.",
     mBegin: "Begin",
     mBack: "Back",
     mContinue: "Continue",
@@ -1021,12 +1136,12 @@ const UI = {
     mGreetEvening: "Good evening",
     mStartCheckin: "Start today's check-in",
     mDoneTitle: "You've completed the daily check-in",
-    mDoneSub: "Take a quiet breath—your words are ready for us.",
+    mDoneSub: "Take a quiet breath—your words are saved for us.",
     mHelpfulQ: "Did this check-in feel helpful to you today?",
     mHelpNo: "No",
     mHelpLittle: "A little",
     mHelpYes: "Yes",
-    mSaveFinish: "Save and finish",
+    mSaveFinish: "Save & Finish",
     mWkReadyIn: "Weekly reflection will be ready in {t}",
     mPastWeeks: "Past weekly reports",
     mConnQ: "How connected did we feel this week?",
@@ -1039,7 +1154,14 @@ const UI = {
     mPromptHard: "Hard part",
     mPromptNeed: "Need tomorrow",
     mPromptUnsaid: "Unsaid",
-    mPromptBonus: "Extra"
+    mPromptBonus: "Extra",
+    mAboutTitle: "About me",
+    mAboutSub: "Birthdays, favorite things, memories & reminders to read later.",
+    mBirthdayLbl: "Birthday",
+    mFavoritesLbl: "Favorite things",
+    mFavMemoriesLbl: "Favorite memories to remember",
+    mReadLaterLbl: "Reminders to read later",
+    mThemePrefLbl: "Appearance"
   },
   es: {
     brand: "Nuestro check-in", tagline: "Un check-in por día, las dos.", yourKey: "Tu clave", enter: "Entrar", wrongKey: "Clave incorrecta.", enteringAs: "Entrando como {name}.", signOut: "Salir", yourPassword: "Tu contraseña", signIn: "Entrar", wrongPassword: "Email o contraseña incorrectos.", authError: "Error de conexión.", signingIn: "Entrando…",
@@ -1092,7 +1214,14 @@ const UI = {
     mPromptHard: "Lo que costó",
     mPromptNeed: "Para mañana",
     mPromptUnsaid: "Sin decir",
-    mPromptBonus: "Extra"
+    mPromptBonus: "Extra",
+    mAboutTitle: "Sobre mí",
+    mAboutSub: "Cumpleaños, cosas favoritas, recuerdos y notas para leer después.",
+    mBirthdayLbl: "Cumpleaños",
+    mFavoritesLbl: "Cosas favoritas",
+    mFavMemoriesLbl: "Recuerdos para recordar",
+    mReadLaterLbl: "Recordatorios para leer después",
+    mThemePrefLbl: "Tema"
   },
   ru: {
     brand: "Наш чек-ин", tagline: "Один чек-ин в день, обе.", yourKey: "Твой код", enter: "Войти", wrongKey: "Неверный код.", enteringAs: "Вход как {name}.", signOut: "Выйти", yourPassword: "Твой пароль", signIn: "Войти", wrongPassword: "Неверный email/пароль.", authError: "Ошибка подключения.", signingIn: "Входим…",
@@ -1145,7 +1274,14 @@ const UI = {
     mPromptHard: "Сложное",
     mPromptNeed: "На завтра",
     mPromptUnsaid: "Несказанное",
-    mPromptBonus: "Доп. вопрос"
+    mPromptBonus: "Доп. вопрос",
+    mAboutTitle: "Обо мне",
+    mAboutSub: "День рождения, любимое, воспоминания и заметки на потом.",
+    mBirthdayLbl: "День рождения",
+    mFavoritesLbl: "Любимые вещи",
+    mFavMemoriesLbl: "Любимые воспоминания",
+    mReadLaterLbl: "Напоминания прочитать позже",
+    mThemePrefLbl: "Тема"
   }
 };
 
@@ -1185,9 +1321,9 @@ const state = {
   editing: false, editingWeekly: false, selectedMonth: undefined,
   usPhotoDesktopIdx: null, usPhotoMobileIdx: null,
   degraded: false, tx: {}, txOn: {}, langOpen: false, openNotes: new Set(), calEvents: [], calSelectedDate: null, calDayTapped: false, calMonthOffset: 0, calStripScrollLeft: null, calExpandedIds: new Set(), calWho: "both", calTag: "date", calDraftTitle: "", calDraftNote: "", calDraftTime: "", calCountSlotEditing: null, calShowSecondCd: false,
-  // Mobile-only state
   mShowLanding: !ls.get("ci_seen_landing"),
-  mTodayStep: "greet", // greet -> mood -> q0..q4 -> bonus -> complete
+  mAboutOpen: false,
+  mTodayStep: "greet",
   mDraftMood: null,
   mDraftAnswers: ["", "", "", "", ""],
   mDraftBonus: "",
@@ -1202,6 +1338,33 @@ let pendingImage = null;
 
 const savedTheme = ls.get("ci_theme") || "light";
 document.documentElement.setAttribute("data-theme", savedTheme);
+
+function applyThemeForUser(who) {
+  const userTheme = (who && ls.get(`ci_theme_${who}`)) || ls.get("ci_theme") || "light";
+  document.documentElement.setAttribute("data-theme", userTheme);
+  ls.set("ci_theme", userTheme);
+}
+
+function setThemePreference(nextTheme) {
+  document.documentElement.setAttribute("data-theme", nextTheme);
+  ls.set("ci_theme", nextTheme);
+  if (state.me) {
+    ls.set(`ci_theme_${state.me}`, nextTheme);
+  }
+}
+
+function getAboutProfile(who) {
+  try {
+    return JSON.parse(ls.get(`ci_about_${who}`) || "{}") || {};
+  } catch {
+    return {};
+  }
+}
+
+function saveAboutProfile(who, data) {
+  if (!who) return;
+  ls.set(`ci_about_${who}`, JSON.stringify(data));
+}
 
 const t = (k, vars) => { let s = (UI[state.lang] || UI.en)[k] || k; if (vars) for (const v in vars) s = s.replace(`{${v}}`, vars[v]); return s; };
 const questions = () => QUESTIONS[state.lang] || QUESTIONS.en;
@@ -1227,7 +1390,6 @@ function getTimeOfDayGreeting() {
   return t("mGreetEvening");
 }
 
-// WEEKEND & WEEKLY REPORT HELPERS (48H LOCAL SATURDAY & SUNDAY)
 function getWeekendStatus() {
   const now = localNow();
   const forceWeekly = new URLSearchParams(location.search).get("weeklyTest") === "1" || ls.get("ci_weekly_test") === "1";
@@ -1399,12 +1561,29 @@ function syncMobileDraftsFromExisting(prefill) {
   state.mHelpfulChoice = prefill?.helpful ?? null;
 }
 
+function themeIconSVG(isDark) {
+  if (isDark) {
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/></svg>';
+  }
+  return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+}
+
+function stoicBirdLineArtSVG() {
+  return `<svg class="m-line-art" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M36 94c10-20 34-26 52-18"/>
+    <path d="M62 72c-8-12-4-28 8-34 8-4 17 0 20 8l9 3-8 5c-1 10-9 18-20 20"/>
+    <circle cx="77" cy="44" r="1.5" fill="currentColor" stroke="none"/>
+    <path d="M52 80v10M60 78v12"/>
+  </svg>`;
+}
+
 function langHTML(){
-  const themeText = document.documentElement.getAttribute("data-theme") === "dark" ? t("lightMode") : t("darkMode");
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  const themeLabel = isDark ? t("lightMode") : t("darkMode");
   return `
     <div class="lang">
-      <button class="theme-btn" id="themeBtn" style="font-weight: 500; padding: 5px 14px;">${esc(themeText)}</button>
-      <button class="lang-btn" id="langBtn" aria-expanded="${state.langOpen}">
+      <button type="button" class="theme-btn" id="themeBtn" aria-label="${esc(themeLabel)}" title="${esc(themeLabel)}">${themeIconSVG(isDark)}</button>
+      <button type="button" class="lang-btn" id="langBtn" aria-expanded="${state.langOpen}">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg>
         ${esc(LANGS[state.lang])}
       </button>
@@ -1417,12 +1596,13 @@ function renderMobileLanding() {
     <section class="m-landing">
       <div class="m-landing-top">${langHTML()}</div>
       <div class="m-landing-center">
-        <span class="m-ru-badge">${esc(t("mLandingRuBadge"))}</span>
-        <h1 class="m-ru-title">${esc(t("mLandingRuTitle"))}</h1>
-        <p class="m-ru-sub">${esc(t("mLandingRuSub"))}</p>
+        <p class="m-stoic-kicker">${esc(t("mLandingRuBadge"))}</p>
+        <h1 class="m-stoic-h1" style="font-size:2.1rem">${esc(t("mLandingRuTitle"))}</h1>
+        ${stoicBirdLineArtSVG()}
+        <p class="m-stoic-lead" style="max-width:28ch">${esc(t("mLandingRuSub"))}</p>
       </div>
-      <div style="display:flex;justify-content:center">
-        <button type="button" class="btn m-begin-btn" id="mBeginBtn">${esc(t("mBegin"))}</button>
+      <div>
+        <button type="button" class="m-stoic-primary-btn" id="mBeginBtn">${esc(t("mBegin"))}</button>
       </div>
     </section>`;
   wireUI(renderMobileLanding);
@@ -1446,15 +1626,15 @@ function renderLogin(){
         <div class="login-top">${langHTML()}</div>
       </div>
       
-      <div style="text-align: center; margin-bottom: 10px;">
-        <p class="eyebrow">${esc(prettyDate(key))}</p>
-        <h1 style="margin-bottom: 8px;">${esc(questions()[0])}</h1>
-        <p class="sub" style="margin: 0 auto;">${esc(t("tagline"))}</p>
+      <div style="text-align: center; margin-bottom: 6px;">
+        <p class="m-stoic-kicker" style="margin-bottom:6px">${esc(prettyDate(key))}</p>
+        <h1 class="m-stoic-h1" style="margin-bottom: 6px;">${esc(questions()[0])}</h1>
+        <p class="m-stoic-lead" style="margin: 0 auto;">${esc(t("tagline"))}</p>
       </div>
 
       <div class="who">
         ${Object.keys(CONFIG.people).map(k => `
-          <button class="who-btn" data-who="${k}" style="flex: 1; padding: 18px 10px;">
+          <button class="who-btn" data-who="${k}" style="flex: 1; padding: 14px 10px;">
             <strong>${esc(CONFIG.people[k].name)}</strong>
           </button>`).join("")}
       </div>
@@ -1476,9 +1656,9 @@ function renderLogin(){
   root.querySelectorAll(".who-btn").forEach(b => b.addEventListener("click", () => { picked = b.dataset.who; $("#pinForm").classList.remove("hidden"); $("#pinHint").textContent = t("enteringAs", { name: realNameOf(picked) }); $("#pin").focus(); }));
   $("#pinForm").addEventListener("submit", async ev => {
     ev.preventDefault(); if (!picked) return; const val = $("#pin").value;
-    if (!authMode){ const expectedPin = CONFIG.people[picked]?.pin; if (!expectedPin || val.trim() !== expectedPin){ $("#pinHint").textContent = t("wrongKey"); return; } state.me = picked; ls.set("ci_me", picked); start(); return; }
+    if (!authMode){ const expectedPin = CONFIG.people[picked]?.pin; if (!expectedPin || val.trim() !== expectedPin){ $("#pinHint").textContent = t("wrongKey"); return; } state.me = picked; ls.set("ci_me", picked); applyThemeForUser(picked); start(); return; }
     $("#pinHint").textContent = t("signingIn");
-    try { const user = await remote.signIn(CONFIG.people[picked].email, val); state.me = picked; state.userId = user.uid; await start(); } catch { $("#pinHint").textContent = t("wrongPassword"); }
+    try { const user = await remote.signIn(CONFIG.people[picked].email, val); state.me = picked; state.userId = user.uid; applyThemeForUser(picked); await start(); } catch { $("#pinHint").textContent = t("wrongPassword"); }
   });
 }
 
@@ -1493,23 +1673,84 @@ function mobileBottomNavHTML() {
   return `
     <nav class="m-bottom-nav" aria-label="Primary navigation">
       ${items.map(it => `
-        <button type="button" class="m-nav-item" data-tab="${it.id}" aria-selected="${state.tab === it.id}">
+        <button type="button" class="m-nav-item" data-tab="${it.id}" aria-selected="${!state.mAboutOpen && state.tab === it.id}">
           <svg viewBox="0 0 24 24" aria-hidden="true">${it.icon}</svg>
           <span>${esc(it.label)}</span>
         </button>`).join("")}
     </nav>`;
 }
 
+function mobileAboutProfileHTML() {
+  const prof = getAboutProfile(state.me);
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  return `
+    <section class="m-reader-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px">
+        <div>
+          <p class="m-stoic-kicker">${esc(realNameOf(state.me))}</p>
+          <h2 class="m-stoic-h1" style="font-size:1.38rem">${esc(t("mAboutTitle"))}</h2>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" id="mCloseAboutBtn">✕</button>
+      </div>
+      <p class="m-stoic-subnote" style="margin-bottom:10px">${esc(t("mAboutSub"))}</p>
+
+      <form id="mAboutForm">
+        <div class="m-about-field">
+          <label class="m-about-lbl" for="mAboutBday">${esc(t("mBirthdayLbl"))}</label>
+          <input type="text" id="mAboutBday" class="m-about-input" value="${esc(prof.birthday || "")}" placeholder="...">
+        </div>
+
+        <div class="m-about-field">
+          <label class="m-about-lbl" for="mAboutFavs">${esc(t("mFavoritesLbl"))}</label>
+          <textarea id="mAboutFavs" class="m-about-ta" placeholder="${esc(t("writeHere"))}">${esc(prof.favorites || "")}</textarea>
+        </div>
+
+        <div class="m-about-field">
+          <label class="m-about-lbl" for="mAboutMem">${esc(t("mFavMemoriesLbl"))}</label>
+          <textarea id="mAboutMem" class="m-about-ta" placeholder="${esc(t("writeHere"))}">${esc(prof.memories || "")}</textarea>
+        </div>
+
+        <div class="m-about-field">
+          <label class="m-about-lbl" for="mAboutLater">${esc(t("mReadLaterLbl"))}</label>
+          <textarea id="mAboutLater" class="m-about-ta" placeholder="${esc(t("writeHere"))}">${esc(prof.readLater || "")}</textarea>
+        </div>
+
+        <div class="m-about-pref-row">
+          <span style="font-size:0.82rem;font-weight:600">${esc(t("mThemePrefLbl"))}</span>
+          <button type="button" class="btn btn-ghost btn-sm" id="mAboutThemeToggle">${esc(isDark ? t("lightMode") : t("darkMode"))}</button>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px">
+          <button type="submit" class="btn btn-sm">${esc(t("save"))}</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="logout">${esc(t("signOut"))}</button>
+        </div>
+      </form>
+    </section>`;
+}
+
 function shell(inner){
   document.body.classList.toggle("stoic-mobile-active", isMobile());
+  if (isMobile()) {
+    return `
+      <header class="topbar">
+        <span class="brand">${esc(t("brand"))}</span>
+        <div class="m-top-right">
+          <button type="button" class="m-think-pill" data-tab="pensando" aria-pressed="${!state.mAboutOpen && state.tab === "pensando"}">${esc(t("tabPensando"))}</button>
+          <button type="button" class="m-about-circle ${esc(state.me || "")}" id="mAboutCircleBtn" aria-label="${esc(t("mAboutTitle"))}" title="${esc(t("mAboutTitle"))}" aria-pressed="${state.mAboutOpen}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>
+          </button>
+        </div>
+      </header>
+      ${state.store.mode === "local" ? `<div class="banner" style="padding:7px 11px;margin-bottom:8px">${esc(t("localBanner"))}</div>` : ""}
+      ${state.degraded ? `<div class="banner" style="padding:7px 11px;margin-bottom:8px">${esc(t("degradedBanner"))}</div>` : ""}
+      ${inner}
+      ${mobileBottomNavHTML()}`;
+  }
+
   return `
     <header class="topbar">
       <span class="brand">${esc(t("brand"))}</span>
-      <span class="me">
-        ${isMobile() ? `<button type="button" class="m-think-pill" data-tab="pensando" aria-pressed="${state.tab === "pensando"}">✦ ${esc(t("tabPensando"))}</button>` : ""}
-        ${langHTML()}<span class="dot ${state.me}"></span>${esc(t("me"))}
-        <button class="btn btn-ghost btn-sm" id="logout">${esc(t("signOut"))}</button>
-      </span>
+      <span class="me">${langHTML()}<span class="dot ${state.me}"></span>${esc(t("me"))}<button class="btn btn-ghost btn-sm" id="logout">${esc(t("signOut"))}</button></span>
     </header>
     <nav class="tabs" role="tablist">
       <button class="tab" role="tab" data-tab="hoy" aria-selected="${state.tab==="hoy"}">${esc(t("tabToday"))}</button>
@@ -1521,8 +1762,7 @@ function shell(inner){
     </nav>
     ${state.store.mode === "local" ? `<div class="banner">${esc(t("localBanner"))}</div>` : ""}
     ${state.degraded ? `<div class="banner">${esc(t("degradedBanner"))}</div>` : ""}
-    ${inner}
-    ${isMobile() ? mobileBottomNavHTML() : ""}`;
+    ${inner}`;
 }
 
 function formHTML(prefill){
@@ -1553,13 +1793,15 @@ function mobileHoyFlowHTML(mine, hers) {
   if (step === "greet") {
     return `
       <section class="m-screen">
+        <div style="display:flex;justify-content:flex-end">${langHTML()}</div>
         <div class="m-screen-center" style="text-align:center;align-items:center">
-          <p class="eyebrow">${esc(prettyDate(key))}</p>
-          <h2 class="m-greet-title">${esc(getTimeOfDayGreeting())}</h2>
-          <p class="hint" style="max-width:30ch">${esc(t("todayTitle"))}</p>
+          <p class="m-stoic-kicker">${esc(prettyDate(key))}</p>
+          <h2 class="m-stoic-h1" style="font-size:1.85rem">${esc(getTimeOfDayGreeting())}</h2>
+          ${stoicBirdLineArtSVG()}
+          <p class="m-stoic-lead" style="max-width:28ch">${esc(t("todayTitle"))}</p>
         </div>
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <button type="button" class="btn" id="mStartCheckinBtn">${esc(mine ? t("editToday") : t("mStartCheckin"))}</button>
+        <div>
+          <button type="button" class="m-stoic-primary-btn" id="mStartCheckinBtn">${esc(mine ? t("editToday") : t("mStartCheckin"))}</button>
         </div>
       </section>`;
   }
@@ -1569,7 +1811,7 @@ function mobileHoyFlowHTML(mine, hers) {
       <section class="m-screen">
         <div class="m-screen-center">
           <div class="m-step-meta">
-            <span>${esc(prettyDate(key))}</span>
+            <span class="m-stoic-kicker">${esc(prettyDate(key))}</span>
             <span>1 / ${qs.length + 2}</span>
           </div>
           <h2 class="m-single-q" style="text-align:center">${esc(t("howFeel"))}</h2>
@@ -1595,10 +1837,11 @@ function mobileHoyFlowHTML(mine, hers) {
       <section class="m-screen">
         <div class="m-screen-center">
           <div class="m-step-meta">
-            <span>${esc(prettyDate(key))}</span>
+            <span class="m-stoic-kicker">${esc(prettyDate(key))}</span>
             <span>${qIdx + 2} / ${qs.length + 2}</span>
           </div>
           <label for="mStepTextarea" class="m-single-q">${esc(qs[qIdx])}</label>
+          <p class="m-stoic-subnote">${esc(t("editHint"))}</p>
           <textarea id="mStepTextarea" class="m-single-ta" placeholder="${esc(t("writeHere"))}">${esc(val)}</textarea>
         </div>
         <div class="m-step-actions">
@@ -1614,7 +1857,7 @@ function mobileHoyFlowHTML(mine, hers) {
       <section class="m-screen">
         <div class="m-screen-center">
           <div class="m-step-meta">
-            <span>${esc(t("bonusHere"))}</span>
+            <span class="m-stoic-kicker">${esc(t("bonusHere"))}</span>
             <span>${qs.length + 2} / ${qs.length + 2}</span>
           </div>
           <label for="mBonusTextarea" class="m-single-q">${esc(bPrompt)}</label>
@@ -1627,7 +1870,6 @@ function mobileHoyFlowHTML(mine, hers) {
       </section>`;
   }
 
-  // Completion screen ("you've completed the daily check in" + helpfulness + Save and finish)
   const helpOpts = [
     { id: "no", label: t("mHelpNo") },
     { id: "little", label: t("mHelpLittle") },
@@ -1636,17 +1878,17 @@ function mobileHoyFlowHTML(mine, hers) {
   return `
     <section class="m-screen">
       <div class="m-screen-center" style="text-align:center">
-        <p class="eyebrow">${esc(prettyDate(key))}</p>
-        <h2 class="m-greet-title" style="font-size:2rem">${esc(t("mDoneTitle"))}</h2>
-        <p class="hint" style="margin:0 auto 12px">${esc(t("mDoneSub"))}</p>
+        ${stoicBirdLineArtSVG()}
+        <h2 class="m-stoic-h1" style="font-size:1.5rem">${esc(t("mDoneTitle"))}</h2>
+        <p class="m-stoic-subnote" style="margin:0 auto 2px">${esc(t("mDoneSub"))}</p>
         <div class="m-reader-card" style="text-align:left">
-          <p class="q" style="font-size:1.12rem;text-align:center">${esc(t("mHelpfulQ"))}</p>
+          <p class="m-stoic-subnote" style="text-align:center;font-weight:600;color:var(--ink);margin-bottom:6px">${esc(t("mHelpfulQ"))}</p>
           <div class="m-help-row" role="group" aria-label="${esc(t("mHelpfulQ"))}">
             ${helpOpts.map(h => `
               <button type="button" class="m-help-btn" data-m-help="${h.id}" aria-pressed="${state.mHelpfulChoice === h.id}">${esc(h.label)}</button>
             `).join("")}
           </div>
-          <button type="button" class="btn" style="width:100%" id="mSaveFinishBtn">${esc(t("mSaveFinish"))}</button>
+          <button type="button" class="m-stoic-primary-btn" id="mSaveFinishBtn">${esc(t("mSaveFinish"))}</button>
         </div>
       </div>
       <div class="m-step-actions">
@@ -1689,14 +1931,14 @@ function viewHoy(){
       return mobileHoyFlowHTML(mine, hers);
     }
     return `
-      <div class="m-reader-card" style="margin-bottom:18px">
+      <div class="m-reader-card" style="margin-bottom:12px">
         <div class="day-label">${esc(t("yours"))}</div>
         ${entryHTML(mine)}
-        <p class="hint" style="margin-top:12px">${esc(t("nextIn", { t: countdown() }))} <button class="btn btn-ghost btn-sm" id="editBtn">${esc(t("editToday"))}</button></p>
+        <p class="hint" style="margin-top:8px">${esc(t("nextIn", { t: countdown() }))} <button class="btn btn-ghost btn-sm" id="editBtn">${esc(t("editToday"))}</button></p>
       </div>
       <div class="m-reader-card">
         <div class="day-label">${esc(t("hersLabel", { name: nameOf(other(state.me)) }))}</div>
-        ${hers ? `<div class="revealed">${entryHTML(hers, { reactable: true })}</div>` : `<p class="empty">${esc(t("notYet", { name: nameOf(other(state.me)) }))}</p>`}
+        ${hers ? `<div class="revealed">${entryHTML(hers)}</div>` : `<p class="empty">${esc(t("notYet", { name: nameOf(other(state.me)) }))}</p>`}
       </div>`;
   }
 
@@ -1706,7 +1948,7 @@ function viewHoy(){
       <p class="hint" style="margin-top:10px">${esc(t("nextIn", { t: countdown() }))} <button class="btn btn-ghost btn-sm" id="editBtn">${esc(t("editToday"))}</button></p>
     </div>
     <div class="day"><div class="day-label">${esc(t("hersLabel", { name: nameOf(other(state.me)) }))}</div>
-      ${hers ? `<div class="revealed">${entryHTML(hers, { reactable: true })}</div>` : `<div class="card"><p class="empty">${esc(t("notYet", { name: nameOf(other(state.me)) }))}</p></div>`}
+      ${hers ? `<div class="revealed">${entryHTML(hers)}</div>` : `<div class="card"><p class="empty">${esc(t("notYet", { name: nameOf(other(state.me)) }))}</p></div>`}
     </div>`;
 }
 
@@ -1722,7 +1964,7 @@ function mobileJournalPromptCard(d, e, who, isLocked) {
     blockHTML = `<p class="empty">${esc(t("veil", { name: nameOf(other(state.me)) }))}</p>`;
   } else if (p === "feeling") {
     blockHTML = typeof e.mood === "number"
-      ? `<p class="moodchip" style="font-size:0.9rem;padding:6px 14px">${esc(STOIC_MOOD_FACES[e.mood] || "")} ${esc(moods()[e.mood])}</p>`
+      ? `<p class="moodchip" style="font-size:0.88rem;padding:5px 12px">${esc(STOIC_MOOD_FACES[e.mood] || "")} ${esc(moods()[e.mood])}</p>`
       : `<p class="empty">${esc(t("emptyJournal"))}</p>`;
   } else if (p === "bonus") {
     const bTxt = (src.bonus || "").trim();
@@ -1739,8 +1981,8 @@ function mobileJournalPromptCard(d, e, who, isLocked) {
   }
 
   return `
-    <div class="m-reader-card" style="margin-bottom:12px">
-      <div class="entry-head">
+    <div class="m-reader-card" style="margin-bottom:10px">
+      <div class="entry-head" style="margin-bottom:8px">
         <span class="author ${who}">${esc(nameOf(who))}</span>
         <span class="stamp">${esc(prettyDate(d))}</span>
       </div>
@@ -1872,7 +2114,7 @@ function viewDiario(){
       `;
       
       const makeItem = (e, who, isLocked) => {
-        const body = entryHTML(e, { reactable: !isLocked, thread: !isLocked, veiled: isLocked, veilMsg: t("veil", { name: nameOf(other(state.me)) }) });
+        const body = entryHTML(e, { thread: !isLocked, veiled: isLocked, veilMsg: t("veil", { name: nameOf(other(state.me)) }) });
         return `
           <details class="tl-details">
             <summary class="tl-summary">
@@ -2024,8 +2266,8 @@ function viewSemanal(){
     const activePastId = state.mSelectedPastWeek || allWeeks[0].id;
     const chosenDoc = allWeeks.find(w => w.id === activePastId) || allWeeks[0];
     const archivePicker = allWeeks.length > 1 ? `
-      <div class="m-reader-card" style="margin-bottom:16px">
-        <p class="hint" style="margin:0 0 8px;font-weight:500;color:var(--ink)">${esc(t("mPastWeeks"))}</p>
+      <div class="m-reader-card" style="margin-bottom:14px">
+        <p class="m-stoic-subnote" style="margin:0 0 8px;font-weight:600;color:var(--ink)">${esc(t("mPastWeeks"))}</p>
         <div class="m-prompt-pills" style="margin-bottom:0">
           ${allWeeks.map(w => `
             <button type="button" class="m-prompt-pill" data-m-week="${esc(w.id)}" aria-pressed="${chosenDoc.id === w.id}">${esc(formatWeekMeta(w.id).title)}</button>
@@ -2144,11 +2386,12 @@ function viewPensando() {
     return `
       <section class="m-screen">
         <div class="m-screen-center" style="text-align:center;align-items:center">
-          <p class="eyebrow">✦</p>
-          <h2 class="m-greet-title">${esc(t("mRewardTitle"))}</h2>
-          <p class="hint">${esc(t("mRewardSub", { name: nameOf(other(state.me)) }))}</p>
+          <p class="m-stoic-kicker">${esc(t("tabPensando"))}</p>
+          <h2 class="m-stoic-h1" style="font-size:1.75rem">${esc(t("mRewardTitle"))}</h2>
+          ${stoicBirdLineArtSVG()}
+          <p class="m-stoic-lead">${esc(t("mRewardSub", { name: nameOf(other(state.me)) }))}</p>
         </div>
-        <button type="button" class="btn" id="mBackNotesBtn">${esc(t("mBackNotes"))}</button>
+        <button type="button" class="m-stoic-primary-btn" id="mBackNotesBtn">${esc(t("mBackNotes"))}</button>
       </section>`;
   }
 
@@ -2223,11 +2466,10 @@ function viewPensando() {
 function wireUI(rerender){
   $("#langBtn")?.addEventListener("click", ev => { ev.stopPropagation(); state.langOpen = !state.langOpen; rerender(); });
   
-  $("#themeBtn")?.addEventListener("click", (e) => {
-    let current = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", current);
-    ls.set("ci_theme", current);
-    e.target.textContent = current === "dark" ? t("lightMode") : t("darkMode");
+  $("#themeBtn")?.addEventListener("click", () => {
+    const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    setThemePreference(next);
+    rerender();
   });
   
   root.querySelectorAll(".lang-menu button").forEach(b => b.addEventListener("click", () => { state.lang = b.dataset.lang; document.documentElement.lang = state.lang; ls.set("ci_lang", state.lang); state.langOpen = false; rerender(); }));
@@ -2506,7 +2748,9 @@ function viewCalendario() {
     </div>`;
 }
 
-  const inner = state.tab === "hoy" ? viewHoy()
+  const inner = (isMobile() && state.mAboutOpen)
+              ? mobileAboutProfileHTML()
+              : state.tab === "hoy" ? viewHoy()
               : state.tab === "diario" ? viewDiario()
               : state.tab === "semanal" ? viewSemanal()
               : state.tab === "calendario" ? viewCalendario()
@@ -2514,9 +2758,35 @@ function viewCalendario() {
               : viewPensando();
   root.innerHTML = shell(inner);
   wireUI(render);
-  $("#logout")?.addEventListener("click", async () => { state.me = null; state.userId = null; state.editing = false; state.editingWeekly = false; state.mRewardVisible = false; ls.del("ci_me"); if (CONFIG.useAuth && state.store.mode === "remote"){ try { await state.store.signOut(); } catch {} } renderLogin(); });
+
+  $("#mAboutCircleBtn")?.addEventListener("click", () => {
+    state.mAboutOpen = !state.mAboutOpen;
+    render();
+  });
+  $("#mCloseAboutBtn")?.addEventListener("click", () => {
+    state.mAboutOpen = false;
+    render();
+  });
+  $("#mAboutThemeToggle")?.addEventListener("click", () => {
+    const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    setThemePreference(next);
+    render();
+  });
+  $("#mAboutForm")?.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    saveAboutProfile(state.me, {
+      birthday: ($("#mAboutBday")?.value || "").trim(),
+      favorites: ($("#mAboutFavs")?.value || "").trim(),
+      memories: ($("#mAboutMem")?.value || "").trim(),
+      readLater: ($("#mAboutLater")?.value || "").trim()
+    });
+    toast(t("saved"));
+  });
+
+  $("#logout")?.addEventListener("click", async () => { state.me = null; state.userId = null; state.editing = false; state.editingWeekly = false; state.mAboutOpen = false; state.mRewardVisible = false; ls.del("ci_me"); if (CONFIG.useAuth && state.store.mode === "remote"){ try { await state.store.signOut(); } catch {} } renderLogin(); });
   root.querySelectorAll("[data-tab]").forEach(b => b.addEventListener("click", () => {
     state.tab = b.dataset.tab;
+    state.mAboutOpen = false;
     state.editing = false;
     state.editingWeekly = false;
     state.mRewardVisible = false;
@@ -2550,7 +2820,6 @@ function viewCalendario() {
     render();
   });
 
-  // Mobile "one thing at a time" check-in step listeners
   const mStepOrder = () => ["greet", "mood", ...questions().map((_, i) => `q${i}`), "bonus", "complete"];
   const saveCurrentMobileStepInput = () => {
     const step = state.mTodayStep;
@@ -2623,7 +2892,6 @@ function viewCalendario() {
       bonus,
       helpful: state.mHelpfulChoice || null,
       lang: state.lang,
-      reactions: prev?.reactions || {},
       created_at: prev?.created_at || new Date().toISOString(),
       edited: !!prev
     };
@@ -2886,7 +3154,7 @@ function viewCalendario() {
       ev.preventDefault(); const answers = questions().map((_, i) => form[`q${i}`].value.trim()); const bonus = form.bonus.value.trim();
       if (mood === null && !answers.some(Boolean) && !bonus){ toast(t("writeSomething")); return; }
       const key = todayKey(), prev = entryOf(key, state.me);
-      const entry = { id: `${key}__${state.me}`, date: key, author: state.me, mood, answers, bonus, lang: state.lang, reactions: prev?.reactions || {}, created_at: prev?.created_at || new Date().toISOString(), edited: !!prev };
+      const entry = { id: `${key}__${state.me}`, date: key, author: state.me, mood, answers, bonus, lang: state.lang, created_at: prev?.created_at || new Date().toISOString(), edited: !!prev };
       try { await state.store.saveEntry(withAuthor(entry)); } catch { toast(t("saveFailed")); return; }
       state.editing = false; delete state.tx[entry.id]; await refresh(); render(); toast(prev ? t("changed") : t("saved"));
     });
@@ -3011,7 +3279,9 @@ async function start(){
   state.calDayTapped = false;
   state.calStripScrollLeft = null;
   state.mTodayStep = "greet";
+  state.mAboutOpen = false;
   state.mRewardVisible = false;
+  if (state.me) applyThemeForUser(state.me);
   pickSessionUsPhotos();
   await refresh();
   render();
@@ -3024,8 +3294,8 @@ async function start(){
     try { await remote.init(); state.store = remote; }
     catch { state.store = allowLocalFallback ? local : remote; state.degraded = true; }
   }
-  if (CONFIG.useAuth && state.store.mode === "remote"){ try { const user = await remote.getSession(); if (user){ const who = Object.keys(CONFIG.people).find(k => CONFIG.people[k].email === user.email); if (who){ state.me = who; state.userId = user.uid; await start(); return; } } } catch {} renderLogin(); } else { const saved = ls.get("ci_me"); if (saved && CONFIG.people[saved]){ state.me = saved; await start(); } else { renderLogin(); } }
-  setInterval(async () => { if (state.store.mode !== "remote" || !state.me || state.editing || state.editingWeekly || state.calCountSlotEditing) return; const before = state.entries.length + state.weekly.length + state.comments.length + state.notes.length + state.calEvents.length; await refresh(); if (state.entries.length + state.weekly.length + state.comments.length + state.notes.length + state.calEvents.length !== before) render(); }, 45000);
+  if (CONFIG.useAuth && state.store.mode === "remote"){ try { const user = await remote.getSession(); if (user){ const who = Object.keys(CONFIG.people).find(k => CONFIG.people[k].email === user.email); if (who){ state.me = who; state.userId = user.uid; applyThemeForUser(who); await start(); return; } } } catch {} renderLogin(); } else { const saved = ls.get("ci_me"); if (saved && CONFIG.people[saved]){ state.me = saved; applyThemeForUser(saved); await start(); } else { renderLogin(); } }
+  setInterval(async () => { if (state.store.mode !== "remote" || !state.me || state.editing || state.editingWeekly || state.calCountSlotEditing || state.mAboutOpen) return; const before = state.entries.length + state.weekly.length + state.comments.length + state.notes.length + state.calEvents.length; await refresh(); if (state.entries.length + state.weekly.length + state.comments.length + state.notes.length + state.calEvents.length !== before) render(); }, 45000);
 })();
 </script>
 </body>
