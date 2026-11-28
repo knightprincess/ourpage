@@ -102,54 +102,53 @@ button{font:inherit;cursor:pointer}
 .lang-menu button:hover{background:var(--surface-3)}
 .lang-menu button[aria-current="true"]{color:var(--accent-ink);background:var(--accent);font-weight:500}
 
-/* Landing page: single Cyrillic phrase + Bubu & Dudu + Begin/Start pinned cleanly in viewport */
+/* Landing page: prominent phrase + centered image below + compact bottom button */
 .landing-page{
   flex:1;
-  min-height:calc(100dvh - 48px);
+  min-height:calc(100dvh - 36px);
+  width:100%;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
   align-items:center;
-  gap:12px;
-  padding:4px 0 6px;
-}
-.landing-top{
-  width:100%;
-  display:flex;
-  justify-content:flex-end;
+  gap:16px;
+  padding:10px 4px 6px;
 }
 .landing-phrase-wrap{
   flex:1 1 auto;
+  width:100%;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   text-align:center;
-  gap:14px;
-  padding:8px 8px;
+  gap:22px;
+  padding:6px 4px;
 }
 .landing-cyrillic-phrase{
   font-family:"Cormorant Garamond","Newsreader",Georgia,serif;
   font-style:italic;
   font-weight:400;
-  font-size:clamp(2.15rem, 8.2vw, 3.35rem);
-  line-height:1.14;
-  letter-spacing:-0.01em;
+  font-size:clamp(2.65rem, 10.5vw, 4.35rem);
+  line-height:1.1;
+  letter-spacing:-0.015em;
   color:var(--ink);
   margin:0;
 }
 .landing-art-box{
-  width:min(210px, 46vw);
-  max-height:24dvh;
+  width:min(195px, 46vw);
+  max-height:22dvh;
+  margin:0 auto;
   display:flex;
   align-items:center;
   justify-content:center;
 }
 .landing-art-box img{
   max-width:100%;
-  max-height:24dvh;
+  max-height:22dvh;
   width:auto;
   height:auto;
+  margin:0 auto;
   object-fit:contain;
   border-radius:16px;
   display:block;
@@ -158,57 +157,70 @@ button{font:inherit;cursor:pointer}
 }
 .landing-bottom{
   width:100%;
-  max-width:340px;
   display:flex;
   justify-content:center;
   padding-bottom:env(safe-area-inset-bottom, 0px);
 }
 .landing-begin-btn{
-  width:100%;
-  padding:13px 24px;
-  font-size:1rem;
+  width:auto;
+  min-width:152px;
+  max-width:230px;
+  padding:11px 28px;
+  font-size:0.96rem;
+  letter-spacing:0.01em;
+}
+:root:not([data-theme="dark"]) .landing-begin-btn{
+  background:var(--paper-2);
+  color:var(--ink);
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+}
+:root:not([data-theme="dark"]) .landing-begin-btn:hover{
+  background:var(--surface-3);
+  border-color:var(--accent);
 }
 
-/* Today / Login page: Day + "How was your day, really?" + Stoic warm pill buttons + bottom Bubu & Dudu */
+/* Today / Login page: Day + "How was your day, really?" + warm pill buttons + bottom Bubu & Dudu */
 .today-login-page{
   flex:1;
-  min-height:calc(100dvh - 48px);
+  min-height:calc(100dvh - 36px);
+  width:100%;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
   gap:14px;
-  padding:2px 0 4px;
+  padding:6px 2px 4px;
 }
 .today-login-top{
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  justify-content:flex-start;
   gap:10px;
 }
 .today-login-hero{
   text-align:center;
   margin-top:auto;
   margin-bottom:auto;
-  padding:6px 4px;
+  padding:8px 4px;
 }
 .eyebrow{font-size:.82rem;color:var(--ink-soft);margin:0}
 .today-login-q{
   font-family:Newsreader,Georgia,serif;
   font-style:italic;
   font-weight:300;
-  font-size:clamp(1.7rem, 6.4vw, 2.55rem);
+  font-size:clamp(1.75rem, 6.5vw, 2.6rem);
   line-height:1.16;
   margin:8px 0 0;
   color:var(--ink);
 }
 
-/* Stoic minimalist pill boxes in warm palette */
+/* Warm pill buttons in palette */
 .stoic-pills{
   display:flex;
   flex-direction:row;
-  gap:10px;
+  gap:12px;
   width:100%;
-  max-width:440px;
+  max-width:360px;
   margin:0 auto;
 }
 .stoic-pill{
@@ -217,17 +229,23 @@ button{font:inherit;cursor:pointer}
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  gap:8px;
-  padding:13px 16px;
+  gap:9px;
+  padding:11px 16px;
   border-radius:999px;
   background:var(--paper-2);
   border:1px solid var(--line);
   color:var(--ink);
   box-shadow:var(--shadow);
-  transition:border-color .16s ease, background .16s ease, transform .16s ease;
+  transition:border-color .16s ease, background .16s ease, transform .16s ease, color .16s ease;
 }
 .stoic-pill:hover{
   border-color:var(--accent);
+  background:var(--surface-3);
+}
+.stoic-pill[aria-pressed="true"]{
+  border-color:var(--accent);
+  background:var(--accent);
+  color:var(--accent-ink);
 }
 :root[data-theme="dark"] .stoic-pill{
   background:var(--surface-3);
@@ -236,12 +254,16 @@ button{font:inherit;cursor:pointer}
   background:#79513A;
   border-color:var(--accent);
 }
+:root[data-theme="dark"] .stoic-pill[aria-pressed="true"]{
+  background:var(--accent);
+  color:var(--accent-ink);
+}
 .stoic-pill:active{
-  transform:scale(0.985);
+  transform:scale(0.98);
 }
 .stoic-pill strong{
   font-family:Newsreader,Georgia,serif;
-  font-size:1.18rem;
+  font-size:1.12rem;
   font-weight:400;
   white-space:nowrap;
 }
@@ -251,17 +273,19 @@ button{font:inherit;cursor:pointer}
 
 .today-bottom-art{
   margin-top:auto;
-  padding-top:6px;
+  padding-top:8px;
+  width:100%;
   display:flex;
   justify-content:center;
   align-items:flex-end;
   padding-bottom:env(safe-area-inset-bottom, 0px);
 }
 .today-bottom-art img{
-  max-width:min(176px, 42vw);
-  max-height:17dvh;
+  max-width:min(168px, 40vw);
+  max-height:15dvh;
   width:auto;
   height:auto;
+  margin:0 auto;
   object-fit:contain;
   border-radius:14px;
   display:block;
@@ -657,7 +681,7 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 
 @media (max-width: 679px) {
   .wrap {
-    padding: 14px 16px 92px;
+    padding: 14px 10px 92px;
   }
   .landing-page,
   .today-login-page {
@@ -723,33 +747,46 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 
 /* Short mobile viewports (such as iPhone SE 2022) */
 @media (max-width: 679px) and (max-height: 720px) {
+  .landing-phrase-wrap {
+    gap: 14px;
+  }
   .landing-cyrillic-phrase {
-    font-size: clamp(1.9rem, 7.6vw, 2.4rem);
+    font-size: clamp(2.25rem, 9.2vw, 2.85rem);
   }
   .landing-art-box img {
-    max-height: 20dvh;
+    max-height: 18dvh;
+  }
+  .landing-begin-btn {
+    padding: 9px 22px;
+    font-size: 0.9rem;
   }
   .today-login-q {
-    font-size: clamp(1.5rem, 6vw, 1.9rem);
+    font-size: clamp(1.55rem, 6.2vw, 1.95rem);
   }
   .stoic-pill {
-    padding: 11px 12px;
+    padding: 9px 12px;
   }
   .stoic-pill strong {
-    font-size: 1.06rem;
+    font-size: 1.04rem;
   }
   .today-bottom-art img {
-    max-height: 14dvh;
+    max-height: 12dvh;
   }
 }
 
 /* Taller mobile viewports (such as iPhone 13, Samsung, Moto) */
 @media (max-width: 679px) and (min-height: 780px) {
+  .landing-phrase-wrap {
+    gap: 24px;
+  }
+  .landing-cyrillic-phrase {
+    font-size: clamp(2.85rem, 11vw, 3.6rem);
+  }
   .landing-art-box img {
-    max-height: 26dvh;
+    max-height: 23dvh;
   }
   .today-bottom-art img {
-    max-height: 18dvh;
+    max-height: 15dvh;
   }
 }
 </style>
@@ -1195,7 +1232,6 @@ function langHTML(){
 function renderLanding() {
   root.innerHTML = `
     <section class="landing-page" aria-label="Landing">
-      <div class="landing-top">${langHTML()}</div>
       <div class="landing-phrase-wrap">
         <h1 class="landing-cyrillic-phrase">${esc(LANDING_PHRASE)}</h1>
         <div class="landing-art-box">
@@ -1206,7 +1242,6 @@ function renderLanding() {
         <button class="btn landing-begin-btn" type="button" id="landingBeginBtn">${esc(t("begin"))}</button>
       </div>
     </section>`;
-  wireUI(renderLanding);
   $("#landingBeginBtn")?.addEventListener("click", () => {
     state.landingPassed = true;
     renderLogin();
@@ -1224,7 +1259,6 @@ function renderLogin(){
     <section class="today-login-page">
       <div class="today-login-top">
         <span class="eyebrow">${esc(prettyDate(key))}</span>
-        ${langHTML()}
       </div>
 
       <div class="today-login-hero">
@@ -1234,7 +1268,7 @@ function renderLogin(){
       <div>
         <div class="stoic-pills">
           ${Object.keys(CONFIG.people).map(k => `
-            <button type="button" class="stoic-pill" data-who="${k}">
+            <button type="button" class="stoic-pill" data-who="${k}" aria-pressed="false">
               <span class="dot ${k}"></span>
               <strong>${esc(CONFIG.people[k].name)}</strong>
             </button>`).join("")}
@@ -1252,10 +1286,10 @@ function renderLogin(){
       </div>
     </section>`;
 
-  wireUI(renderLogin);
   let picked = null;
   root.querySelectorAll(".stoic-pill").forEach(b => b.addEventListener("click", () => {
     picked = b.dataset.who;
+    root.querySelectorAll(".stoic-pill").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
     $("#pinForm").classList.remove("hidden");
     $("#pinHint").textContent = t("enteringAs", { name: realNameOf(picked) });
     $("#pin").focus();
