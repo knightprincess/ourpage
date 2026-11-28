@@ -102,7 +102,7 @@ button{font:inherit;cursor:pointer}
 .lang-menu button:hover{background:var(--surface-3)}
 .lang-menu button[aria-current="true"]{color:var(--accent-ink);background:var(--accent);font-weight:500}
 
-/* Landing page: prominent phrase + centered image below + compact bottom button */
+/* Landing page: #5e3929 phrase + centered image below + #5e3929 button */
 .landing-page{
   flex:1;
   min-height:calc(100dvh - 36px);
@@ -128,12 +128,15 @@ button{font:inherit;cursor:pointer}
 .landing-cyrillic-phrase{
   font-family:"Cormorant Garamond","Newsreader",Georgia,serif;
   font-style:italic;
-  font-weight:450;
+  font-weight:500;
   font-size:clamp(2.8rem, 11vw, 4.55rem);
   line-height:1.1;
   letter-spacing:-0.012em;
-  color:var(--ink);
+  color:#5e3929;
   margin:0;
+}
+:root[data-theme="dark"] .landing-cyrillic-phrase{
+  color:#E6C7B5;
 }
 .landing-art-box{
   width:min(195px, 46vw);
@@ -167,30 +170,25 @@ button{font:inherit;cursor:pointer}
   max-width:220px;
   padding:11px 28px;
   font-size:0.96rem;
+  font-weight:500;
   letter-spacing:0.01em;
-  background:var(--paper-2);
-  color:var(--ink);
-  border:1.5px solid var(--line);
-  box-shadow:var(--shadow);
+  background:#5e3929 !important;
+  color:#F9F5F6 !important;
+  border:1.5px solid #5e3929 !important;
+  box-shadow:0 8px 22px -10px rgba(94, 57, 41, 0.55);
+  transition:transform .15s ease, opacity .15s ease, background .15s ease;
 }
 .landing-begin-btn:hover{
-  background:var(--mica-wash);
-  border-color:var(--tati-name);
-  color:var(--ink);
+  background:#4a2c20 !important;
+  border-color:#4a2c20 !important;
+  color:#F9F5F6 !important;
   opacity:1;
 }
-:root[data-theme="dark"] .landing-begin-btn{
-  background:var(--surface-3);
-  color:var(--ink);
-  border:1.5px solid var(--line);
-}
-:root[data-theme="dark"] .landing-begin-btn:hover{
-  background:#79513A;
-  border-color:var(--mica-name);
-  color:var(--ink);
+.landing-begin-btn:active{
+  transform:scale(0.985);
 }
 
-/* Today / Login page: centered question with small unbold date right above + warm fitted pills */
+/* Log in page: unified centered hero + pill group + bottom image */
 .today-login-page{
   flex:1;
   min-height:calc(100dvh - 36px);
@@ -198,14 +196,23 @@ button{font:inherit;cursor:pointer}
   display:flex;
   flex-direction:column;
   justify-content:space-between;
+  align-items:center;
   gap:16px;
-  padding:12px 2px 10px;
+  padding:12px 4px 10px;
+}
+.today-login-center{
+  flex:1 1 auto;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:24px;
+  padding:12px 4px;
 }
 .today-login-hero{
   text-align:center;
-  margin-top:6dvh;
-  margin-bottom:auto;
-  padding:8px 8px;
+  padding:0 8px;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -213,7 +220,7 @@ button{font:inherit;cursor:pointer}
 }
 .today-login-date{
   font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  font-size:0.78rem;
+  font-size:0.8rem;
   font-weight:400;
   color:var(--ink-soft);
   margin:0;
@@ -229,6 +236,12 @@ button{font:inherit;cursor:pointer}
   margin:0;
   max-width:14ch;
   color:var(--ink);
+}
+.today-login-controls{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
 /* Fitted pill buttons matching the landing button */
@@ -292,21 +305,21 @@ button{font:inherit;cursor:pointer}
   white-space:nowrap;
 }
 
-.pin-row{display:flex;gap:8px;margin-top:10px;max-width:440px;width:100%;margin-left:auto;margin-right:auto}
+.pin-row{display:flex;gap:8px;margin-top:14px;max-width:340px;width:100%;margin-left:auto;margin-right:auto}
 .pin-row input{flex:1;min-width:0}
 
 .today-bottom-art{
-  margin-top:auto;
-  padding-top:8px;
+  flex:0 0 auto;
+  padding-top:4px;
   width:100%;
   display:flex;
   justify-content:center;
   align-items:flex-end;
-  padding-bottom:env(safe-area-inset-bottom, 0px);
+  padding-bottom:calc(8px + env(safe-area-inset-bottom, 0px));
 }
 .today-bottom-art img{
-  max-width:min(168px, 40vw);
-  max-height:15dvh;
+  max-width:min(176px, 42vw);
+  max-height:17dvh;
   width:auto;
   height:auto;
   margin:0 auto;
@@ -551,7 +564,7 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .wk-group-left{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;min-width:0}
 .wk-group-name{font-family:Newsreader,serif;font-size:1.08rem;font-style:italic;color:var(--ink);font-weight:500}
 .wk-group-dates{font-size:.8rem;color:var(--ink-soft)}
-.wk-group-right{display:flex;align-items:center;gap:8px;flex:none}
+.wk-group-right{display:flex;align-items:center;gap:8px;flex-none}
 .wk-group-dots{display:inline-flex;align-items:center;gap:4px}
 .wk-group-dot{width:7px;height:7px;border-radius:999px;display:inline-block}
 .wk-group-dot.mica{background:var(--mica);border:1px solid rgba(0,0,0,0.12)}
@@ -784,17 +797,20 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
     padding: 9px 22px;
     font-size: 0.9rem;
   }
+  .today-login-center {
+    gap: 18px;
+  }
   .today-login-q {
     font-size: clamp(1.55rem, 6.2vw, 1.95rem);
   }
   .stoic-pill {
-    padding: 9px 12px;
+    padding: 9px 14px;
   }
   .stoic-pill strong {
     font-size: 1.04rem;
   }
   .today-bottom-art img {
-    max-height: 12dvh;
+    max-height: 13dvh;
   }
 }
 
@@ -809,8 +825,11 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
   .landing-art-box img {
     max-height: 23dvh;
   }
+  .today-login-center {
+    gap: 28px;
+  }
   .today-bottom-art img {
-    max-height: 15dvh;
+    max-height: 17dvh;
   }
 }
 </style>
@@ -850,7 +869,7 @@ const CONFIG = {
 
 const LANDING_PHRASE = "Там, где любовь";
 const LANDING_ART_SRC = "IMAGES/bubuanddudu-landing-page.png";
-const TODAY_ART_SRC = "IMAGES/bubuanddudu-today-page.png";
+const LOGIN_ART_SRC = "IMAGES/bubuanddudu-log-in-page.png";
 
 const LANGS = { en: "English", es: "Español", ru: "Русский" };
 const LOCALE = { en: "en-GB", es: "es-AR", ru: "ru-RU" };
@@ -1254,12 +1273,13 @@ function langHTML(){
 }
 
 function renderLanding() {
+  state.landingPassed = false;
   root.innerHTML = `
     <section class="landing-page" aria-label="Landing">
       <div class="landing-phrase-wrap">
         <h1 class="landing-cyrillic-phrase">${esc(LANDING_PHRASE)}</h1>
         <div class="landing-art-box">
-          <img src="${esc(LANDING_ART_SRC)}" alt="Bubu and Dudu" onerror="this.style.display='none'">
+          <img src="${esc(LANDING_ART_SRC)}" alt="Bubu and Dudu" data-srcs="images/bubuanddudu-landing-page.png,bubuanddudu-landing-page.png,IMAGES/bubuanddudu-landing-page.jpg,images/bubuanddudu-landing-page.jpg" onerror="const list=(this.dataset.srcs||'').split(',').filter(Boolean);if(list.length){this.src=list.shift();this.dataset.srcs=list.join(',');}else{this.style.display='none';}">
         </div>
       </div>
       <div class="landing-bottom">
@@ -1281,28 +1301,30 @@ function renderLogin(){
   const authMode = CONFIG.useAuth && state.store.mode === "remote";
   root.innerHTML = `
     <section class="today-login-page">
-      <div class="today-login-hero">
-        <p class="today-login-date">${esc(prettyDate(key))}</p>
-        <h1 class="today-login-q">${esc(questions()[0])}</h1>
-      </div>
-
-      <div>
-        <div class="stoic-pills">
-          ${Object.keys(CONFIG.people).map(k => `
-            <button type="button" class="stoic-pill" data-who="${k}" aria-pressed="false">
-              <strong>${esc(CONFIG.people[k].name)}</strong>
-            </button>`).join("")}
+      <div class="today-login-center">
+        <div class="today-login-hero">
+          <p class="today-login-date">${esc(prettyDate(key))}</p>
+          <h1 class="today-login-q">${esc(questions()[0])}</h1>
         </div>
 
-        <form class="pin-row hidden" id="pinForm">
-          <input type="password" id="pin" aria-label="${esc(authMode ? t("yourPassword") : t("yourKey"))}" autocomplete="${authMode ? "current-password" : "off"}" placeholder="${esc(authMode ? t("yourPassword") : t("yourKey"))}">
-          <button class="btn" type="submit">${esc(authMode ? t("signIn") : t("enter"))}</button>
-        </form>
-        <p class="hint" id="pinHint" style="text-align: center;"></p>
+        <div class="today-login-controls">
+          <div class="stoic-pills">
+            ${Object.keys(CONFIG.people).map(k => `
+              <button type="button" class="stoic-pill" data-who="${k}" aria-pressed="false">
+                <strong>${esc(CONFIG.people[k].name)}</strong>
+              </button>`).join("")}
+          </div>
+
+          <form class="pin-row hidden" id="pinForm">
+            <input type="password" id="pin" aria-label="${esc(authMode ? t("yourPassword") : t("yourKey"))}" autocomplete="${authMode ? "current-password" : "off"}" placeholder="${esc(authMode ? t("yourPassword") : t("yourKey"))}">
+            <button class="btn" type="submit">${esc(authMode ? t("signIn") : t("enter"))}</button>
+          </form>
+          <p class="hint" id="pinHint" style="text-align: center;"></p>
+        </div>
       </div>
 
       <div class="today-bottom-art">
-        <img src="${esc(TODAY_ART_SRC)}" alt="Bubu and Dudu" onerror="this.style.display='none'">
+        <img src="${esc(LOGIN_ART_SRC)}" alt="Bubu and Dudu" data-srcs="images/bubuanddudu-log-in-page.png,bubuanddudu-log-in-page.png,IMAGES/bubuanddudu-log-in-page.jpg,images/bubuanddudu-log-in-page.jpg" onerror="const list=(this.dataset.srcs||'').split(',').filter(Boolean);if(list.length){this.src=list.shift();this.dataset.srcs=list.join(',');}else{this.style.display='none';}">
       </div>
     </section>`;
 
@@ -1691,8 +1713,12 @@ function viewNosotras(){
         const aMood = a && typeof a.mood === "number" ? moods()[a.mood] : "—";
         const bMood = b && typeof b.mood === "number" ? moods()[b.mood] : "—";
         const aSnip = getSnippet(a); const bSnip = getSnippet(b);
-        const titleA = a ? `${nameOf("mica")} | ${shortDate} | ${aMood}\n\n"${aSnip}"` : `${nameOf("mica")} | ${shortDate}`;
-        const titleB = b ? `${nameOf("tati")} | ${shortDate} | ${bMood}\n\n"${bSnip}"` : `${nameOf("tati")} | ${shortDate}`;
+        const titleA = a ? `${nameOf("mica")} | ${shortDate} | ${aMood}
+
+"${aSnip}"` : `${nameOf("mica")} | ${shortDate}`;
+        const titleB = b ? `${nameOf("tati")} | ${shortDate} | ${bMood}
+
+"${bSnip}"` : `${nameOf("tati")} | ${shortDate}`;
         return `<div class="mood-dot-col">
                   <div class="mood-dot mica ${!a?'empty':''}" title="${titleA}"></div>
                   <div class="mood-dot tati ${!b?'empty':''}" title="${titleB}"></div>
@@ -2088,7 +2114,18 @@ function viewCalendario() {
               : viewPensando();
   root.innerHTML = shell(inner);
   wireUI(render);
-  $("#logout")?.addEventListener("click", async () => { state.me = null; state.userId = null; state.editing = false; state.editingWeekly = false; ls.del("ci_me"); if (CONFIG.useAuth && state.store.mode === "remote"){ try { await state.store.signOut(); } catch {} } renderLogin(); });
+  $("#logout")?.addEventListener("click", async () => {
+    state.me = null;
+    state.userId = null;
+    state.editing = false;
+    state.editingWeekly = false;
+    state.landingPassed = false;
+    ls.del("ci_me");
+    if (CONFIG.useAuth && state.store.mode === "remote") {
+      try { await state.store.signOut(); } catch {}
+    }
+    renderLanding();
+  });
   root.querySelectorAll("[data-tab]").forEach(b => b.addEventListener("click", () => {
     state.tab = b.dataset.tab;
     state.editing = false;
@@ -2459,7 +2496,7 @@ async function start(){
     try { await remote.init(); state.store = remote; }
     catch { state.store = allowLocalFallback ? local : remote; state.degraded = true; }
   }
-  if (CONFIG.useAuth && state.store.mode === "remote"){ try { const user = await remote.getSession(); if (user){ const who = Object.keys(CONFIG.people).find(k => CONFIG.people[k].email === user.email); if (who){ state.me = who; state.userId = user.uid; await start(); return; } } } catch {} renderLogin(); } else { const saved = ls.get("ci_me"); if (saved && CONFIG.people[saved]){ state.me = saved; await start(); } else { renderLogin(); } }
+  if (CONFIG.useAuth && state.store.mode === "remote"){ try { const user = await remote.getSession(); if (user){ const who = Object.keys(CONFIG.people).find(k => CONFIG.people[k].email === user.email); if (who){ state.me = who; state.userId = user.uid; await start(); return; } } } catch {} renderLanding(); } else { const saved = ls.get("ci_me"); if (saved && CONFIG.people[saved]){ state.me = saved; await start(); } else { renderLanding(); } }
   setInterval(async () => { if (state.store.mode !== "remote" || !state.me || state.editing || state.editingWeekly || state.calCountSlotEditing) return; const before = state.entries.length + state.weekly.length + state.comments.length + state.notes.length + state.calEvents.length; await refresh(); if (state.entries.length + state.weekly.length + state.comments.length + state.notes.length + state.calEvents.length !== before) render(); }, 45000);
 })();
 </script>
