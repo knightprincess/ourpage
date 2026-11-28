@@ -13,7 +13,7 @@
   
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500;1,6..72,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500;1,6..72,600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#231D33; 
@@ -78,7 +78,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
   min-width:0;
   min-height:100dvh;
   margin:0 auto;
-  padding:28px 24px 96px;
+  padding:24px 22px 96px;
   display:flex;
   flex-direction:column;
   overflow-x:clip;
@@ -102,26 +102,176 @@ button{font:inherit;cursor:pointer}
 .lang-menu button:hover{background:var(--surface-3)}
 .lang-menu button[aria-current="true"]{color:var(--accent-ink);background:var(--accent);font-weight:500}
 
-.login{flex:1;min-height:calc(100dvh - 56px);display:flex;flex-direction:column;justify-content:space-between;gap:28px;padding:8px 0 12px}
-.login-top{display:flex;justify-content:flex-end}
-.eyebrow{font-size:.82rem;color:var(--ink-soft);margin:0}
-.login h1{font-size:clamp(2.1rem,6.8vw,3.1rem);font-style:italic;line-height:1.12;font-weight:300}
-.login .sub{color:var(--ink-soft);font-size:.98rem;max-width:46ch}
+/* Landing page: single Cyrillic phrase + Bubu & Dudu + Begin/Start pinned cleanly in viewport */
+.landing-page{
+  flex:1;
+  min-height:calc(100dvh - 48px);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:4px 0 6px;
+}
+.landing-top{
+  width:100%;
+  display:flex;
+  justify-content:flex-end;
+}
+.landing-phrase-wrap{
+  flex:1 1 auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  gap:14px;
+  padding:8px 8px;
+}
+.landing-cyrillic-phrase{
+  font-family:"Cormorant Garamond","Newsreader",Georgia,serif;
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(2.15rem, 8.2vw, 3.35rem);
+  line-height:1.14;
+  letter-spacing:-0.01em;
+  color:var(--ink);
+  margin:0;
+}
+.landing-art-box{
+  width:min(210px, 46vw);
+  max-height:24dvh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.landing-art-box img{
+  max-width:100%;
+  max-height:24dvh;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  border-radius:16px;
+  display:block;
+  pointer-events:none;
+  user-select:none;
+}
+.landing-bottom{
+  width:100%;
+  max-width:340px;
+  display:flex;
+  justify-content:center;
+  padding-bottom:env(safe-area-inset-bottom, 0px);
+}
+.landing-begin-btn{
+  width:100%;
+  padding:13px 24px;
+  font-size:1rem;
+}
 
-.who{display:flex;flex-direction:row;gap:14px;justify-content:center;}
-.who-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;flex:1;min-width:0;text-align:center;
-  padding:22px 14px;border-radius:var(--radius);background:var(--paper-2);border:1px solid var(--line);
-  color:var(--ink);box-shadow:var(--shadow);transition:border-color .18s ease, transform .18s ease, background .18s ease}
-.who-btn:hover{border-color:var(--accent)}
-:root[data-theme="dark"] .who-btn:hover{background:var(--surface-3)}
-.who-btn:active{transform:scale(.99)}
-.who-btn strong{font-family:Newsreader,serif;font-size:1.38rem;font-weight:400;display:block}
-.dot{width:11px;height:11px;border-radius:999px;flex:none;}
-.dot.mica{background:var(--mica)} 
-.dot.tati{background:var(--tati)}
+/* Today / Login page: Day + "How was your day, really?" + Stoic warm pill buttons + bottom Bubu & Dudu */
+.today-login-page{
+  flex:1;
+  min-height:calc(100dvh - 48px);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:14px;
+  padding:2px 0 4px;
+}
+.today-login-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.today-login-hero{
+  text-align:center;
+  margin-top:auto;
+  margin-bottom:auto;
+  padding:6px 4px;
+}
+.eyebrow{font-size:.82rem;color:var(--ink-soft);margin:0}
+.today-login-q{
+  font-family:Newsreader,Georgia,serif;
+  font-style:italic;
+  font-weight:300;
+  font-size:clamp(1.7rem, 6.4vw, 2.55rem);
+  line-height:1.16;
+  margin:8px 0 0;
+  color:var(--ink);
+}
+
+/* Stoic minimalist pill boxes in warm palette */
+.stoic-pills{
+  display:flex;
+  flex-direction:row;
+  gap:10px;
+  width:100%;
+  max-width:440px;
+  margin:0 auto;
+}
+.stoic-pill{
+  flex:1 1 0;
+  min-width:0;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:13px 16px;
+  border-radius:999px;
+  background:var(--paper-2);
+  border:1px solid var(--line);
+  color:var(--ink);
+  box-shadow:var(--shadow);
+  transition:border-color .16s ease, background .16s ease, transform .16s ease;
+}
+.stoic-pill:hover{
+  border-color:var(--accent);
+}
+:root[data-theme="dark"] .stoic-pill{
+  background:var(--surface-3);
+}
+:root[data-theme="dark"] .stoic-pill:hover{
+  background:#79513A;
+  border-color:var(--accent);
+}
+.stoic-pill:active{
+  transform:scale(0.985);
+}
+.stoic-pill strong{
+  font-family:Newsreader,Georgia,serif;
+  font-size:1.18rem;
+  font-weight:400;
+  white-space:nowrap;
+}
 
 .pin-row{display:flex;gap:8px;margin-top:10px;max-width:440px;width:100%;margin-left:auto;margin-right:auto}
 .pin-row input{flex:1;min-width:0}
+
+.today-bottom-art{
+  margin-top:auto;
+  padding-top:6px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+  padding-bottom:env(safe-area-inset-bottom, 0px);
+}
+.today-bottom-art img{
+  max-width:min(176px, 42vw);
+  max-height:17dvh;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  border-radius:14px;
+  display:block;
+  pointer-events:none;
+  user-select:none;
+}
+
+.dot{width:10px;height:10px;border-radius:999px;flex:none;}
+.dot.mica{background:var(--mica)} 
+.dot.tati{background:var(--tati)}
 
 input[type="password"],input[type="text"],textarea{width:100%;max-width:100%;min-width:0;background:var(--surface-3);color:var(--ink);
   border:1px solid var(--line);border-radius:12px;padding:12px 14px;font:inherit;resize:vertical;transition:border-color .15s ease, background .15s ease}
@@ -294,7 +444,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 }
 .wiggle { animation: gentleWiggle 280ms ease; }
 
-/* Mobile: 2 columns showing only tag + who uploaded until tapped to expand */
 .notes-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; align-items: start; width: 100%; }
 @media(min-width: 680px) {
   .notes-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
@@ -338,13 +487,12 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 
 .empty{color:var(--ink-soft);font-family:Newsreader,serif;font-style:italic}
 .banner{border:1px dashed var(--line);border-radius:14px;padding:12px 14px;font-size:.85rem;color:var(--ink-soft);margin-bottom:20px;min-width:0;max-width:100%;background:var(--paper-2)}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(78px + env(safe-area-inset-bottom,0px));
   background:var(--accent);color:var(--accent-ink);padding:10px 18px;border-radius:999px;font-size:.88rem;font-weight:500;z-index:50;box-shadow:var(--shadow)}
 :root:not([data-theme="dark"]) .toast{background:var(--ink);color:var(--paper)}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
 
 .page-footer{margin-top:auto;padding-top:28px;margin-bottom:6px;display:flex;justify-content:center;align-items:center;}
-.page-footer.login-footer{margin-top:8px;}
 .page-footer img{width:110px;max-width:34vw;height:auto;object-fit:contain;display:block;pointer-events:none;user-select:none;}
 .page-footer.weekly-footer img{width:136px;max-width:40vw;}
 
@@ -406,14 +554,13 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .journal-content .entry { border: none; box-shadow: none; padding: 0; background: transparent; }
 .journal-content .entry-head { display: none; }
 
-/* CALENDAR TAB (ADHD-FRIENDLY NOW & NEXT + MONTH JUMP + COUNTDOWNS) */
+/* CALENDAR TAB */
 .cal-section { margin-bottom: 20px; }
 .cal-section:last-child { margin-bottom: 0; }
 .cal-sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
 .cal-sec-title { font-family: Newsreader, serif; font-size: 1.24rem; font-style: italic; color: var(--ink); font-weight: 400; }
 .cal-sec-sub { font-size: 0.78rem; color: var(--ink-soft); }
 
-/* LIVE COUNTDOWN CARDS */
 .cal-countdowns { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 18px; }
 .cal-countdowns.has-two { grid-template-columns: 1fr; }
 @media(min-width: 560px) {
@@ -436,7 +583,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .cal-cd-title { font-family: Newsreader, serif; font-size: 1.04rem; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .cal-cd-date { font-size: 0.76rem; color: var(--ink-soft); }
 
-/* MONTH & DAY STRIP WITH DESKTOP ARROWS + TOUCH SCROLL */
 .cal-month-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
 .cal-month-label { font-family: Newsreader, serif; font-size: 1.15rem; font-style: italic; color: var(--ink); }
 .cal-strip-wrap { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; max-width: 100%; }
@@ -464,7 +610,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .cal-today-pill-btn { background: none; border: none; padding: 0; color: var(--ink); font-size: 0.74rem; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
 :root[data-theme="dark"] .cal-today-pill-btn { color: var(--accent); }
 
-/* NOW & NEXT EXPANDABLE STREAM */
 .cal-stream { display: flex; flex-direction: column; gap: 8px; }
 .cal-ev { background: var(--surface-3); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; cursor: pointer; transition: border-color .15s ease, background .15s ease; min-width: 0; }
 :root:not([data-theme="dark"]) .cal-ev { background: var(--paper); }
@@ -485,7 +630,6 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .cal-ev.expanded .cal-ev-detail { display: block; }
 .cal-ev-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
 
-/* QUICK EVENT COMPOSER */
 .cal-form-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
 .cal-form-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 @media(min-width: 560px) {
@@ -506,360 +650,107 @@ input:focus,textarea:focus{border-color:var(--accent);outline:none}
 .cal-seg:hover { border-color: var(--accent); }
 .cal-seg[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 500; }
 
-/* ==========================================================================
-   MOBILE-ONLY STOIC / READER OVERHAUL (@media (max-width: 679px))
-   Desktop (> 679px) remains untouched.
-   ========================================================================== */
+/* Cozy + User-Friendly Mobile Navigation Dock (warm + cute middle ground) */
+.m-bottom-nav {
+  display: none;
+}
+
 @media (max-width: 679px) {
-  body.stoic-mobile-active {
-    padding-bottom: calc(82px + env(safe-area-inset-bottom, 0px));
-  }
   .wrap {
-    padding: 16px 18px 96px;
+    padding: 14px 16px 92px;
   }
-
-  /* Pre-login slow landing page */
-  .m-landing {
-    flex: 1;
-    min-height: calc(100dvh - 56px);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 10px 4px 20px;
-    gap: 24px;
+  .landing-page,
+  .today-login-page {
+    min-height: calc(100dvh - 28px);
   }
-  .m-landing-top {
-    display: flex;
-    justify-content: flex-end;
-  }
-  .m-landing-center {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    margin: auto 0;
-  }
-  .m-ru-badge {
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-  }
-  .m-ru-title {
-    font-family: Newsreader, Georgia, serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(2.35rem, 11vw, 3.1rem);
-    line-height: 1.08;
-    color: var(--ink);
-    margin: 0;
-  }
-  .m-ru-sub {
-    font-family: Newsreader, Georgia, serif;
-    font-size: 1.08rem;
-    line-height: 1.5;
-    color: var(--ink-soft);
-    max-width: 28ch;
-    margin: 0;
-  }
-  .m-begin-btn {
-    width: 100%;
-    max-width: 320px;
-    padding: 15px 24px;
-    border-radius: 999px;
-    font-size: 1rem;
-  }
-
-  /* Mobile sign-in screen */
-  .login {
-    min-height: calc(100dvh - 56px);
-    justify-content: space-between;
-    gap: 18px;
-    padding: 8px 0 14px;
-  }
-  .login-head-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-  }
-  .who {
-    flex-direction: column;
-    gap: 10px;
-  }
-  .who-btn {
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 16px 18px;
-  }
-
-  /* Mobile top bar & secondary "Thinking of you" pill */
-  .topbar {
-    padding-bottom: 10px;
-    gap: 8px;
-  }
-  .m-think-pill {
-    background: var(--paper-2);
-    border: 1px solid var(--line);
-    color: var(--ink);
-    border-radius: 999px;
-    padding: 5px 12px;
-    font-size: 0.78rem;
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .m-think-pill[aria-pressed="true"] {
-    background: var(--accent);
-    color: var(--accent-ink);
-    border-color: var(--accent);
-  }
-
-  /* Hide horizontal top tab deck on mobile; use bottom bar instead */
   .tabs {
     display: none;
   }
-
-  /* Bottom navigation bar */
   .m-bottom-nav {
     position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    left: 10px;
+    right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
     z-index: 40;
-    background: var(--paper);
-    border-top: 1px solid var(--line);
-    padding: 6px 8px calc(8px + env(safe-area-inset-bottom, 0px));
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 6px;
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: 2px;
-    box-shadow: 0 -8px 24px -16px rgba(0,0,0,0.22);
+    box-shadow: 0 12px 28px -12px rgba(35, 29, 51, 0.24), 0 2px 8px rgba(0,0,0,0.06);
   }
-  .m-nav-item {
-    background: none;
+  :root[data-theme="dark"] .m-bottom-nav {
+    background: var(--paper-2);
+    box-shadow: 0 14px 30px -12px rgba(15, 10, 8, 0.75);
+  }
+  .m-nav-btn {
+    background: transparent;
     border: none;
-    border-radius: 12px;
+    border-radius: 18px;
     padding: 6px 2px;
-    min-height: 48px;
+    min-height: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 3px;
     color: var(--ink-soft);
-    font-size: 0.68rem;
-    line-height: 1.1;
-    transition: color .15s ease, background .15s ease;
+    font-size: 0.64rem;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    transition: background .16s ease, color .16s ease, transform .14s ease;
   }
-  .m-nav-item svg {
-    width: 19px;
-    height: 19px;
+  .m-nav-btn svg {
+    width: 18px;
+    height: 18px;
     stroke: currentColor;
     fill: none;
-    stroke-width: 1.7;
+    stroke-width: 1.75;
+    flex: none;
   }
-  .m-nav-item[aria-selected="true"] {
-    color: var(--ink);
+  .m-nav-btn[aria-selected="true"] {
+    background: var(--accent);
+    color: var(--accent-ink);
     font-weight: 600;
-    background: var(--paper-2);
   }
+  :root:not([data-theme="dark"]) .m-nav-btn[aria-selected="true"] {
+    background: var(--ink);
+    color: var(--paper);
+  }
+}
 
-  /* Full-screen "one thing at a time" mobile views */
-  .m-screen {
-    flex: 1;
-    min-height: calc(100dvh - 156px);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 6px 0 12px;
+/* Short mobile viewports (such as iPhone SE 2022) */
+@media (max-width: 679px) and (max-height: 720px) {
+  .landing-cyrillic-phrase {
+    font-size: clamp(1.9rem, 7.6vw, 2.4rem);
   }
-  .m-screen-center {
-    margin: auto 0;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+  .landing-art-box img {
+    max-height: 20dvh;
   }
-  .m-greet-title {
-    font-family: Newsreader, Georgia, serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(2.1rem, 9.5vw, 2.75rem);
-    line-height: 1.12;
-    margin: 6px 0;
+  .today-login-q {
+    font-size: clamp(1.5rem, 6vw, 1.9rem);
   }
-  .m-step-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 0.78rem;
-    color: var(--ink-soft);
+  .stoic-pill {
+    padding: 11px 12px;
   }
+  .stoic-pill strong {
+    font-size: 1.06rem;
+  }
+  .today-bottom-art img {
+    max-height: 14dvh;
+  }
+}
 
-  /* Stoic mood faces: clean faces first; label + gentle spring animation when tapped */
-  @keyframes moodPop {
-    0% { transform: scale(1) translateY(0); }
-    40% { transform: scale(1.16) translateY(-6px); }
-    72% { transform: scale(0.96) translateY(1px); }
-    100% { transform: scale(1.06) translateY(-2px); }
+/* Taller mobile viewports (such as iPhone 13, Samsung, Moto) */
+@media (max-width: 679px) and (min-height: 780px) {
+  .landing-art-box img {
+    max-height: 26dvh;
   }
-  .m-mood-grid {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 8px;
-    margin: 10px 0 6px;
+  .today-bottom-art img {
+    max-height: 18dvh;
   }
-  .m-mood-btn {
-    background: var(--paper-2);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 14px 4px;
-    min-height: 76px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    color: var(--ink);
-    transition: border-color .18s ease, background .18s ease;
-  }
-  .m-mood-face {
-    font-size: 1.65rem;
-    line-height: 1;
-    display: inline-block;
-  }
-  .m-mood-lbl {
-    font-size: 0.68rem;
-    font-weight: 500;
-    line-height: 1.1;
-    text-align: center;
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: opacity .2s ease, max-height .2s ease;
-  }
-  .m-mood-btn[aria-pressed="true"] {
-    background: var(--accent);
-    color: var(--accent-ink);
-    border-color: var(--accent);
-  }
-  .m-mood-btn[aria-pressed="true"] .m-mood-face {
-    animation: moodPop 380ms cubic-bezier(.34, 1.56, .64, 1) forwards;
-  }
-  .m-mood-btn[aria-pressed="true"] .m-mood-lbl {
-    opacity: 1;
-    max-height: 24px;
-  }
-
-  /* Single-question full-page editor */
-  .m-single-q {
-    font-family: Newsreader, Georgia, serif;
-    font-style: italic;
-    font-size: 1.5rem;
-    line-height: 1.28;
-    font-weight: 400;
-    margin: 0 0 12px;
-  }
-  .m-single-ta {
-    min-height: 36dvh;
-    font-size: 1.12rem;
-    line-height: 1.6;
-    padding: 14px 15px;
-  }
-  .m-step-actions {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 8px;
-  }
-
-  /* Completion screen (no tags, helpfulness question + Save and finish) */
-  .m-help-row {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
-    margin: 12px 0 18px;
-  }
-  .m-help-btn {
-    padding: 12px 8px;
-    border-radius: 14px;
-    border: 1px solid var(--line);
-    background: var(--paper-2);
-    color: var(--ink);
-    font-size: 0.88rem;
-  }
-  .m-help-btn[aria-pressed="true"] {
-    background: var(--accent);
-    color: var(--accent-ink);
-    border-color: var(--accent);
-    font-weight: 500;
-  }
-
-  /* Reader-first Journal & Weekly prompt picker */
-  .m-reader-card {
-    background: var(--paper-2);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    padding: 20px 18px;
-    box-shadow: var(--shadow);
-  }
-  .m-prompt-pills {
-    display: flex;
-    gap: 7px;
-    overflow-x: auto;
-    padding-bottom: 6px;
-    margin-bottom: 12px;
-  }
-  .m-prompt-pills::-webkit-scrollbar { display: none; }
-  .m-prompt-pill {
-    flex: 0 0 auto;
-    background: var(--surface-3);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 6px 12px;
-    font-size: 0.78rem;
-    color: var(--ink);
-  }
-  .m-prompt-pill[aria-pressed="true"] {
-    background: var(--accent);
-    color: var(--accent-ink);
-    border-color: var(--accent);
-    font-weight: 500;
-  }
-
-  /* Weekly connection pills */
-  .m-conn-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin: 10px 0 16px;
-  }
-  .m-conn-pill {
-    background: var(--surface-3);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 7px 13px;
-    font-size: 0.82rem;
-    color: var(--ink);
-  }
-  .m-conn-pill[aria-pressed="true"] {
-    background: var(--accent);
-    color: var(--accent-ink);
-    border-color: var(--accent);
-    font-weight: 500;
-  }
-
-  /* Calendar mobile ordering: calendar + countdowns first, everything else below */
-  .m-cal-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .m-cal-top-block { order: 1; }
-  .m-cal-bottom-block { order: 2; display: flex; flex-direction: column; gap: 16px; }
 }
 </style>
 </head>
@@ -896,9 +787,12 @@ const CONFIG = {
   }
 };
 
+const LANDING_PHRASE = "Там, где любовь";
+const LANDING_ART_SRC = "IMAGES/bubuanddudu-landing-page.png";
+const TODAY_ART_SRC = "IMAGES/bubuanddudu-today-page.png";
+
 const LANGS = { en: "English", es: "Español", ru: "Русский" };
 const LOCALE = { en: "en-GB", es: "es-AR", ru: "ru-RU" };
-const STOIC_MOOD_FACES = ["😔", "😕", "😐", "🙂", "😌"];
 
 const QUESTIONS = {
   en: ["How was your day, really?", "What was the best thing that happened today?", "What was hard today?", "What do you need from me tomorrow?", "Anything you wanted to tell me today and couldn't?"],
@@ -996,15 +890,9 @@ const MOODS = {
   ru: ["Тяжело", "Так себе", "Нормально", "Хорошо", "Прекрасно"]
 };
 
-const CONNECTION_PILLS = {
-  en: ["Close & steady", "Tender", "Missing you", "Quietly warm", "Rebuilding rhythm", "Deeply held"],
-  es: ["Cerca y serenas", "Tiernas", "Extrañándonos", "Con calidez tranquila", "Buscando ritmo", "Sostenidas"],
-  ru: ["Близко и спокойно", "Нежно", "Скучаем", "Тёпло и тихо", "Находим ритм", "Бережно"]
-};
-
 const UI = {
   en: {
-    brand: "Our check-in", tagline: "One check-in a day, both of us.", yourKey: "Your key", enter: "Enter", wrongKey: "Wrong key.", enteringAs: "Entering as {name}.", signOut: "Sign out", yourPassword: "Your password", signIn: "Sign in", wrongPassword: "Wrong email or password.", authError: "Couldn't reach server.", signingIn: "Signing in…",
+    brand: "Our check-in", begin: "Begin", yourKey: "Your key", enter: "Enter", wrongKey: "Wrong key.", enteringAs: "Entering as {name}.", signOut: "Sign out", yourPassword: "Your password", signIn: "Sign in", wrongPassword: "Wrong email or password.", authError: "Couldn't reach server.", signingIn: "Signing in…",
     me: "Me",
     tabCalendar: "Calendar",
     calTitle: "Now & Next", calSub: "Tap any item to expand.",
@@ -1019,45 +907,13 @@ const UI = {
     calSaveEvent: "Add to calendar", calDelete: "Remove", calAdded: "Added to calendar", calRemoved: "Removed",
     calTzNote: "Saved with your time zone & shown in both clocks automatically.",
 
-    tabToday: "Today", tabJournal: "Journal", tabWeekly: "Weekly", tabUs: "Us", tabPensando: "Thinking of you",
+    tabToday: "Today", tabJournal: "Journal", tabWeekly: "Weekly", tabUs: "Us", tabPensando: "Thinking",
     localBanner: "Test mode.", degradedBanner: "Offline.", todayTitle: "Your check-in today", howFeel: "How are you feeling?", writeHere: "...", bonusHere: "Today's extra question.", save: "Save", saveChanges: "Save changes", editHint: "Edit until your midnight.", yours: "Me", hersLabel: "{name}", editToday: "Edit today", nextIn: "Next opens in {t}.", notYet: "{name} hasn't checked in.", veil: "Write your check-in to read {name}'s.", emptyJournal: "Nothing written yet.",
     weeklyTitle: "Weekend Reflection", weeklySub: "Open for 48 hours on your local Saturday & Sunday.", weeklyLocked: "Weekly check-in opens on your weekend (Saturday 00:00).", weeklyOpensIn: "Your weekend window opens in {t}.", weeklyClosesIn: "Closes at your Sunday midnight ({t} left).", weeklyEmpty: "No weekly reports yet.", weeklyWaiting: "Waiting for {name}...",
-    commentHere: "Say something…", send: "Send", daysTogether: "days together", streak: "days in sync", savedAnswers: "letters exchanged", howWeAre: "How we're doing", moodSub: "Mood history.", moodEmpty: "No data.", thinking: "This made me think of you", notesSub: "Upload an image, paste a YouTube link, or write a thought. Tap a card to expand.", noteHere: "A song, a verse, a thought...", leave: "Save memory", noNotes: "No notes yet.", tagPhoto: "Photo", tagYoutube: "YouTube", tagLink: "Link", tagNote: "Note", today: "Today", yesterday: "Yesterday", edited: "edited", saved: "Saved", changed: "Changes saved", noteSent: "Sent", writeSomething: "Write something.", saveFailed: "Failed.", translate: "Translate", original: "Show original", translating: "Translating…", trFailed: "Error", trNote: "Machine translation", language: "Language", lightMode: "Light Mode", darkMode: "Dark Mode",
-
-    mLandingRuBadge: "Тихое пространство для двоих",
-    mLandingRuTitle: "Наша страница",
-    mLandingRuSub: "Медленный ритуал, чтобы быть ближе каждый день.",
-    mBegin: "Begin",
-    mBack: "Back",
-    mContinue: "Continue",
-    mSkip: "Skip",
-    mGreetMorning: "Good morning",
-    mGreetAfternoon: "Good afternoon",
-    mGreetEvening: "Good evening",
-    mStartCheckin: "Start today's check-in",
-    mDoneTitle: "You've completed the daily check-in",
-    mDoneSub: "Take a quiet breath—your words are ready for us.",
-    mHelpfulQ: "Did this check-in feel helpful to you today?",
-    mHelpNo: "No",
-    mHelpLittle: "A little",
-    mHelpYes: "Yes",
-    mSaveFinish: "Save and finish",
-    mWkReadyIn: "Weekly reflection will be ready in {t}",
-    mPastWeeks: "Past weekly reports",
-    mConnQ: "How connected did we feel this week?",
-    mGratitudeQ: "A moment of gratitude from this week:",
-    mRewardTitle: "Good job",
-    mRewardSub: "Saved with love for {name}.",
-    mBackNotes: "Back to memories",
-    mPromptFeeling: "Feeling",
-    mPromptBest: "Best part",
-    mPromptHard: "Hard part",
-    mPromptNeed: "Need tomorrow",
-    mPromptUnsaid: "Unsaid",
-    mPromptBonus: "Extra"
+    commentHere: "Say something…", send: "Send", daysTogether: "days together", streak: "days in sync", savedAnswers: "letters exchanged", howWeAre: "How we're doing", moodSub: "Mood history.", moodEmpty: "No data.", thinking: "This made me think of you", notesSub: "Upload an image, paste a YouTube link, or write a thought. Tap a card to expand.", noteHere: "A song, a verse, a thought...", leave: "Save memory", noNotes: "No notes yet.", tagPhoto: "Photo", tagYoutube: "YouTube", tagLink: "Link", tagNote: "Note", today: "Today", yesterday: "Yesterday", edited: "edited", saved: "Saved", changed: "Changes saved", noteSent: "Sent", writeSomething: "Write something.", saveFailed: "Failed.", translate: "Translate", original: "Show original", translating: "Translating…", trFailed: "Error", trNote: "Machine translation", language: "Language", lightMode: "Light Mode", darkMode: "Dark Mode"
   },
   es: {
-    brand: "Nuestro check-in", tagline: "Un check-in por día, las dos.", yourKey: "Tu clave", enter: "Entrar", wrongKey: "Clave incorrecta.", enteringAs: "Entrando como {name}.", signOut: "Salir", yourPassword: "Tu contraseña", signIn: "Entrar", wrongPassword: "Email o contraseña incorrectos.", authError: "Error de conexión.", signingIn: "Entrando…",
+    brand: "Nuestro check-in", begin: "Comenzar", yourKey: "Tu clave", enter: "Entrar", wrongKey: "Clave incorrecta.", enteringAs: "Entrando como {name}.", signOut: "Salir", yourPassword: "Tu contraseña", signIn: "Entrar", wrongPassword: "Email o contraseña incorrectos.", authError: "Error de conexión.", signingIn: "Entrando…",
     me: "Yo",
     tabCalendar: "Calendario",
     calTitle: "Ahora y lo que sigue", calSub: "Tocá cualquier plan para agrandarlo.",
@@ -1072,45 +928,13 @@ const UI = {
     calSaveEvent: "Sumar al calendario", calDelete: "Borrar", calAdded: "Sumado al calendario", calRemoved: "Borrado",
     calTzNote: "Se guarda con tu horario y se muestra en ambos relojes automáticamente.",
 
-    tabToday: "Hoy", tabJournal: "Diario", tabWeekly: "Semanal", tabUs: "Nosotras", tabPensando: "Pensando en vos",
+    tabToday: "Hoy", tabJournal: "Diario", tabWeekly: "Semanal", tabUs: "Nosotras", tabPensando: "Pensando",
     localBanner: "Modo prueba.", degradedBanner: "Sin conexión.", todayTitle: "Tu check-in de hoy", howFeel: "¿Cómo te sentís?", writeHere: "...", bonusHere: "Pregunta extra de hoy.", save: "Guardar", saveChanges: "Guardar cambios", editHint: "Se puede editar hasta tu medianoche.", yours: "Yo", hersLabel: "{name}", editToday: "Editar", nextIn: "Mañana se abre en {t}.", notYet: "{name} todavía no hizo el check-in.", veil: "Respondé para leer a {name}.", emptyJournal: "Sin registros.",
     weeklyTitle: "Reporte Semanal", weeklySub: "Disponible durante 48 horas tu sábado y domingo locales.", weeklyLocked: "El reporte semanal se abre tu fin de semana (sábado 00:00).", weeklyOpensIn: "Tu ventana de fin de semana abre en {t}.", weeklyClosesIn: "Cierra el domingo a tu medianoche (quedan {t}).", weeklyEmpty: "Todavía no hay reportes semanales.", weeklyWaiting: "Esperando a {name}...",
-    commentHere: "Comentar algo…", send: "Enviar", daysTogether: "días juntas", streak: "días en sintonía", savedAnswers: "cartas intercambiadas", howWeAre: "Cómo venimos", moodSub: "Ánimo histórico.", moodEmpty: "Sin datos.", thinking: "Esto me hizo acordar a vos", notesSub: "Subí una foto, pegá un link de YouTube, o dejá un pensamiento. Tocá una tarjeta para expandir.", noteHere: "Una canción, un verso, un pensamiento...", leave: "Guardar", noNotes: "Todavía no hay nada.", tagPhoto: "Foto", tagYoutube: "YouTube", tagLink: "Link", tagNote: "Nota", today: "Hoy", yesterday: "Ayer", edited: "editado", saved: "Guardado", changed: "Cambios guardados", noteSent: "Enviado", writeSomething: "Escribí algo.", saveFailed: "Error al guardar.", translate: "Traducir", original: "Original", translating: "Traduciendo…", trFailed: "Error", trNote: "Traducción automática", language: "Idioma", lightMode: "Modo claro", darkMode: "Modo oscuro",
-
-    mLandingRuBadge: "Тихое пространство для двоих",
-    mLandingRuTitle: "Наша страница",
-    mLandingRuSub: "Un espacio calmo para leer y acompañarnos de a poquito.",
-    mBegin: "Comenzar",
-    mBack: "Volver",
-    mContinue: "Continuar",
-    mSkip: "Saltar",
-    mGreetMorning: "Buen día",
-    mGreetAfternoon: "Buenas tardes",
-    mGreetEvening: "Buenas noches",
-    mStartCheckin: "Empezar check-in de hoy",
-    mDoneTitle: "Completaste el check-in diario",
-    mDoneSub: "Un respiro tranquilo—todo quedó listo para nosotras.",
-    mHelpfulQ: "¿Te resultó útil este check-in hoy?",
-    mHelpNo: "No",
-    mHelpLittle: "Un poco",
-    mHelpYes: "Sí",
-    mSaveFinish: "Guardar y terminar",
-    mWkReadyIn: "El reporte semanal estará listo en {t}",
-    mPastWeeks: "Reportes semanales anteriores",
-    mConnQ: "¿Qué tan conectadas nos sentimos esta semana?",
-    mGratitudeQ: "Un momento de gratitud de esta semana:",
-    mRewardTitle: "¡Qué lindo!",
-    mRewardSub: "Guardado con cariño para {name}.",
-    mBackNotes: "Volver a recuerdos",
-    mPromptFeeling: "Ánimo",
-    mPromptBest: "Lo mejor",
-    mPromptHard: "Lo que costó",
-    mPromptNeed: "Para mañana",
-    mPromptUnsaid: "Sin decir",
-    mPromptBonus: "Extra"
+    commentHere: "Comentar algo…", send: "Enviar", daysTogether: "días juntas", streak: "días en sintonía", savedAnswers: "cartas intercambiadas", howWeAre: "Cómo venimos", moodSub: "Ánimo histórico.", moodEmpty: "Sin datos.", thinking: "Esto me hizo acordar a vos", notesSub: "Subí una foto, pegá un link de YouTube, o dejá un pensamiento. Tocá una tarjeta para expandir.", noteHere: "Una canción, un verso, un pensamiento...", leave: "Guardar", noNotes: "Todavía no hay nada.", tagPhoto: "Foto", tagYoutube: "YouTube", tagLink: "Link", tagNote: "Nota", today: "Hoy", yesterday: "Ayer", edited: "editado", saved: "Guardado", changed: "Cambios guardados", noteSent: "Enviado", writeSomething: "Escribí algo.", saveFailed: "Error al guardar.", translate: "Traducir", original: "Original", translating: "Traduciendo…", trFailed: "Error", trNote: "Traducción automática", language: "Idioma", lightMode: "Modo claro", darkMode: "Modo oscuro"
   },
   ru: {
-    brand: "Наш чек-ин", tagline: "Один чек-ин в день, обе.", yourKey: "Твой код", enter: "Войти", wrongKey: "Неверный код.", enteringAs: "Вход как {name}.", signOut: "Выйти", yourPassword: "Твой пароль", signIn: "Войти", wrongPassword: "Неверный email/пароль.", authError: "Ошибка подключения.", signingIn: "Входим…",
+    brand: "Наш чек-ин", begin: "Начать", yourKey: "Твой код", enter: "Войти", wrongKey: "Неверный код.", enteringAs: "Вход как {name}.", signOut: "Выйти", yourPassword: "Твой пароль", signIn: "Войти", wrongPassword: "Неверный email/пароль.", authError: "Ошибка подключения.", signingIn: "Входим…",
     me: "Я",
     tabCalendar: "Календарь",
     calTitle: "Сейчас и дальше", calSub: "Нажми на план, чтобы раскрыть.",
@@ -1125,49 +949,16 @@ const UI = {
     calSaveEvent: "В календарь", calDelete: "Удалить", calAdded: "Добавлено в календарь", calRemoved: "Удалено",
     calTzNote: "Сохраняется с твоим часовым поясом и сразу показывает время для обеих.",
 
-    tabToday: "Сегодня", tabJournal: "Дневник", tabWeekly: "Неделя", tabUs: "Мы", tabPensando: "Думаю о тебе",
+    tabToday: "Сегодня", tabJournal: "Дневник", tabWeekly: "Неделя", tabUs: "Мы", tabPensando: "Мысли",
     localBanner: "Тестовый режим.", degradedBanner: "Офлайн.", todayTitle: "Твой чек-ин", howFeel: "Как ты себя чувствуешь?", writeHere: "...", bonusHere: "Дополнительный вопрос.", save: "Сохранить", saveChanges: "Изменить", editHint: "Можно редактировать до твоей полуночи.", yours: "Я", hersLabel: "{name}", editToday: "Изменить", nextIn: "Завтра откроется через {t}.", notYet: "{name} ещё не сделала чек-ин.", veil: "Напиши чтобы прочитать.", emptyJournal: "Пусто.",
     weeklyTitle: "Итоги недели", weeklySub: "Доступно 48 часов в твои субботу и воскресенье.", weeklyLocked: "Еженедельный отчёт откроется в твои выходные (суббота 00:00).", weeklyOpensIn: "Откроется через {t}.", weeklyClosesIn: "Закроется в полночь воскресенья (осталось {t}).", weeklyEmpty: "Пока нет недельных отчётов.", weeklyWaiting: "Ждём {name}...",
-    commentHere: "Написать…", send: "Отправить", daysTogether: "дней вместе", streak: "дней в унисон", savedAnswers: "писем друг другу", howWeAre: "Как у нас дела", moodSub: "История настроения.", moodEmpty: "Нет данных.", thinking: "Это напомнило мне о тебе", notesSub: "Загрузи фото, вставь ссылку на YouTube или напиши мысль. Нажми на карточку, чтобы развернуть.", noteHere: "Песня, стих, мысль...", leave: "Сохранить", noNotes: "Пока нет.", tagPhoto: "Фото", tagYoutube: "YouTube", tagLink: "Ссылка", tagNote: "Заметка", today: "Сегодня", yesterday: "Вчера", edited: "изменено", saved: "Сохранено", changed: "Изменено", noteSent: "Отправлено", writeSomething: "Напиши что-то.", saveFailed: "Ошибка.", translate: "Перевести", original: "Оригинал", translating: "Перевожу…", trFailed: "Ошибка", trNote: "Машинный перевод", language: "Язык", lightMode: "Светлая тема", darkMode: "Тёмная тема",
-
-    mLandingRuBadge: "Тихое пространство для двоих",
-    mLandingRuTitle: "Наша страница",
-    mLandingRuSub: "Спокойный ежедневный ритуал для нас двоих.",
-    mBegin: "Начать",
-    mBack: "Назад",
-    mContinue: "Далее",
-    mSkip: "Пропустить",
-    mGreetMorning: "Доброе утро",
-    mGreetAfternoon: "Добрый день",
-    mGreetEvening: "Добрый вечер",
-    mStartCheckin: "Начать чек-ин сегодня",
-    mDoneTitle: "Ты завершила ежедневный чек-ин",
-    mDoneSub: "Тихий выдох — всё сохранено для нас.",
-    mHelpfulQ: "Был ли этот чек-ин полезен тебе сегодня?",
-    mHelpNo: "Нет",
-    mHelpLittle: "Немного",
-    mHelpYes: "Да",
-    mSaveFinish: "Сохранить и завершить",
-    mWkReadyIn: "Еженедельный отчёт будет готов через {t}",
-    mPastWeeks: "Прошлые недельные отчёты",
-    mConnQ: "Насколько близко мы чувствовали себя на этой неделе?",
-    mGratitudeQ: "Момент благодарности за эту неделю:",
-    mRewardTitle: "Умница!",
-    mRewardSub: "Сохранено с любовью для {name}.",
-    mBackNotes: "К воспоминаниям",
-    mPromptFeeling: "Настроение",
-    mPromptBest: "Лучшее",
-    mPromptHard: "Сложное",
-    mPromptNeed: "На завтра",
-    mPromptUnsaid: "Несказанное",
-    mPromptBonus: "Доп. вопрос"
+    commentHere: "Написать…", send: "Отправить", daysTogether: "дней вместе", streak: "дней в унисон", savedAnswers: "писем друг другу", howWeAre: "Как у нас дела", moodSub: "История настроения.", moodEmpty: "Нет данных.", thinking: "Это напомнило мне о тебе", notesSub: "Загрузи фото, вставь ссылку на YouTube или напиши мысль. Нажми на карточку, чтобы развернуть.", noteHere: "Песня, стих, мысль...", leave: "Сохранить", noNotes: "Пока нет.", tagPhoto: "Фото", tagYoutube: "YouTube", tagLink: "Ссылка", tagNote: "Заметка", today: "Сегодня", yesterday: "Вчера", edited: "изменено", saved: "Сохранено", changed: "Изменено", noteSent: "Отправлено", writeSomething: "Напиши что-то.", saveFailed: "Ошибка.", translate: "Перевести", original: "Оригинал", translating: "Перевожу…", trFailed: "Ошибка", trNote: "Машинный перевод", language: "Язык", lightMode: "Светлая тема", darkMode: "Тёмная тема"
   }
 };
 
 const $ = (s, el = document) => el.querySelector(s);
 const root = $("#root");
 const pad = n => String(n).padStart(2, "0");
-const isMobile = () => window.matchMedia("(max-width: 679px)").matches;
 
 const getOffset = () => (state.me && CONFIG.people[state.me]?.tz !== undefined) ? CONFIG.people[state.me].tz : -3;
 const localNow = () => new Date(Date.now() + getOffset() * 3600000);
@@ -1200,18 +991,7 @@ const state = {
   editing: false, editingWeekly: false, selectedMonth: undefined,
   usPhotoDesktopIdx: null, usPhotoMobileIdx: null,
   degraded: false, tx: {}, txOn: {}, langOpen: false, openNotes: new Set(), calEvents: [], calSelectedDate: null, calDayTapped: false, calMonthOffset: 0, calStripScrollLeft: null, calExpandedIds: new Set(), calWho: "both", calTag: "date", calDraftTitle: "", calDraftNote: "", calDraftTime: "", calCountSlotEditing: null, calShowSecondCd: false,
-  // Mobile-only state
-  mShowLanding: !ls.get("ci_seen_landing"),
-  mTodayStep: "greet", // greet -> mood -> q0..q4 -> bonus -> complete
-  mDraftMood: null,
-  mDraftAnswers: ["", "", "", "", ""],
-  mDraftBonus: "",
-  mHelpfulChoice: null,
-  mJournalPrompt: "feeling",
-  mWeeklyConnection: "",
-  mWeeklyGratitude: "",
-  mSelectedPastWeek: null,
-  mRewardVisible: false
+  landingPassed: false
 };
 let pendingImage = null; 
 
@@ -1222,7 +1002,6 @@ const t = (k, vars) => { let s = (UI[state.lang] || UI.en)[k] || k; if (vars) fo
 const questions = () => QUESTIONS[state.lang] || QUESTIONS.en;
 const weeklyQuestions = () => WEEKLY_QUESTIONS[state.lang] || WEEKLY_QUESTIONS.en;
 const moods = () => MOODS[state.lang] || MOODS.en;
-const connectionPills = () => CONNECTION_PILLS[state.lang] || CONNECTION_PILLS.en;
 
 function bonusFor(key){ const [y,m,d] = key.split("-").map(Number); const list = BONUS[state.lang] || BONUS.en; return list[Math.floor(Date.UTC(y, m-1, d) / 86400000) % list.length]; }
 function prettyDate(key){ const [y,m,d] = key.split("-").map(Number); const s = new Date(Date.UTC(y, m-1, d)).toLocaleDateString(LOCALE[state.lang], { weekday:"long", day:"numeric", month:"long", timeZone:"UTC" }); return s.charAt(0).toUpperCase() + s.slice(1); }
@@ -1233,13 +1012,6 @@ function countdown(){
   const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()+1));
   const ms = next.getTime() - now.getTime();
   return `${Math.floor(ms/3600000)}h ${Math.floor(ms%3600000/60000)}m`;
-}
-
-function getTimeOfDayGreeting() {
-  const hr = localNow().getUTCHours();
-  if (hr >= 5 && hr < 12) return t("mGreetMorning");
-  if (hr >= 12 && hr < 19) return t("mGreetAfternoon");
-  return t("mGreetEvening");
 }
 
 // WEEKEND & WEEKLY REPORT HELPERS (48H LOCAL SATURDAY & SUNDAY)
@@ -1407,13 +1179,6 @@ const entryOf = (date, who) => state.entries.find(x => x.date === date && x.auth
 const weeklyOf = (weekId) => state.weekly.find(x => x.id === weekId);
 const withAuthor = obj => state.userId ? { ...obj, author_id: state.userId } : obj;
 
-function syncMobileDraftsFromExisting(prefill) {
-  state.mDraftMood = typeof prefill?.mood === "number" ? prefill.mood : null;
-  state.mDraftAnswers = [0, 1, 2, 3, 4].map(i => prefill?.answers?.[i] || "");
-  state.mDraftBonus = prefill?.bonus || "";
-  state.mHelpfulChoice = prefill?.helpful ?? null;
-}
-
 function langHTML(){
   const themeText = document.documentElement.getAttribute("data-theme") === "dark" ? t("lightMode") : t("darkMode");
   return `
@@ -1427,50 +1192,50 @@ function langHTML(){
     </div>`;
 }
 
-function renderMobileLanding() {
+function renderLanding() {
   root.innerHTML = `
-    <section class="m-landing">
-      <div class="m-landing-top">${langHTML()}</div>
-      <div class="m-landing-center">
-        <span class="m-ru-badge">${esc(t("mLandingRuBadge"))}</span>
-        <h1 class="m-ru-title">${esc(t("mLandingRuTitle"))}</h1>
-        <p class="m-ru-sub">${esc(t("mLandingRuSub"))}</p>
+    <section class="landing-page" aria-label="Landing">
+      <div class="landing-top">${langHTML()}</div>
+      <div class="landing-phrase-wrap">
+        <h1 class="landing-cyrillic-phrase">${esc(LANDING_PHRASE)}</h1>
+        <div class="landing-art-box">
+          <img src="${esc(LANDING_ART_SRC)}" alt="Bubu and Dudu" onerror="this.style.display='none'">
+        </div>
       </div>
-      <div style="display:flex;justify-content:center">
-        <button type="button" class="btn m-begin-btn" id="mBeginBtn">${esc(t("mBegin"))}</button>
+      <div class="landing-bottom">
+        <button class="btn landing-begin-btn" type="button" id="landingBeginBtn">${esc(t("begin"))}</button>
       </div>
     </section>`;
-  wireUI(renderMobileLanding);
-  $("#mBeginBtn")?.addEventListener("click", () => {
-    state.mShowLanding = false;
-    ls.set("ci_seen_landing", "1");
+  wireUI(renderLanding);
+  $("#landingBeginBtn")?.addEventListener("click", () => {
+    state.landingPassed = true;
     renderLogin();
   });
 }
 
 function renderLogin(){
-  if (isMobile() && state.mShowLanding) {
-    renderMobileLanding();
+  if (!state.landingPassed) {
+    renderLanding();
     return;
   }
-  const key = todayKey(); const authMode = CONFIG.useAuth && state.store.mode === "remote";
+  const key = todayKey();
+  const authMode = CONFIG.useAuth && state.store.mode === "remote";
   root.innerHTML = `
-    <section class="login">
-      <div class="login-head-bar">
-        ${isMobile() ? `<button type="button" class="btn btn-ghost btn-sm" id="mBackToLanding">‹ ${esc(t("mBack"))}</button>` : `<span></span>`}
-        <div class="login-top">${langHTML()}</div>
-      </div>
-      
-      <div style="text-align: center; margin-bottom: 10px; margin-top: auto;">
-        <p class="eyebrow">${esc(prettyDate(key))}</p>
-        <h1 style="margin-bottom: 8px;">${esc(questions()[0])}</h1>
-        <p class="sub" style="margin: 0 auto;">${esc(t("tagline"))}</p>
+    <section class="today-login-page">
+      <div class="today-login-top">
+        <span class="eyebrow">${esc(prettyDate(key))}</span>
+        ${langHTML()}
       </div>
 
-      <div style="margin-bottom: auto;">
-        <div class="who">
+      <div class="today-login-hero">
+        <h1 class="today-login-q">${esc(questions()[0])}</h1>
+      </div>
+
+      <div>
+        <div class="stoic-pills">
           ${Object.keys(CONFIG.people).map(k => `
-            <button class="who-btn" data-who="${k}" style="flex: 1; padding: 18px 10px;">
+            <button type="button" class="stoic-pill" data-who="${k}">
+              <span class="dot ${k}"></span>
               <strong>${esc(CONFIG.people[k].name)}</strong>
             </button>`).join("")}
         </div>
@@ -1481,16 +1246,20 @@ function renderLogin(){
         </form>
         <p class="hint" id="pinHint" style="text-align: center;"></p>
       </div>
-      <div class="page-footer login-footer"><img src="IMAGES/duduandbubu.png" alt="Dudu and Bubu" onerror="if(!this.dataset.tried){this.dataset.tried=1;this.src='duduandbubu.png';}else{this.style.display='none';}"></div>
+
+      <div class="today-bottom-art">
+        <img src="${esc(TODAY_ART_SRC)}" alt="Bubu and Dudu" onerror="this.style.display='none'">
+      </div>
     </section>`;
-    
+
   wireUI(renderLogin);
-  $("#mBackToLanding")?.addEventListener("click", () => {
-    state.mShowLanding = true;
-    renderMobileLanding();
-  });
   let picked = null;
-  root.querySelectorAll(".who-btn").forEach(b => b.addEventListener("click", () => { picked = b.dataset.who; $("#pinForm").classList.remove("hidden"); $("#pinHint").textContent = t("enteringAs", { name: realNameOf(picked) }); $("#pin").focus(); }));
+  root.querySelectorAll(".stoic-pill").forEach(b => b.addEventListener("click", () => {
+    picked = b.dataset.who;
+    $("#pinForm").classList.remove("hidden");
+    $("#pinHint").textContent = t("enteringAs", { name: realNameOf(picked) });
+    $("#pin").focus();
+  }));
   $("#pinForm").addEventListener("submit", async ev => {
     ev.preventDefault(); if (!picked) return; const val = $("#pin").value;
     if (!authMode){ const expectedPin = CONFIG.people[picked]?.pin; if (!expectedPin || val.trim() !== expectedPin){ $("#pinHint").textContent = t("wrongKey"); return; } state.me = picked; ls.set("ci_me", picked); start(); return; }
@@ -1499,18 +1268,19 @@ function renderLogin(){
   });
 }
 
-function mobileBottomNavHTML() {
+function mobileNavHTML() {
   const items = [
-    { id: "hoy", label: t("tabToday"), icon: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/>' },
-    { id: "diario", label: t("tabJournal"), icon: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>' },
-    { id: "semanal", label: t("tabWeekly"), icon: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 9h8M8 13h6"/>' },
-    { id: "calendario", label: t("tabCalendar"), icon: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>' },
-    { id: "nosotras", label: t("tabUs"), icon: '<path d="M12 20.5s-7.5-4.7-7.5-10.3A4.2 4.2 0 0 1 12 7.1a4.2 4.2 0 0 1 7.5 3.1c0 5.6-7.5 10.3-7.5 10.3z"/>' }
+    { id: "hoy", label: t("tabToday"), icon: '<circle cx="12" cy="12" r="4"/><path d="M12 3v2m0 14v2M4.9 4.9l1.4 1.4m11.4 11.4l1.4 1.4M3 12h2m14 0h2M4.9 19.1l1.4-1.4m11.4-11.4l1.4-1.4"/>' },
+    { id: "diario", label: t("tabJournal"), icon: '<path d="M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4z"/><path d="M9 8h6M9 12h4"/>' },
+    { id: "semanal", label: t("tabWeekly"), icon: '<rect x="3.5" y="5" width="17" height="14" rx="3"/><path d="M8 10h8M8 14h5"/>' },
+    { id: "calendario", label: t("tabCalendar"), icon: '<rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M8 3v3m8-3v3M3.5 10h17"/>' },
+    { id: "nosotras", label: t("tabUs"), icon: '<path d="M12 19.5s-7-4.4-7-9.6A3.8 3.8 0 0 1 12 7.2a3.8 3.8 0 0 1 7 2.7c0 5.2-7 9.6-7 9.6z"/>' },
+    { id: "pensando", label: t("tabPensando"), icon: '<path d="M12 3l1.7 4.3L18 9l-4.3 1.7L12 15l-1.7-4.3L6 9l4.3-1.7L12 3z"/><path d="M18.5 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/>' }
   ];
   return `
-    <nav class="m-bottom-nav" aria-label="Primary navigation">
+    <nav class="m-bottom-nav" aria-label="Mobile navigation">
       ${items.map(it => `
-        <button type="button" class="m-nav-item" data-tab="${it.id}" aria-selected="${state.tab === it.id}">
+        <button type="button" class="m-nav-btn" data-tab="${it.id}" aria-selected="${state.tab === it.id}">
           <svg viewBox="0 0 24 24" aria-hidden="true">${it.icon}</svg>
           <span>${esc(it.label)}</span>
         </button>`).join("")}
@@ -1518,15 +1288,10 @@ function mobileBottomNavHTML() {
 }
 
 function shell(inner){
-  document.body.classList.toggle("stoic-mobile-active", isMobile());
   return `
     <header class="topbar">
       <span class="brand">${esc(t("brand"))}</span>
-      <span class="me">
-        ${isMobile() ? `<button type="button" class="m-think-pill" data-tab="pensando" aria-pressed="${state.tab === "pensando"}">✦ ${esc(t("tabPensando"))}</button>` : ""}
-        ${langHTML()}<span class="dot ${state.me}"></span>${esc(t("me"))}
-        <button class="btn btn-ghost btn-sm" id="logout">${esc(t("signOut"))}</button>
-      </span>
+      <span class="me">${langHTML()}<span class="dot ${state.me}"></span>${esc(t("me"))} <button class="btn btn-ghost btn-sm" id="logout">${esc(t("signOut"))}</button></span>
     </header>
     <nav class="tabs" role="tablist">
       <button class="tab" role="tab" data-tab="hoy" aria-selected="${state.tab==="hoy"}">${esc(t("tabToday"))}</button>
@@ -1539,7 +1304,7 @@ function shell(inner){
     ${state.store.mode === "local" ? `<div class="banner">${esc(t("localBanner"))}</div>` : ""}
     ${state.degraded ? `<div class="banner">${esc(t("degradedBanner"))}</div>` : ""}
     ${inner}
-    ${isMobile() ? mobileBottomNavHTML() : ""}`;
+    ${mobileNavHTML()}`;
 }
 
 function formHTML(prefill){
@@ -1559,118 +1324,6 @@ function formHTML(prefill){
         <p class="hint">${esc(t("editHint"))}</p>
       </form>
     </div>`;
-}
-
-function mobileHoyFlowHTML(mine, hers) {
-  const key = todayKey();
-  const qs = questions();
-  const mList = moods();
-  const step = state.mTodayStep || "greet";
-
-  if (step === "greet") {
-    return `
-      <section class="m-screen">
-        <div class="m-screen-center" style="text-align:center;align-items:center">
-          <p class="eyebrow">${esc(prettyDate(key))}</p>
-          <h2 class="m-greet-title">${esc(getTimeOfDayGreeting())}</h2>
-          <p class="hint" style="max-width:30ch">${esc(t("todayTitle"))}</p>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <button type="button" class="btn" id="mStartCheckinBtn">${esc(mine ? t("editToday") : t("mStartCheckin"))}</button>
-        </div>
-      </section>`;
-  }
-
-  if (step === "mood") {
-    return `
-      <section class="m-screen">
-        <div class="m-screen-center">
-          <div class="m-step-meta">
-            <span>${esc(prettyDate(key))}</span>
-            <span>1 / ${qs.length + 2}</span>
-          </div>
-          <h2 class="m-single-q" style="text-align:center">${esc(t("howFeel"))}</h2>
-          <div class="m-mood-grid" role="group" aria-label="${esc(t("howFeel"))}">
-            ${mList.map((lbl, idx) => `
-              <button type="button" class="m-mood-btn" data-m-mood="${idx}" aria-pressed="${state.mDraftMood === idx}">
-                <span class="m-mood-face" aria-hidden="true">${STOIC_MOOD_FACES[idx] || "🙂"}</span>
-                <span class="m-mood-lbl">${esc(lbl)}</span>
-              </button>`).join("")}
-          </div>
-        </div>
-        <div class="m-step-actions">
-          <button type="button" class="btn btn-ghost btn-sm" id="mPrevStepBtn">‹ ${esc(t("mBack"))}</button>
-          <button type="button" class="btn btn-sm" id="mNextStepBtn">${esc(state.mDraftMood !== null ? t("mContinue") : t("mSkip"))} ›</button>
-        </div>
-      </section>`;
-  }
-
-  if (step.startsWith("q")) {
-    const qIdx = Number(step.slice(1));
-    const val = state.mDraftAnswers[qIdx] || "";
-    return `
-      <section class="m-screen">
-        <div class="m-screen-center">
-          <div class="m-step-meta">
-            <span>${esc(prettyDate(key))}</span>
-            <span>${qIdx + 2} / ${qs.length + 2}</span>
-          </div>
-          <label for="mStepTextarea" class="m-single-q">${esc(qs[qIdx])}</label>
-          <textarea id="mStepTextarea" class="m-single-ta" placeholder="${esc(t("writeHere"))}">${esc(val)}</textarea>
-        </div>
-        <div class="m-step-actions">
-          <button type="button" class="btn btn-ghost btn-sm" id="mPrevStepBtn">‹ ${esc(t("mBack"))}</button>
-          <button type="button" class="btn btn-sm" id="mNextStepBtn">${esc(val.trim() ? t("mContinue") : t("mSkip"))} ›</button>
-        </div>
-      </section>`;
-  }
-
-  if (step === "bonus") {
-    const bPrompt = bonusFor(key);
-    return `
-      <section class="m-screen">
-        <div class="m-screen-center">
-          <div class="m-step-meta">
-            <span>${esc(t("bonusHere"))}</span>
-            <span>${qs.length + 2} / ${qs.length + 2}</span>
-          </div>
-          <label for="mBonusTextarea" class="m-single-q">${esc(bPrompt)}</label>
-          <textarea id="mBonusTextarea" class="m-single-ta" placeholder="${esc(t("bonusHere"))}">${esc(state.mDraftBonus)}</textarea>
-        </div>
-        <div class="m-step-actions">
-          <button type="button" class="btn btn-ghost btn-sm" id="mPrevStepBtn">‹ ${esc(t("mBack"))}</button>
-          <button type="button" class="btn btn-sm" id="mNextStepBtn">${esc(state.mDraftBonus.trim() ? t("mContinue") : t("mSkip"))} ›</button>
-        </div>
-      </section>`;
-  }
-
-  // Completion screen ("you've completed the daily check in" + helpfulness + Save and finish)
-  const helpOpts = [
-    { id: "no", label: t("mHelpNo") },
-    { id: "little", label: t("mHelpLittle") },
-    { id: "yes", label: t("mHelpYes") }
-  ];
-  return `
-    <section class="m-screen">
-      <div class="m-screen-center" style="text-align:center">
-        <p class="eyebrow">${esc(prettyDate(key))}</p>
-        <h2 class="m-greet-title" style="font-size:2rem">${esc(t("mDoneTitle"))}</h2>
-        <p class="hint" style="margin:0 auto 12px">${esc(t("mDoneSub"))}</p>
-        <div class="m-reader-card" style="text-align:left">
-          <p class="q" style="font-size:1.12rem;text-align:center">${esc(t("mHelpfulQ"))}</p>
-          <div class="m-help-row" role="group" aria-label="${esc(t("mHelpfulQ"))}">
-            ${helpOpts.map(h => `
-              <button type="button" class="m-help-btn" data-m-help="${h.id}" aria-pressed="${state.mHelpfulChoice === h.id}">${esc(h.label)}</button>
-            `).join("")}
-          </div>
-          <button type="button" class="btn" style="width:100%" id="mSaveFinishBtn">${esc(t("mSaveFinish"))}</button>
-        </div>
-      </div>
-      <div class="m-step-actions">
-        <button type="button" class="btn btn-ghost btn-sm" id="mPrevStepBtn">‹ ${esc(t("mBack"))}</button>
-        <span></span>
-      </div>
-    </section>`;
 }
 
 function entryHTML(e, opts = {}){
@@ -1701,22 +1354,6 @@ function threadHTML(entryId, txMap){
 
 function viewHoy(){
   const key = todayKey(); const mine = entryOf(key, state.me), hers = entryOf(key, other(state.me));
-  if (isMobile()) {
-    if (!mine || state.editing || state.mTodayStep !== "greet") {
-      return mobileHoyFlowHTML(mine, hers);
-    }
-    return `
-      <div class="m-reader-card" style="margin-bottom:18px">
-        <div class="day-label">${esc(t("yours"))}</div>
-        ${entryHTML(mine)}
-        <p class="hint" style="margin-top:12px">${esc(t("nextIn", { t: countdown() }))} <button class="btn btn-ghost btn-sm" id="editBtn">${esc(t("editToday"))}</button></p>
-      </div>
-      <div class="m-reader-card">
-        <div class="day-label">${esc(t("hersLabel", { name: nameOf(other(state.me)) }))}</div>
-        ${hers ? `<div class="revealed">${entryHTML(hers, { reactable: true })}</div>` : `<p class="empty">${esc(t("notYet", { name: nameOf(other(state.me)) }))}</p>`}
-      </div>`;
-  }
-
   if (!mine || state.editing) return formHTML(state.editing ? mine : null);
   return `
     <div class="day"><div class="day-label">${esc(t("yours"))}</div>${entryHTML(mine)}
@@ -1727,79 +1364,10 @@ function viewHoy(){
     </div>`;
 }
 
-function mobileJournalPromptCard(d, e, who, isLocked) {
-  const qs = questions();
-  const showTx = state.txOn[e.id] && state.tx[e.id] && state.tx[e.id].lang === state.lang;
-  const src = showTx ? state.tx[e.id] : e;
-  const canTranslate = CONFIG.translateApi && (e.lang || "es") !== state.lang;
-  const p = state.mJournalPrompt || "feeling";
-
-  let blockHTML = "";
-  if (isLocked) {
-    blockHTML = `<p class="empty">${esc(t("veil", { name: nameOf(other(state.me)) }))}</p>`;
-  } else if (p === "feeling") {
-    blockHTML = typeof e.mood === "number"
-      ? `<p class="moodchip" style="font-size:0.9rem;padding:6px 14px">${esc(STOIC_MOOD_FACES[e.mood] || "")} ${esc(moods()[e.mood])}</p>`
-      : `<p class="empty">${esc(t("emptyJournal"))}</p>`;
-  } else if (p === "bonus") {
-    const bTxt = (src.bonus || "").trim();
-    blockHTML = bTxt
-      ? `<div class="qa"><div class="lbl">${esc(bonusFor(d))}</div><div class="ans">${esc(bTxt)}</div></div>`
-      : `<p class="empty">${esc(t("emptyJournal"))}</p>`;
-  } else {
-    const idxMap = { best: 1, hard: 2, need: 3, unsaid: 4 };
-    const qIdx = idxMap[p] ?? 1;
-    const ans = (src.answers?.[qIdx] || "").trim();
-    blockHTML = ans
-      ? `<div class="qa"><div class="lbl">${esc(qs[qIdx])}</div><div class="ans">${esc(ans)}</div></div>`
-      : `<p class="empty">${esc(t("emptyJournal"))}</p>`;
-  }
-
-  return `
-    <div class="m-reader-card" style="margin-bottom:12px">
-      <div class="entry-head">
-        <span class="author ${who}">${esc(nameOf(who))}</span>
-        <span class="stamp">${esc(prettyDate(d))}</span>
-      </div>
-      ${blockHTML}
-      ${!isLocked && canTranslate ? `<div class="trbar"><button class="tr" data-tr="${e.id}">${esc(showTx ? t("original") : t("translate"))}</button></div>` : ""}
-      ${!isLocked ? threadHTML(e.id, showTx ? state.tx[e.id].comments : null) : ""}
-    </div>`;
-}
-
 function viewDiario(){
   const key = todayKey(); 
   const allDates = [...new Set(state.entries.map(e => e.date))].sort().reverse();
   if (!allDates.length) return `<div class="card"><p class="empty">${esc(t("emptyJournal"))}</p></div>`;
-
-  if (isMobile()) {
-    const promptTabs = [
-      { id: "feeling", label: t("mPromptFeeling") },
-      { id: "best", label: t("mPromptBest") },
-      { id: "hard", label: t("mPromptHard") },
-      { id: "need", label: t("mPromptNeed") },
-      { id: "unsaid", label: t("mPromptUnsaid") },
-      { id: "bonus", label: t("mPromptBonus") }
-    ];
-    const recentDates = allDates.slice(0, 7);
-    const cardsHTML = recentDates.map(d => {
-      const mine = entryOf(d, state.me);
-      const hers = entryOf(d, other(state.me));
-      const locked = d === key && !mine;
-      let out = "";
-      if (mine) out += mobileJournalPromptCard(d, mine, state.me, false);
-      if (hers) out += mobileJournalPromptCard(d, hers, other(state.me), locked);
-      return out;
-    }).join("");
-
-    return `
-      <div class="m-prompt-pills" role="group" aria-label="Journal prompts">
-        ${promptTabs.map(pt => `
-          <button type="button" class="m-prompt-pill" data-m-jprompt="${pt.id}" aria-pressed="${state.mJournalPrompt === pt.id}">${esc(pt.label)}</button>
-        `).join("")}
-      </div>
-      ${cardsHTML || `<div class="m-reader-card"><p class="empty">${esc(t("emptyJournal"))}</p></div>`}`;
-  }
 
   const months = [...new Set(allDates.map(d => d.slice(0, 7)))];
   if (state.selectedMonth === undefined || (state.selectedMonth !== null && !months.includes(state.selectedMonth))) {
@@ -1912,71 +1480,6 @@ function viewDiario(){
   return html;
 }
 
-function renderWeeklyDocCard(doc, wqs, herKey) {
-  const wMeta = formatWeekMeta(doc.id);
-  const mine = doc[state.me];
-  const hers = doc[herKey];
-
-  const getAns = (who, idx) => {
-    const part = doc[who];
-    if (!part) return null;
-    const txKey = `wk:${doc.id}:${who}`;
-    if (state.txOn[txKey] && state.tx[txKey]?.lang === state.lang) {
-      return state.tx[txKey].answers?.[idx] || "";
-    }
-    return part.answers?.[idx] || "";
-  };
-
-  const canTxHer = hers && CONFIG.translateApi && (hers.lang || "es") !== state.lang;
-  const herTxKey = `wk:${doc.id}:${herKey}`;
-  const showingHerTx = state.txOn[herTxKey] && state.tx[herTxKey]?.lang === state.lang;
-
-  const extraMeta = (part) => {
-    if (!part) return "";
-    const pieces = [];
-    if (part.connection) pieces.push(part.connection);
-    if (part.gratitude && part.gratitude.trim()) pieces.push(`${t("mGratitudeQ")} ${part.gratitude.trim()}`);
-    return pieces.length ? `<div style="margin-top:8px;font-size:0.84rem;color:var(--ink-soft)">${esc(pieces.join(" · "))}</div>` : "";
-  };
-
-  return `
-    <div class="card" style="margin-bottom: 20px;">
-      <div class="wk-header">
-        <span class="wk-title">${esc(wMeta.title)}</span>
-        <span class="wk-range">${esc(wMeta.range)}</span>
-      </div>
-
-      ${wqs.map((q, i) => {
-        const herAns = getAns(herKey, i);
-        const myAns = getAns(state.me, i);
-        return `
-          <div class="wk-block">
-            <div class="wk-q">${esc(q)}</div>
-            <div class="wk-pair">
-              <div class="wk-ans">
-                <span class="wk-who ${herKey}">${esc(nameOf(herKey))}</span>
-                ${hers ? esc(herAns || "—") : `<span class="wk-empty">${esc(t("weeklyWaiting", { name: nameOf(herKey) }))}</span>`}
-              </div>
-              <div class="wk-ans">
-                <span class="wk-who ${state.me}">${esc(nameOf(state.me))}</span>
-                ${mine ? esc(myAns || "—") : `<span class="wk-empty">${esc(t("weeklyWaiting", { name: nameOf(state.me) }))}</span>`}
-              </div>
-            </div>
-          </div>`;
-      }).join("")}
-
-      ${extraMeta(hers) || extraMeta(mine)}
-
-      ${canTxHer ? `
-        <div class="trbar">
-          <button class="tr" data-trwk="${doc.id}" data-who="${herKey}">${esc(showingHerTx ? t("original") : t("translate"))}</button>
-          ${showingHerTx ? `<div class="trnote">${esc(t("trNote"))}</div>` : ""}
-        </div>` : ""}
-
-      ${threadHTML(`wk_${doc.id}`, null)}
-    </div>`;
-}
-
 function viewSemanal(){
   const wk = getWeekendStatus();
   const currentDoc = weeklyOf(wk.weekId);
@@ -1987,7 +1490,6 @@ function viewSemanal(){
 
   let topHTML = "";
   if (wk.isWeekend && (!myData || state.editingWeekly)) {
-    const connList = connectionPills();
     topHTML = `
       <div class="card" style="margin-bottom: 26px;">
         <div class="wk-header">
@@ -2001,28 +1503,15 @@ function viewSemanal(){
               <label class="q" style="display:block" for="wq${i}">${esc(q)}</label>
               <textarea id="wq${i}" name="wq${i}" placeholder="${esc(t("writeHere"))}">${esc(myData?.answers?.[i] || "")}</textarea>
             </div>`).join("")}
-          ${isMobile() ? `
-            <div class="field">
-              <p class="q">${esc(t("mConnQ"))}</p>
-              <div class="m-conn-pills" role="group" aria-label="${esc(t("mConnQ"))}">
-                ${connList.map(cp => `
-                  <button type="button" class="m-conn-pill" data-m-conn="${esc(cp)}" aria-pressed="${state.mWeeklyConnection === cp}">${esc(cp)}</button>
-                `).join("")}
-              </div>
-            </div>
-            <div class="field">
-              <label class="q" style="display:block" for="mGratitudeInput">${esc(t("mGratitudeQ"))}</label>
-              <textarea id="mGratitudeInput" name="mGratitude" placeholder="${esc(t("writeHere"))}">${esc(state.mWeeklyGratitude)}</textarea>
-            </div>` : ""}
           <button class="btn" type="submit">${esc(myData ? t("saveChanges") : t("save"))}</button>
         </form>
       </div>`;
   } else if (!wk.isWeekend) {
     topHTML = `
       <div class="card" style="margin-bottom: 26px;">
-        <h3 style="font-size:1.25rem;margin-bottom:4px">${esc(isMobile() ? t("mWkReadyIn", { t: wk.timeStr }) : t("weeklyTitle"))}</h3>
+        <h3 style="font-size:1.25rem;margin-bottom:4px">${esc(t("weeklyTitle"))}</h3>
         <p class="hint">${esc(t("weeklyLocked"))}</p>
-        ${!isMobile() ? `<p class="hint" style="font-weight:500;color:var(--ink);margin-top:8px">${esc(t("weeklyOpensIn", { t: wk.timeStr }))}</p>` : ""}
+        <p class="hint" style="font-weight:500;color:var(--ink);margin-top:8px">${esc(t("weeklyOpensIn", { t: wk.timeStr }))}</p>
       </div>`;
   } else {
     topHTML = `
@@ -2034,27 +1523,65 @@ function viewSemanal(){
 
   const allWeeks = [...state.weekly].sort((a, b) => b.id.localeCompare(a.id));
   if (!allWeeks.length) {
-    return `${topHTML}<div class="card"><p class="empty">${esc(t("weeklyEmpty"))}</p></div><div class="page-footer weekly-footer"><img src="IMAGES/duduandbubuweekly.png" alt="Dudu and Bubu Weekly" data-srcs="images/duduandbubuweekly.png,duduandbubuweekly.png,IMAGES/duduandbubuweekly.jpg,images/duduandbubuweekly.jpg,IMAGES/duduandbubuweekly.jpeg,IMAGES/duduandbubuweekly.webp" onerror="const list=(this.dataset.srcs||'').split(',').filter(Boolean);if(list.length){this.src=list.shift();this.dataset.srcs=list.join(',');}else{this.style.display='none';}"></div>`;
+    return `${topHTML}<div class="card"><p class="empty">${esc(t("weeklyEmpty"))}</p></div><div class="page-footer weekly-footer"><img src="IMAGES/duduandbubuweekly.png" alt="Dudu and Bubu Weekly" data-srcs="images/duduandbubuweekly.png,duduandbubuweekly.png,IMAGES/duduandbubuweekly.jpg,images/duduandbubuweekly.jpg,IMAGES/duduandbubuweekly.jpeg,images/duduandbubuweekly.webp" onerror="const list=(this.dataset.srcs||'').split(',').filter(Boolean);if(list.length){this.src=list.shift();this.dataset.srcs=list.join(',');}else{this.style.display='none';}"></div>`;
   }
 
-  if (isMobile()) {
-    const activePastId = state.mSelectedPastWeek || allWeeks[0].id;
-    const chosenDoc = allWeeks.find(w => w.id === activePastId) || allWeeks[0];
-    const archivePicker = allWeeks.length > 1 ? `
-      <div class="m-reader-card" style="margin-bottom:16px">
-        <p class="hint" style="margin:0 0 8px;font-weight:500;color:var(--ink)">${esc(t("mPastWeeks"))}</p>
-        <div class="m-prompt-pills" style="margin-bottom:0">
-          ${allWeeks.map(w => `
-            <button type="button" class="m-prompt-pill" data-m-week="${esc(w.id)}" aria-pressed="${chosenDoc.id === w.id}">${esc(formatWeekMeta(w.id).title)}</button>
-          `).join("")}
+  const listHTML = allWeeks.map(doc => {
+    const wMeta = formatWeekMeta(doc.id);
+    const mine = doc[state.me];
+    const hers = doc[herKey];
+
+    const getAns = (who, idx) => {
+      const part = doc[who];
+      if (!part) return null;
+      const txKey = `wk:${doc.id}:${who}`;
+      if (state.txOn[txKey] && state.tx[txKey]?.lang === state.lang) {
+        return state.tx[txKey].answers?.[idx] || "";
+      }
+      return part.answers?.[idx] || "";
+    };
+
+    const canTxHer = hers && CONFIG.translateApi && (hers.lang || "es") !== state.lang;
+    const herTxKey = `wk:${doc.id}:${herKey}`;
+    const showingHerTx = state.txOn[herTxKey] && state.tx[herTxKey]?.lang === state.lang;
+
+    return `
+      <div class="card" style="margin-bottom: 20px;">
+        <div class="wk-header">
+          <span class="wk-title">${esc(wMeta.title)}</span>
+          <span class="wk-range">${esc(wMeta.range)}</span>
         </div>
-      </div>` : "";
 
-    return `${topHTML}${archivePicker}${renderWeeklyDocCard(chosenDoc, wqs, herKey)}<div class="page-footer weekly-footer"><img src="IMAGES/duduandbubuweekly.png" alt="Dudu and Bubu Weekly" data-srcs="images/duduandbubuweekly.png,duduandbubuweekly.png,IMAGES/duduandbubuweekly.jpg,images/duduandbubuweekly.jpg,IMAGES/duduandbubuweekly.jpeg,IMAGES/duduandbubuweekly.webp" onerror="const list=(this.dataset.srcs||'').split(',').filter(Boolean);if(list.length){this.src=list.shift();this.dataset.srcs=list.join(',');}else{this.style.display='none';}"></div>`;
-  }
+        ${wqs.map((q, i) => {
+          const herAns = getAns(herKey, i);
+          const myAns = getAns(state.me, i);
+          return `
+            <div class="wk-block">
+              <div class="wk-q">${esc(q)}</div>
+              <div class="wk-pair">
+                <div class="wk-ans">
+                  <span class="wk-who ${herKey}">${esc(nameOf(herKey))}</span>
+                  ${hers ? esc(herAns || "—") : `<span class="wk-empty">${esc(t("weeklyWaiting", { name: nameOf(herKey) }))}</span>`}
+                </div>
+                <div class="wk-ans">
+                  <span class="wk-who ${state.me}">${esc(nameOf(state.me))}</span>
+                  ${mine ? esc(myAns || "—") : `<span class="wk-empty">${esc(t("weeklyWaiting", { name: nameOf(state.me) }))}</span>`}
+                </div>
+              </div>
+            </div>`;
+        }).join("")}
 
-  const listHTML = allWeeks.map(doc => renderWeeklyDocCard(doc, wqs, herKey)).join("");
-  return `${topHTML}${listHTML}<div class="page-footer weekly-footer"><img src="IMAGES/duduandbubuweekly.png" alt="Dudu and Bubu Weekly" data-srcs="images/duduandbubuweekly.png,duduandbubuweekly.png,IMAGES/duduandbubuweekly.jpg,images/duduandbubuweekly.jpg,IMAGES/duduandbubuweekly.jpeg,IMAGES/duduandbubuweekly.webp" onerror="const list=(this.dataset.srcs||'').split(',').filter(Boolean);if(list.length){this.src=list.shift();this.dataset.srcs=list.join(',');}else{this.style.display='none';}"></div>`;
+        ${canTxHer ? `
+          <div class="trbar">
+            <button class="tr" data-trwk="${doc.id}" data-who="${herKey}">${esc(showingHerTx ? t("original") : t("translate"))}</button>
+            ${showingHerTx ? `<div class="trnote">${esc(t("trNote"))}</div>` : ""}
+          </div>` : ""}
+
+        ${threadHTML(`wk_${doc.id}`, null)}
+      </div>`;
+  }).join("");
+
+  return `${topHTML}${listHTML}<div class="page-footer weekly-footer"><img src="IMAGES/duduandbubuweekly.png" alt="Dudu and Bubu Weekly" data-srcs="images/duduandbubuweekly.png,duduandbubuweekly.png,IMAGES/duduandbubuweekly.jpg,images/duduandbubuweekly.jpg,IMAGES/duduandbubuweekly.jpeg,images/duduandbubuweekly.webp" onerror="const list=(this.dataset.srcs||'').split(',').filter(Boolean);if(list.length){this.src=list.shift();this.dataset.srcs=list.join(',');}else{this.style.display='none';}"></div>`;
 }
 
 function pickSessionUsPhotos() {
@@ -2157,18 +1684,6 @@ function noteKind(n) {
 }
 
 function viewPensando() {
-  if (isMobile() && state.mRewardVisible) {
-    return `
-      <section class="m-screen">
-        <div class="m-screen-center" style="text-align:center;align-items:center">
-          <p class="eyebrow">✦</p>
-          <h2 class="m-greet-title">${esc(t("mRewardTitle"))}</h2>
-          <p class="hint">${esc(t("mRewardSub", { name: nameOf(other(state.me)) }))}</p>
-        </div>
-        <button type="button" class="btn" id="mBackNotesBtn">${esc(t("mBackNotes"))}</button>
-      </section>`;
-  }
-
   const notes = [...state.notes].sort((a,b) => b.created_at.localeCompare(a.created_at));
   
   const renderRichNote = (n) => {
@@ -2441,85 +1956,77 @@ function viewCalendario() {
   };
 
   return `
-    <div class="m-cal-layout">
-      <div class="m-cal-top-block">
-        <div class="cal-countdowns ${showSecondCd ? "has-two" : ""}">
-          ${renderCountdownSlot(1, t("calCountSlot1"))}
-          ${showSecondCd ? renderCountdownSlot(2, t("calCountSlot2")) : ""}
-        </div>
+    <div class="cal-countdowns ${showSecondCd ? "has-two" : ""}">
+      ${renderCountdownSlot(1, t("calCountSlot1"))}
+      ${showSecondCd ? renderCountdownSlot(2, t("calCountSlot2")) : ""}
+    </div>
 
-        <div class="card cal-section">
-          <div class="cal-month-nav">
-            <button type="button" class="btn btn-ghost btn-sm" id="calPrevMonth" aria-label="Previous month">‹</button>
-            <span class="cal-month-label">${esc(capMonthHeading)}</span>
-            <div style="display:flex;gap:6px">
-              <button type="button" class="btn btn-ghost btn-sm" id="calJumpToday">${esc(t("today"))}</button>
-              <button type="button" class="btn btn-ghost btn-sm" id="calNextMonth" aria-label="Next month">›</button>
-            </div>
-          </div>
-
-          <div class="cal-today-legend">
-            <span><button type="button" class="cal-today-pill-btn" data-jump-date="${myTodayKey}">${esc(t("calMyToday"))} (${Number(myTodayKey.slice(8, 10))})</button></span>
-            ${herTodayKey !== myTodayKey ? `<span>· <button type="button" class="cal-today-pill-btn" data-jump-date="${herTodayKey}">${esc(t("calHerToday", { name: nameOf(herKey) }))} (${Number(herTodayKey.slice(8, 10))})</button></span>` : ""}
-          </div>
-
-          <div class="cal-strip-wrap">
-            <button type="button" class="cal-scroll-btn" id="calStripLeft" aria-label="Scroll days left">‹</button>
-            <div class="cal-strip" id="calStrip" role="group" aria-label="Month days">
-              ${dayPills.join("")}
-            </div>
-            <button type="button" class="cal-scroll-btn" id="calStripRight" aria-label="Scroll days right">›</button>
-          </div>
+    <div class="card cal-section">
+      <div class="cal-month-nav">
+        <button type="button" class="btn btn-ghost btn-sm" id="calPrevMonth" aria-label="Previous month">‹</button>
+        <span class="cal-month-label">${esc(capMonthHeading)}</span>
+        <div style="display:flex;gap:6px">
+          <button type="button" class="btn btn-ghost btn-sm" id="calJumpToday">${esc(t("today"))}</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="calNextMonth" aria-label="Next month">›</button>
         </div>
       </div>
 
-      <div class="m-cal-bottom-block">
-        <div class="card cal-section">
-          <div class="cal-sec-head">
-            <span class="cal-sec-title">${esc(streamTitle)}</span>
-            <span class="cal-sec-sub">${esc(t("calSub"))}</span>
-          </div>
-
-          ${(streamSource.length || showEmptyDayMsg) ? `
-            <div class="cal-stream">
-              ${streamSource.length
-                ? streamSource.map(renderEventCard).join("")
-                : `<p class="empty">${esc(t("calNoEvents"))}</p>`}
-            </div>` : ""}
-        </div>
-
-        <div class="card cal-section">
-          <h3 style="font-size:1.22rem;margin-bottom:10px">${esc(t("calAddTitle"))}</h3>
-          <form id="calEventForm" class="cal-form-grid">
-            <input type="text" id="calEvTitle" class="cal-input" placeholder="${esc(t("calTitlePh"))}" value="${esc(state.calDraftTitle)}" maxlength="120">
-            <div class="cal-form-2">
-              <div class="cal-field-box">
-                <label class="cal-field-lbl" for="calEvDate">${esc(t("calDateLbl"))}</label>
-                <input type="date" id="calEvDate" class="cal-input" value="${esc(state.calSelectedDate)}">
-              </div>
-              <div class="cal-field-box">
-                <label class="cal-field-lbl" for="calEvTime">${esc(t("calTimeLbl"))}</label>
-                <input type="time" id="calEvTime" class="cal-input ${state.calDraftTime ? "" : "is-empty"}" data-placeholder="${esc(t("calTimePh"))}" value="${esc(state.calDraftTime)}">
-              </div>
-            </div>
-            <div class="cal-seg-row" role="group" aria-label="Who">
-              ${["both", "mica", "tati"].map(w => `
-                <button type="button" class="cal-seg" data-cal-who="${w}" aria-pressed="${state.calWho === w}">${esc(whoLabelFor(w))}</button>
-              `).join("")}
-            </div>
-            <div class="cal-seg-row" role="group" aria-label="Category">
-              ${["date", "movie", "play", "call", "milestone", "personal"].map(tg => `
-                <button type="button" class="cal-seg" data-cal-tag="${tg}" aria-pressed="${state.calTag === tg}">${esc(tagLabelFor(tg))}</button>
-              `).join("")}
-            </div>
-            <input type="text" id="calEvNote" class="cal-input" placeholder="${esc(t("calNotePh"))}" value="${esc(state.calDraftNote)}" maxlength="280">
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
-              <span class="hint" style="margin:0">${esc(t("calTzNote"))}</span>
-              <button type="submit" class="btn btn-sm">${esc(t("calSaveEvent"))}</button>
-            </div>
-          </form>
-        </div>
+      <div class="cal-today-legend">
+        <span><button type="button" class="cal-today-pill-btn" data-jump-date="${myTodayKey}">${esc(t("calMyToday"))} (${Number(myTodayKey.slice(8, 10))})</button></span>
+        ${herTodayKey !== myTodayKey ? `<span>· <button type="button" class="cal-today-pill-btn" data-jump-date="${herTodayKey}">${esc(t("calHerToday", { name: nameOf(herKey) }))} (${Number(herTodayKey.slice(8, 10))})</button></span>` : ""}
       </div>
+
+      <div class="cal-strip-wrap">
+        <button type="button" class="cal-scroll-btn" id="calStripLeft" aria-label="Scroll days left">‹</button>
+        <div class="cal-strip" id="calStrip" role="group" aria-label="Month days">
+          ${dayPills.join("")}
+        </div>
+        <button type="button" class="cal-scroll-btn" id="calStripRight" aria-label="Scroll days right">›</button>
+      </div>
+
+      <div class="cal-sec-head" style="margin-top:6px">
+        <span class="cal-sec-title">${esc(streamTitle)}</span>
+        <span class="cal-sec-sub">${esc(t("calSub"))}</span>
+      </div>
+
+      ${(streamSource.length || showEmptyDayMsg) ? `
+        <div class="cal-stream">
+          ${streamSource.length
+            ? streamSource.map(renderEventCard).join("")
+            : `<p class="empty">${esc(t("calNoEvents"))}</p>`}
+        </div>` : ""}
+    </div>
+
+    <div class="card cal-section">
+      <h3 style="font-size:1.22rem;margin-bottom:10px">${esc(t("calAddTitle"))}</h3>
+      <form id="calEventForm" class="cal-form-grid">
+        <input type="text" id="calEvTitle" class="cal-input" placeholder="${esc(t("calTitlePh"))}" value="${esc(state.calDraftTitle)}" maxlength="120">
+        <div class="cal-form-2">
+          <div class="cal-field-box">
+            <label class="cal-field-lbl" for="calEvDate">${esc(t("calDateLbl"))}</label>
+            <input type="date" id="calEvDate" class="cal-input" value="${esc(state.calSelectedDate)}">
+          </div>
+          <div class="cal-field-box">
+            <label class="cal-field-lbl" for="calEvTime">${esc(t("calTimeLbl"))}</label>
+            <input type="time" id="calEvTime" class="cal-input ${state.calDraftTime ? "" : "is-empty"}" data-placeholder="${esc(t("calTimePh"))}" value="${esc(state.calDraftTime)}">
+          </div>
+        </div>
+        <div class="cal-seg-row" role="group" aria-label="Who">
+          ${["both", "mica", "tati"].map(w => `
+            <button type="button" class="cal-seg" data-cal-who="${w}" aria-pressed="${state.calWho === w}">${esc(whoLabelFor(w))}</button>
+          `).join("")}
+        </div>
+        <div class="cal-seg-row" role="group" aria-label="Category">
+          ${["date", "movie", "play", "call", "milestone", "personal"].map(tg => `
+            <button type="button" class="cal-seg" data-cal-tag="${tg}" aria-pressed="${state.calTag === tg}">${esc(tagLabelFor(tg))}</button>
+          `).join("")}
+        </div>
+        <input type="text" id="calEvNote" class="cal-input" placeholder="${esc(t("calNotePh"))}" value="${esc(state.calDraftNote)}" maxlength="280">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+          <span class="hint" style="margin:0">${esc(t("calTzNote"))}</span>
+          <button type="submit" class="btn btn-sm">${esc(t("calSaveEvent"))}</button>
+        </div>
+      </form>
     </div>`;
 }
 
@@ -2531,18 +2038,12 @@ function viewCalendario() {
               : viewPensando();
   root.innerHTML = shell(inner);
   wireUI(render);
-  $("#logout")?.addEventListener("click", async () => { state.me = null; state.userId = null; state.editing = false; state.editingWeekly = false; state.mRewardVisible = false; ls.del("ci_me"); if (CONFIG.useAuth && state.store.mode === "remote"){ try { await state.store.signOut(); } catch {} } renderLogin(); });
+  $("#logout")?.addEventListener("click", async () => { state.me = null; state.userId = null; state.editing = false; state.editingWeekly = false; ls.del("ci_me"); if (CONFIG.useAuth && state.store.mode === "remote"){ try { await state.store.signOut(); } catch {} } renderLogin(); });
   root.querySelectorAll("[data-tab]").forEach(b => b.addEventListener("click", () => {
     state.tab = b.dataset.tab;
     state.editing = false;
     state.editingWeekly = false;
-    state.mRewardVisible = false;
     pendingImage = null;
-    if (state.tab === "hoy" && isMobile()) {
-      const existing = entryOf(todayKey(), state.me);
-      syncMobileDraftsFromExisting(existing);
-      state.mTodayStep = "greet";
-    }
     if (state.tab === "calendario") {
       state.calMonthOffset = 0;
       state.calSelectedDate = todayKey();
@@ -2551,134 +2052,8 @@ function viewCalendario() {
     }
     render();
   }));
-  $("#editBtn")?.addEventListener("click", () => {
-    state.editing = true;
-    if (isMobile()) {
-      syncMobileDraftsFromExisting(entryOf(todayKey(), state.me));
-      state.mTodayStep = "mood";
-    }
-    render();
-  });
-  $("#editWeeklyBtn")?.addEventListener("click", () => {
-    state.editingWeekly = true;
-    const prev = weeklyOf(getWeekendStatus().weekId)?.[state.me];
-    state.mWeeklyConnection = prev?.connection || "";
-    state.mWeeklyGratitude = prev?.gratitude || "";
-    render();
-  });
-
-  // Mobile "one thing at a time" check-in step listeners
-  const mStepOrder = () => ["greet", "mood", ...questions().map((_, i) => `q${i}`), "bonus", "complete"];
-  const saveCurrentMobileStepInput = () => {
-    const step = state.mTodayStep;
-    if (step && step.startsWith("q")) {
-      const idx = Number(step.slice(1));
-      const ta = $("#mStepTextarea");
-      if (ta) state.mDraftAnswers[idx] = ta.value;
-    } else if (step === "bonus") {
-      const bta = $("#mBonusTextarea");
-      if (bta) state.mDraftBonus = bta.value;
-    }
-  };
-
-  $("#mStartCheckinBtn")?.addEventListener("click", () => {
-    syncMobileDraftsFromExisting(entryOf(todayKey(), state.me));
-    state.mTodayStep = "mood";
-    render();
-  });
-
-  root.querySelectorAll("[data-m-mood]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      state.mDraftMood = Number(btn.dataset.mMood);
-      render();
-    });
-  });
-
-  $("#mPrevStepBtn")?.addEventListener("click", () => {
-    saveCurrentMobileStepInput();
-    const order = mStepOrder();
-    const idx = order.indexOf(state.mTodayStep);
-    if (idx > 0) {
-      state.mTodayStep = order[idx - 1];
-      render();
-    }
-  });
-
-  $("#mNextStepBtn")?.addEventListener("click", () => {
-    saveCurrentMobileStepInput();
-    const order = mStepOrder();
-    const idx = order.indexOf(state.mTodayStep);
-    if (idx >= 0 && idx < order.length - 1) {
-      state.mTodayStep = order[idx + 1];
-      render();
-    }
-  });
-
-  root.querySelectorAll("[data-m-help]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      state.mHelpfulChoice = btn.dataset.mHelp;
-      render();
-    });
-  });
-
-  $("#mSaveFinishBtn")?.addEventListener("click", async () => {
-    const answers = state.mDraftAnswers.map(a => String(a || "").trim());
-    const bonus = String(state.mDraftBonus || "").trim();
-    const mood = state.mDraftMood;
-    if (mood === null && !answers.some(Boolean) && !bonus) {
-      toast(t("writeSomething"));
-      return;
-    }
-    const key = todayKey();
-    const prev = entryOf(key, state.me);
-    const entry = {
-      id: `${key}__${state.me}`,
-      date: key,
-      author: state.me,
-      mood,
-      answers,
-      bonus,
-      helpful: state.mHelpfulChoice || null,
-      lang: state.lang,
-      reactions: prev?.reactions || {},
-      created_at: prev?.created_at || new Date().toISOString(),
-      edited: !!prev
-    };
-    try { await state.store.saveEntry(withAuthor(entry)); } catch { toast(t("saveFailed")); return; }
-    state.editing = false;
-    state.mTodayStep = "greet";
-    delete state.tx[entry.id];
-    await refresh();
-    render();
-    toast(prev ? t("changed") : t("saved"));
-  });
-
-  root.querySelectorAll("[data-m-jprompt]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      state.mJournalPrompt = btn.dataset.mJprompt;
-      render();
-    });
-  });
-
-  root.querySelectorAll("[data-m-conn]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const val = btn.dataset.mConn;
-      state.mWeeklyConnection = state.mWeeklyConnection === val ? "" : val;
-      render();
-    });
-  });
-
-  root.querySelectorAll("[data-m-week]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      state.mSelectedPastWeek = btn.dataset.mWeek;
-      render();
-    });
-  });
-
-  $("#mBackNotesBtn")?.addEventListener("click", () => {
-    state.mRewardVisible = false;
-    render();
-  });
+  $("#editBtn")?.addEventListener("click", () => { state.editing = true; render(); });
+  $("#editWeeklyBtn")?.addEventListener("click", () => { state.editingWeekly = true; render(); });
 
   const calStrip = $("#calStrip");
   if (calStrip) {
@@ -2916,14 +2291,10 @@ function viewCalendario() {
       const wk = getWeekendStatus();
       if (!wk.isWeekend) return;
       const answers = weeklyQuestions().map((_, i) => wForm[`wq${i}`].value.trim());
-      const gratitude = (wForm.mGratitude?.value ?? state.mWeeklyGratitude ?? "").trim();
-      const connection = state.mWeeklyConnection || "";
-      if (!answers.some(Boolean) && !gratitude && !connection) { toast(t("writeSomething")); return; }
+      if (!answers.some(Boolean)) { toast(t("writeSomething")); return; }
       const prev = weeklyOf(wk.weekId)?.[state.me];
       const payload = withAuthor({
         answers,
-        connection,
-        gratitude,
         lang: state.lang,
         created_at: prev?.created_at || new Date().toISOString(),
         edited: !!prev
@@ -3004,7 +2375,6 @@ function viewCalendario() {
     try { await state.store.addNote(withAuthor({ id: uid(), author: state.me, text, image: pendingImage, lang: state.lang, created_at: new Date().toISOString() })); } 
     catch { toast(t("saveFailed")); return; } 
     pendingImage = null;
-    if (isMobile()) state.mRewardVisible = true;
     await refresh(); render(); toast(t("noteSent")); 
   });
   
@@ -3027,8 +2397,6 @@ async function start(){
   state.calSelectedDate = todayKey();
   state.calDayTapped = false;
   state.calStripScrollLeft = null;
-  state.mTodayStep = "greet";
-  state.mRewardVisible = false;
   pickSessionUsPhotos();
   await refresh();
   render();
